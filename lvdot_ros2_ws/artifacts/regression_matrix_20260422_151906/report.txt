@@ -1,0 +1,41 @@
+LV-DOT ROS2 Regression Matrix Report
+
+overall_result: FAIL
+next_action: inspect_detector_and_scene_summaries
+
+detector_only:
+  validation: PASS
+  failure_reason: none
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151906/detector_only_regression_20260422_151907/summary.txt
+
+scene_regression:
+  validation: UNKNOWN
+  failure_reason: unknown
+  ready_wait_seconds: unknown
+  enable_yolo: unknown
+  launch_yolo_node: unknown
+  validate_failure_keys: unknown
+  sample_delta: unknown
+  depth_delta: unknown
+  color_delta: unknown
+  lidar_delta: unknown
+  yolo_delta: unknown
+  detection_tick_delta: unknown
+  tracking_tick_delta: unknown
+  dynamic_delta: unknown
+  summary: 
+
+scene_diagnostics:
+  result: SKIPPED
+  failure_reason: skipped
+  summary: 
+
+scene_staged:
+  result: SKIPPED
+  failure_reason: skipped
+  summary: 
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151906
+  matrix_summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151906/summary.txt
+  matrix_report: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151906/report.txt

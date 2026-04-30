@@ -1,0 +1,19 @@
+LV-DOT ROS2 Regression Matrix Report
+
+overall_result: DETECTOR_PASS_SCENE_ENV_BLOCKED
+next_action: fix_desktop_scene_environment
+
+detector_only:
+  validation: PASS
+  failure_reason: none
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_143744/detector_only_regression_20260420_143745/summary.txt
+
+scene_regression:
+  validation: FAIL
+  failure_reason: dds_environment_restricted
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_143744/real_scene_regression_20260420_143823/summary.txt
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_143744
+  matrix_summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_143744/summary.txt
+  matrix_report: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_143744/report.txt

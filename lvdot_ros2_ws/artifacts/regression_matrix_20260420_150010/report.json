@@ -1,0 +1,25 @@
+{
+  "overall_result": "DETECTOR_PASS_SCENE_ENV_BLOCKED",
+  "next_action": "dds_environment_restricted",
+  "artifact_dir": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_150010",
+  "detector": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_150010/detector_only_regression_20260420_150011/summary.txt",
+    "validation": "PASS",
+    "failure_reason": "none"
+  },
+  "scene": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_150010/real_scene_regression_20260420_150049/summary.txt",
+    "validation": "FAIL",
+    "failure_reason": "dds_environment_restricted"
+  },
+  "scene_diagnostics": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_150010/scene_environment_diag_20260420_150102/summary.txt",
+    "result": "FAIL",
+    "failure_reason": "dds_environment_restricted"
+  },
+  "scene_staged": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_150010/scene_staged_diag_20260420_150118/summary.txt",
+    "result": "FAIL",
+    "failure_reason": "dds_environment_restricted"
+  }
+}

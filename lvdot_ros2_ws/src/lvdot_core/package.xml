@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>lvdot_core</name>
+  <version>0.1.0</version>
+  <description>
+    Pure C++ algorithm core ported from the ROS1 LV-DOT onboard_detector.
+    Contains DBSCAN, Kalman filter, UV detector and LiDAR detector without any ROS dependency.
+  </description>
+  <maintainer email="dev@example.com">skbt2</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>eigen</depend>
+  <depend>libpcl-all-dev</depend>
+  <depend>libopencv-dev</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

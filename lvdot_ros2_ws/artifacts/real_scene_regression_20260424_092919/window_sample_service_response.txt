@@ -1,0 +1,6 @@
+waiting for service to become available...
+requester: making request: lvdot_interfaces.srv.GetDynamicObstacles_Request(current_position=geometry_msgs.msg.Point(x=0.0, y=0.0, z=0.0), range=120.0)
+
+response:
+lvdot_interfaces.srv.GetDynamicObstacles_Response(position=[geometry_msgs.msg.Vector3(x=7.5420527363509855, y=2.5214206006934283, z=0.47885796766309435)], velocity=[geometry_msgs.msg.Vector3(x=3.085880393747665, y=-4.695599540938725, z=0.0)], size=[geometry_msgs.msg.Vector3(x=0.8972089728889561, y=0.7749691229719176, z=1.3312119435428205)])
+

@@ -1,0 +1,42 @@
+=== input_health ===
+
+=== input_health_status ===
+depth_count: 293
+color_count: 291
+lidar_count: 45
+pose_count: 294
+odom_count: 294
+yolo_count: 288
+depth_pose_sync_count: 0
+lidar_pose_sync_count: 0
+depth_odom_sync_count: 0
+lidar_odom_sync_count: 0
+---
+
+=== stage_timers ===
+data: detection=300 lidar_detection=300 tracking=300 classification=219 vis=0 det_phase=idle lidar_phase=idle track_phase=idle cls_pha...
+---
+
+=== stage_timers_status ===
+
+=== pipeline_stats ===
+
+=== pipeline_stats_status ===
+
+=== dynamic_obstacles service type ===
+/home/skbt2/lvdot_ros2_ws/install/lvdot_bringup/lib/lvdot_bringup/check_real_scene_topics.sh: line 41: rg: command not found
+Traceback (most recent call last):
+  File "/opt/ros/jazzy/bin/ros2", line 33, in <module>
+    sys.exit(load_entry_point('ros2cli==0.32.8', 'console_scripts', 'ros2')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2cli/cli.py", line 91, in main
+    rc = extension.main(parser=parser, args=args)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2service/command/service.py", line 41, in main
+    return extension.main(args=args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2service/verb/list.py", line 51, in main
+    print(msg)
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe

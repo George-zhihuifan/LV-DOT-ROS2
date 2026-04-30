@@ -1,0 +1,46 @@
+[PASS] command: ros2
+[PASS] command: gz
+[PASS] file: /home/skbt2/ros2_depth_eval_ws/install/setup.bash
+[PASS] file: /home/skbt2/lvdot_ros2_ws/install/setup.bash
+[PASS] file: /home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/share/depth_eval_bringup/worlds/pedestrian_prototype.sdf
+[PASS] ros2_cli_runtime
+[FAIL] detector_launch_smoke_test
+--- stdout ---
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-23-23-53-54-298450-DESKTOP-90MQDL6-212280
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [lvdot_detector_main-1]: process started with pid [212283]
+[lvdot_detector_main-1] terminate called after throwing an instance of 'rclcpp::exceptions::InvalidParameterTypeException'
+[lvdot_detector_main-1]   what():  parameter 'depth_scale_factor' has invalid type: expected [double] got [integer]
+[lvdot_detector_main-1] 
+[lvdot_detector_main-1] === FATAL SIGNAL 6 received, backtrace (depth=26) ===
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(+0xa0efc1)[0x5a83d04ddfc1]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libc.so.6(+0x45330)[0x7f1dfd445330]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x11c)[0x7f1dfd49eb2c]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libc.so.6(gsignal+0x1e)[0x7f1dfd44527e]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libc.so.6(abort+0xdf)[0x7f1dfd4288ff]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libstdc++.so.6(+0xa5ff5)[0x7f1dfd8a5ff5]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libstdc++.so.6(+0xbb0da)[0x7f1dfd8bb0da]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libstdc++.so.6(_ZSt10unexpectedv+0x0)[0x7f1dfd8a5a55]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libstdc++.so.6(+0xbb391)[0x7f1dfd8bb391]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNK6rclcpp9Parameter9get_valueIdEEDcv+0x118)[0x5a83d0536042]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNK6rclcpp4Node13get_parameterIdEEbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERT_+0xac)[0x5a83d053615e]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNK6rclcpp4Node16get_parameter_orIdEEbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERT_RKSA_+0x65)[0x5a83d05246e3]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNK6rclcpp4Node16get_parameter_orIdEET_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKS2_+0x3f)[0x5a83d0515fc3]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(+0xa21fd9)[0x5a83d04f0fd9]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN10lvdot_ros217LVdotDetectorNode27load_config_from_parametersEv+0x371)[0x5a83d04e51b9]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN10lvdot_ros217LVdotDetectorNodeC1ERKN6rclcpp11NodeOptionsE+0xaae)[0x5a83d04e3ff8]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZSt10_ConstructIN10lvdot_ros217LVdotDetectorNodeEJRN6rclcpp11NodeOptionsEEEvPT_DpOT0_+0x4c)[0x5a83d04e0bac]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt23_Sp_counted_ptr_inplaceIN10lvdot_ros217LVdotDetectorNodeESaIvELN9__gnu_cxx12_Lock_policyE2EEC1IJRN6rclcpp11NodeOptionsEEEES2_DpOT_+0x84)[0x5a83d04e0876]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEC1IN10lvdot_ros217LVdotDetectorNodeESaIvEJRN6rclcpp11NodeOptionsEEEERPT_St20_Sp_alloc_shared_tagIT0_EDpOT1_+0xa4)[0x5a83d04e055c]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt12__shared_ptrIN10lvdot_ros217LVdotDetectorNodeELN9__gnu_cxx12_Lock_policyE2EEC2ISaIvEJRN6rclcpp11NodeOptionsEEEESt20_Sp_alloc_shared_tagIT_EDpOT0_+0x4e)[0x5a83d04e01ee]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt10shared_ptrIN10lvdot_ros217LVdotDetectorNodeEEC1ISaIvEJRN6rclcpp11NodeOptionsEEEESt20_Sp_alloc_shared_tagIT_EDpOT0_+0x3b)[0x5a83d04dfee5]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZSt11make_sharedIN10lvdot_ros217LVdotDetectorNodeEJRN6rclcpp11NodeOptionsEEESt10shared_ptrINSt9enable_ifIXntsrSt8is_arrayIT_E5valueES8_E4typeEEDpOT0_+0x48)[0x5a83d04df5dc]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(main+0x153)[0x5a83d04de251]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libc.so.6(+0x2a1ca)[0x7f1dfd42a1ca]
+[lvdot_detector_main-1] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x8b)[0x7f1dfd42a28b]
+[lvdot_detector_main-1] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_start+0x25)[0x5a83d04ddec5]
+[lvdot_detector_main-1] === end backtrace ===
+[ERROR] [lvdot_detector_main-1]: process has died [pid 212283, exit code -6, cmd '/home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main --ros-args -r __node:=lvdot_detector_node --params-file /home/skbt2/lvdot_ros2_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param.yaml'].
+--- stderr ---
+[PASS] gazebo_smoke_test
+=== RESULT: FAIL ===

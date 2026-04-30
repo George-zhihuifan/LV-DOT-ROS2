@@ -1,0 +1,9 @@
+[PASS] command: ros2
+[PASS] command: gz
+[PASS] file: /home/skbt2/ros2_depth_eval_ws/install/setup.bash
+[PASS] file: /home/skbt2/lvdot_ros2_ws/install/setup.bash
+[PASS] file: /home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/share/depth_eval_bringup/worlds/pedestrian_prototype.sdf
+[PASS] ros2_cli_runtime
+[PASS] detector_launch_smoke_test
+[PASS] gazebo_smoke_test
+=== RESULT: PASS ===

@@ -1,0 +1,15 @@
+/camera/color/camera_info
+/camera/color/image_raw
+/camera/depth/camera_info
+/camera/depth/image_rect_raw
+/camera/imu
+/mavros/local_position/odom
+/mavros/local_position/pose
+/parameter_events
+/pedestrian_sim/agent_states
+/pointcloud
+/rgbd_camera/camera_info
+/rgbd_camera/depth_image
+/rgbd_camera/image
+/rgbd_camera/points
+/rosout

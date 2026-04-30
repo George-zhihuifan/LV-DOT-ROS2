@@ -1,0 +1,19 @@
+LV-DOT ROS2 Regression Matrix Report
+
+overall_result: FAIL
+next_action: inspect_detector_and_scene_summaries
+
+detector_only:
+  validation: UNKNOWN
+  failure_reason: unknown
+  summary: 
+
+scene_regression:
+  validation: UNKNOWN
+  failure_reason: unknown
+  summary: 
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_143641
+  matrix_summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_143641/summary.txt
+  matrix_report: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_143641/report.txt

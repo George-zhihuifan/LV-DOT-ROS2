@@ -1,0 +1,29 @@
+LV-DOT ROS2 Regression Matrix Report
+
+overall_result: FAIL
+next_action: inspect_detector_and_scene_summaries
+
+detector_only:
+  validation: PASS
+  failure_reason: none
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_084250/detector_only_regression_20260421_084251/summary.txt
+
+scene_regression:
+  validation: FAIL
+  failure_reason: validation_failed
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_084250/real_scene_regression_20260421_084307/summary.txt
+
+scene_diagnostics:
+  result: PASS
+  failure_reason: none
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_084250/scene_environment_diag_20260421_084831/summary.txt
+
+scene_staged:
+  result: PASS
+  failure_reason: none
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_084250/scene_staged_diag_20260421_084914/summary.txt
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_084250
+  matrix_summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_084250/summary.txt
+  matrix_report: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_084250/report.txt

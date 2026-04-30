@@ -1,0 +1,4 @@
+[suite] artifact_dir=/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_093934
+[suite] running preflight
+[suite] launching scene + detector
+[suite] waiting for detector readiness (timeout=900s, poll=5s, min_uptime=20s)

@@ -1,0 +1,408 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-29-10-11-05-127848-DESKTOP-90MQDL6-60925
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [60963]
+[INFO] [parameter_bridge-2]: process started with pid [60964]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [60965]
+[INFO] [uav_trajectory_controller-4]: process started with pid [60966]
+[INFO] [lvdot_yolo_node-5]: process started with pid [60967]
+[INFO] [lvdot_detector_main-6]: process started with pid [60968]
+[parameter_bridge-2] [INFO] [1777428665.377229646] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777428665.379465190] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777428665.384830769] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777428665.386023294] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777428665.386875947] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777428665.388435259] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777428665.390108870] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1777428665.392557407] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[lvdot_detector_main-6] [INFO] [1777428665.567138760] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.50, 5.00] stage_timers=true vis_stage=false executor_threads=1
+[lvdot_detector_main-6] [INFO] [1777428665.642950171] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/rgbd_camera/depth_image color=/rgbd_camera/image lidar=/rgbd_camera/points pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[lvdot_detector_main-6] [INFO] [1777428665.643011124] [lvdot_detector_node]: Starting executor with executor_threads=1
+[lvdot_detector_main-6] [WARN] [1777428665.643044769] [rclcpp]: MultiThreadedExecutor is used with a single thread.
+[lvdot_detector_main-6] Use the SingleThreadedExecutor instead.
+[gazebo-1] [INFO] [1777428666.498254020] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[lvdot_detector_main-6] [UV] 72 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 72 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 68 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 81 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 78 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [UV] 55 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 70 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428699.820093210] [lvdot_detector_node]: Input health: depth=8 color=8 lidar=8 pose=11 odom=11 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428699.820276965] [lvdot_detector_node]: Stage timers: detection=142 lidar_detection=142 tracking=142 classification=142 vis=0
+[lvdot_detector_main-6] [INFO] [1777428699.820296313] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428699.820304133] [lvdot_detector_node]: Pipeline stats: depth_samples=2369/285200 u_map=7 depth_boxes=7 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3204/153796 uv=0 db=1 lidar=49 fused=49 filtered=49 tracks=24 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=49->0 (49 outputs) fusion_components=49 visual_only=0 lidar_only=49 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 130 line groups → 7 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=7 d_boxes=7 valid_rows=7 invalid_rows=0
+[lvdot_detector_main-6] [UV] 48 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 61 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 92 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 102 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428725.406606866] [lvdot_detector_node]: Input health: depth=14 color=14 lidar=14 pose=17 odom=17 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428725.406722880] [lvdot_detector_node]: Stage timers: detection=148 lidar_detection=148 tracking=148 classification=148 vis=0
+[lvdot_detector_main-6] [INFO] [1777428725.406740011] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428725.406750230] [lvdot_detector_node]: Pipeline stats: depth_samples=821/285200 u_map=1 depth_boxes=1 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3289/161515 uv=0 db=0 lidar=67 fused=67 filtered=67 tracks=2 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=67->0 (67 outputs) fusion_components=67 visual_only=0 lidar_only=67 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 146 line groups → 8 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=8 d_boxes=8 valid_rows=8 invalid_rows=0
+[lvdot_detector_main-6] [UV] 25 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [WARN] [1777428725.509352231] [lvdot_detector_node.rclcpp]: failed to send response to /lvdot_detector_node/get_parameters (timeout): client will not receive response, at ./src/rmw_response.cpp:153, at ./src/rcl/service.c:400
+[lvdot_detector_main-6] [WARN] [1777428730.336759297] [lvdot_detector_node.rclcpp]: failed to send response to /lvdot_detector_node/get_parameters (timeout): client will not receive response, at ./src/rmw_response.cpp:153, at ./src/rcl/service.c:400
+[lvdot_detector_main-6] [UV] 40 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [UV] 31 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428738.969381084] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 45 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 46 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=3 invalid_rows=1
+[lvdot_detector_main-6] [UV] 52 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428751.667377168] [lvdot_detector_node]: Input health: depth=20 color=20 lidar=20 pose=23 odom=23 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428751.667484002] [lvdot_detector_node]: Stage timers: detection=154 lidar_detection=154 tracking=154 classification=154 vis=0
+[lvdot_detector_main-6] [INFO] [1777428751.667502726] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428751.667514941] [lvdot_detector_node]: Pipeline stats: depth_samples=1944/285200 u_map=3 depth_boxes=3 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3168/125035 uv=0 db=0 lidar=17 fused=17 filtered=17 tracks=68 dynamic=0 dyn_points=0 raw_dyn_points=0 service=1/0 split=17->0 (17 outputs) fusion_components=17 visual_only=0 lidar_only=17 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 60 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 72 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 34 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428764.286616870] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 116 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 117 line groups → 7 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=7 d_boxes=7 valid_rows=7 invalid_rows=0
+[lvdot_detector_main-6] [UV] 79 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 55 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 37 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [UV] 60 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428785.489547408] [lvdot_detector_node]: Input health: depth=28 color=28 lidar=28 pose=31 odom=31 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428785.489701296] [lvdot_detector_node]: Stage timers: detection=162 lidar_detection=162 tracking=162 classification=162 vis=0
+[lvdot_detector_main-6] [INFO] [1777428785.489726327] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428785.489739443] [lvdot_detector_node]: Pipeline stats: depth_samples=1934/285200 u_map=4 depth_boxes=4 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3117/127847 uv=0 db=0 lidar=16 fused=16 filtered=16 tracks=10 dynamic=0 dyn_points=0 raw_dyn_points=0 service=4/0 split=16->0 (16 outputs) fusion_components=16 visual_only=0 lidar_only=16 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [INFO] [1777428789.500805422] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 81 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 52 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 98 line groups → 8 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=8 d_boxes=8 valid_rows=7 invalid_rows=1
+[lvdot_detector_main-6] [INFO] [1777428802.866204838] [lvdot_detector_node]: Input health: depth=32 color=32 lidar=32 pose=35 odom=35 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428802.866322499] [lvdot_detector_node]: Stage timers: detection=166 lidar_detection=166 tracking=166 classification=166 vis=0
+[lvdot_detector_main-6] [INFO] [1777428802.866349068] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428802.866366647] [lvdot_detector_node]: Pipeline stats: depth_samples=1929/285200 u_map=3 depth_boxes=3 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3106/117505 uv=0 db=0 lidar=8 fused=8 filtered=8 tracks=18 dynamic=0 dyn_points=0 raw_dyn_points=0 service=5/0 split=8->0 (8 outputs) fusion_components=8 visual_only=0 lidar_only=8 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [INFO] [1777428802.868489435] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 51 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428815.466437039] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 51 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 81 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 73 line groups → 6 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=6 d_boxes=6 valid_rows=5 invalid_rows=1
+[lvdot_detector_main-6] [INFO] [1777428827.964794554] [lvdot_detector_node]: Input health: depth=38 color=38 lidar=38 pose=41 odom=41 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428827.964946065] [lvdot_detector_node]: Stage timers: detection=172 lidar_detection=172 tracking=172 classification=172 vis=0
+[lvdot_detector_main-6] [INFO] [1777428827.964971366] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428827.964981667] [lvdot_detector_node]: Pipeline stats: depth_samples=2148/285200 u_map=4 depth_boxes=4 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3307/120860 uv=0 db=0 lidar=12 fused=12 filtered=12 tracks=20 dynamic=0 dyn_points=0 raw_dyn_points=0 service=7/0 split=12->0 (12 outputs) fusion_components=12 visual_only=0 lidar_only=12 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 73 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 58 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 99 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 68 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428840.603052145] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 124 line groups → 7 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=7 d_boxes=7 valid_rows=7 invalid_rows=0
+[lvdot_detector_main-6] [UV] 107 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428853.157129342] [lvdot_detector_node]: Input health: depth=44 color=44 lidar=44 pose=47 odom=47 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428853.157239409] [lvdot_detector_node]: Stage timers: detection=178 lidar_detection=178 tracking=178 classification=178 vis=0
+[lvdot_detector_main-6] [INFO] [1777428853.157252717] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428853.157259922] [lvdot_detector_node]: Pipeline stats: depth_samples=2018/285200 u_map=7 depth_boxes=7 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3084/157419 uv=0 db=1 lidar=4 fused=4 filtered=4 tracks=1 dynamic=0 dyn_points=0 raw_dyn_points=0 service=9/0 split=4->0 (4 outputs) fusion_components=4 visual_only=0 lidar_only=4 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [INFO] [1777428853.159451556] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 117 line groups → 7 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=7 d_boxes=7 valid_rows=7 invalid_rows=0
+[lvdot_detector_main-6] [UV] 64 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=3 invalid_rows=1
+[lvdot_detector_main-6] [UV] 27 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428866.910267392] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 131 line groups → 6 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=6 d_boxes=6 valid_rows=6 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428871.279786511] [lvdot_detector_node]: Input health: depth=48 color=48 lidar=48 pose=51 odom=51 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428871.279900996] [lvdot_detector_node]: Stage timers: detection=182 lidar_detection=182 tracking=182 classification=182 vis=0
+[lvdot_detector_main-6] [INFO] [1777428871.279927269] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428871.279935961] [lvdot_detector_node]: Pipeline stats: depth_samples=1939/285200 u_map=1 depth_boxes=1 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3454/107908 uv=0 db=0 lidar=15 fused=15 filtered=15 tracks=58 dynamic=0 dyn_points=0 raw_dyn_points=0 service=11/0 split=15->0 (15 outputs) fusion_components=15 visual_only=0 lidar_only=15 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 64 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428879.776990145] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 25 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 86 line groups → 7 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=7 d_boxes=7 valid_rows=7 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428897.595207031] [lvdot_detector_node]: Input health: depth=54 color=54 lidar=54 pose=57 odom=57 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428897.595290390] [lvdot_detector_node]: Stage timers: detection=188 lidar_detection=188 tracking=188 classification=188 vis=0
+[lvdot_detector_main-6] [INFO] [1777428897.595309903] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428897.595321211] [lvdot_detector_node]: Pipeline stats: depth_samples=1936/285200 u_map=1 depth_boxes=1 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3346/191748 uv=0 db=0 lidar=9 fused=9 filtered=9 tracks=7 dynamic=0 dyn_points=0 raw_dyn_points=0 service=13/0 split=9->0 (9 outputs) fusion_components=9 visual_only=0 lidar_only=9 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 99 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428906.821696377] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 71 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 71 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428919.410499025] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 99 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 118 line groups → 6 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=6 d_boxes=6 valid_rows=6 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428923.894210495] [lvdot_detector_node]: Input health: depth=60 color=60 lidar=60 pose=63 odom=63 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428923.894309276] [lvdot_detector_node]: Stage timers: detection=194 lidar_detection=194 tracking=194 classification=194 vis=0
+[lvdot_detector_main-6] [INFO] [1777428923.894323759] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428923.894333947] [lvdot_detector_node]: Pipeline stats: depth_samples=1425/285200 u_map=4 depth_boxes=4 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=2700/192981 uv=0 db=1 lidar=1 fused=1 filtered=1 tracks=5 dynamic=0 dyn_points=0 raw_dyn_points=0 service=15/0 split=1->0 (1 outputs) fusion_components=1 visual_only=0 lidar_only=1 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 113 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 75 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428933.230424713] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428941.889584070] [lvdot_detector_node]: Input health: depth=64 color=64 lidar=64 pose=67 odom=67 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428941.889663881] [lvdot_detector_node]: Stage timers: detection=198 lidar_detection=198 tracking=198 classification=198 vis=0
+[lvdot_detector_main-6] [INFO] [1777428941.889673982] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428941.889680983] [lvdot_detector_node]: Pipeline stats: depth_samples=2171/285200 u_map=5 depth_boxes=5 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3431/123321 uv=0 db=0 lidar=16 fused=16 filtered=16 tracks=2 dynamic=0 dyn_points=0 raw_dyn_points=0 service=16/0 split=16->0 (16 outputs) fusion_components=16 visual_only=0 lidar_only=16 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 70 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 104 line groups → 6 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=6 d_boxes=6 valid_rows=6 invalid_rows=0
+[lvdot_detector_main-6] [UV] 73 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 144 line groups → 8 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=8 d_boxes=8 valid_rows=7 invalid_rows=1
+[lvdot_detector_main-6] [UV] 90 line groups → 6 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=6 d_boxes=6 valid_rows=6 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428960.540081711] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 36 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [UV] 68 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 80 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428978.016520767] [lvdot_detector_node]: Input health: depth=72 color=72 lidar=72 pose=75 odom=75 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777428978.016629741] [lvdot_detector_node]: Stage timers: detection=206 lidar_detection=206 tracking=206 classification=206 vis=0
+[lvdot_detector_main-6] [INFO] [1777428978.016645738] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777428978.016656835] [lvdot_detector_node]: Pipeline stats: depth_samples=2027/276000 u_map=8 depth_boxes=8 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3073/172158 uv=0 db=1 lidar=62 fused=62 filtered=62 tracks=15 dynamic=0 dyn_points=0 raw_dyn_points=0 service=19/0 split=62->0 (62 outputs) fusion_components=62 visual_only=0 lidar_only=62 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 109 line groups → 8 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=8 d_boxes=8 valid_rows=8 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428981.867515026] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 110 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 126 line groups → 8 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=8 d_boxes=8 valid_rows=7 invalid_rows=1
+[lvdot_detector_main-6] [UV] 103 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777428995.692649912] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 49 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [UV] 122 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429006.371669769] [lvdot_detector_node]: Input health: depth=78 color=78 lidar=78 pose=81 odom=81 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429006.371816199] [lvdot_detector_node]: Stage timers: detection=212 lidar_detection=212 tracking=212 classification=212 vis=0
+[lvdot_detector_main-6] [INFO] [1777429006.371835590] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429006.371847085] [lvdot_detector_node]: Pipeline stats: depth_samples=1939/285200 u_map=1 depth_boxes=1 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3446/108032 uv=0 db=0 lidar=8 fused=8 filtered=8 tracks=9 dynamic=0 dyn_points=0 raw_dyn_points=0 service=21/0 split=8->0 (8 outputs) fusion_components=8 visual_only=0 lidar_only=8 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429011.311633144] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 33 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429024.023314697] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 75 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429032.226644800] [lvdot_detector_node]: Input health: depth=84 color=84 lidar=84 pose=87 odom=87 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429032.226726502] [lvdot_detector_node]: Stage timers: detection=218 lidar_detection=218 tracking=218 classification=218 vis=0
+[lvdot_detector_main-6] [INFO] [1777429032.226736602] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429032.226743702] [lvdot_detector_node]: Pipeline stats: depth_samples=1923/285200 u_map=1 depth_boxes=1 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3362/108123 uv=0 db=0 lidar=7 fused=7 filtered=7 tracks=7 dynamic=0 dyn_points=0 raw_dyn_points=0 service=23/0 split=7->0 (7 outputs) fusion_components=7 visual_only=0 lidar_only=7 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 63 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 119 line groups → 10 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=10 d_boxes=10 valid_rows=10 invalid_rows=0
+[lvdot_detector_main-6] [UV] 95 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429047.790609452] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 84 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 74 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429056.540245451] [lvdot_detector_node]: Input health: depth=90 color=90 lidar=90 pose=93 odom=93 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429056.540326158] [lvdot_detector_node]: Stage timers: detection=224 lidar_detection=224 tracking=224 classification=224 vis=0
+[lvdot_detector_main-6] [INFO] [1777429056.540353261] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429056.540370963] [lvdot_detector_node]: Pipeline stats: depth_samples=2073/285200 u_map=7 depth_boxes=7 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3198/129604 uv=0 db=1 lidar=24 fused=24 filtered=24 tracks=14 dynamic=0 dyn_points=0 raw_dyn_points=0 service=25/0 split=24->0 (24 outputs) fusion_components=24 visual_only=0 lidar_only=24 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 141 line groups → 7 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=7 d_boxes=7 valid_rows=7 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429060.886025185] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 97 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 161 line groups → 8 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=8 d_boxes=8 valid_rows=8 invalid_rows=0
+[lvdot_detector_main-6] [UV] 23 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429074.816968167] [lvdot_detector_node]: Input health: depth=94 color=94 lidar=94 pose=97 odom=97 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429074.817143249] [lvdot_detector_node]: Stage timers: detection=228 lidar_detection=228 tracking=228 classification=228 vis=0
+[lvdot_detector_main-6] [INFO] [1777429074.817159548] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429074.817166447] [lvdot_detector_node]: Pipeline stats: depth_samples=1936/285200 u_map=1 depth_boxes=1 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3416/108013 uv=0 db=0 lidar=11 fused=11 filtered=11 tracks=8 dynamic=0 dyn_points=0 raw_dyn_points=0 service=26/0 split=11->0 (11 outputs) fusion_components=11 visual_only=0 lidar_only=11 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [INFO] [1777429074.819191542] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 34 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [UV] 49 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429100.143976847] [lvdot_detector_node]: Input health: depth=100 color=100 lidar=100 pose=103 odom=103 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429100.144131927] [lvdot_detector_node]: Stage timers: detection=234 lidar_detection=234 tracking=234 classification=234 vis=0
+[lvdot_detector_main-6] [INFO] [1777429100.144154624] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429100.144167922] [lvdot_detector_node]: Pipeline stats: depth_samples=2030/285200 u_map=4 depth_boxes=4 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3195/144099 uv=0 db=0 lidar=73 fused=73 filtered=73 tracks=10 dynamic=0 dyn_points=0 raw_dyn_points=0 service=28/0 split=73->0 (73 outputs) fusion_components=73 visual_only=0 lidar_only=73 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [INFO] [1777429100.146569706] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 88 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=4 invalid_rows=1
+[lvdot_detector_main-6] [UV] 90 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 77 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [UV] 94 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 91 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 76 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 141 line groups → 7 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=7 d_boxes=7 valid_rows=7 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429124.816530981] [lvdot_detector_node]: Input health: depth=106 color=106 lidar=106 pose=109 odom=109 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429124.816684269] [lvdot_detector_node]: Stage timers: detection=240 lidar_detection=240 tracking=240 classification=240 vis=0
+[lvdot_detector_main-6] [INFO] [1777429124.816703968] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429124.816716767] [lvdot_detector_node]: Pipeline stats: depth_samples=1839/285200 u_map=5 depth_boxes=5 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3261/130551 uv=0 db=0 lidar=7 fused=7 filtered=7 tracks=3 dynamic=0 dyn_points=0 raw_dyn_points=0 service=30/0 split=7->0 (7 outputs) fusion_components=7 visual_only=0 lidar_only=7 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 110 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 73 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[uav_trajectory_controller-4] [WARN] [1777429131.649981724] [uav_trajectory_controller]: SetEntityPose request timed out after 0.50s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1777429131.650575753] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.
+[lvdot_detector_main-6] [UV] 103 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 19 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429143.469313498] [lvdot_detector_node]: Input health: depth=110 color=110 lidar=110 pose=113 odom=113 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429143.469429696] [lvdot_detector_node]: Stage timers: detection=244 lidar_detection=244 tracking=244 classification=244 vis=0
+[lvdot_detector_main-6] [INFO] [1777429143.469449196] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429143.469464296] [lvdot_detector_node]: Pipeline stats: depth_samples=1923/285200 u_map=1 depth_boxes=1 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3483/125061 uv=0 db=0 lidar=6 fused=6 filtered=6 tracks=79 dynamic=0 dyn_points=0 raw_dyn_points=0 service=30/0 split=6->0 (6 outputs) fusion_components=6 visual_only=0 lidar_only=6 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 49 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 50 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 96 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 45 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 68 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429166.632344175] [lvdot_detector_node]: Input health: depth=116 color=116 lidar=116 pose=119 odom=119 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429166.632471971] [lvdot_detector_node]: Stage timers: detection=250 lidar_detection=250 tracking=250 classification=250 vis=0
+[lvdot_detector_main-6] [INFO] [1777429166.632516270] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429166.632533769] [lvdot_detector_node]: Pipeline stats: depth_samples=1462/285200 u_map=4 depth_boxes=4 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3155/165479 uv=1 db=1 lidar=14 fused=15 filtered=15 tracks=4 dynamic=0 dyn_points=0 raw_dyn_points=0 service=30/0 split=15->0 (15 outputs) fusion_components=15 visual_only=1 lidar_only=14 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 79 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 55 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 54 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 56 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 67 line groups → 2 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=2 d_boxes=2 valid_rows=2 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429190.477948662] [lvdot_detector_node]: Input health: depth=122 color=122 lidar=122 pose=125 odom=125 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429190.478090757] [lvdot_detector_node]: Stage timers: detection=256 lidar_detection=256 tracking=256 classification=256 vis=0
+[lvdot_detector_main-6] [INFO] [1777429190.478107557] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429190.478117757] [lvdot_detector_node]: Pipeline stats: depth_samples=2253/285200 u_map=5 depth_boxes=5 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3244/125007 uv=0 db=0 lidar=19 fused=19 filtered=19 tracks=2 dynamic=0 dyn_points=0 raw_dyn_points=0 service=30/0 split=19->0 (19 outputs) fusion_components=19 visual_only=0 lidar_only=19 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 113 line groups → 6 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=6 d_boxes=6 valid_rows=6 invalid_rows=0
+[lvdot_detector_main-6] [UV] 81 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 46 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 54 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429208.802545715] [lvdot_detector_node]: Input health: depth=126 color=126 lidar=126 pose=129 odom=129 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429208.802670910] [lvdot_detector_node]: Stage timers: detection=260 lidar_detection=260 tracking=260 classification=260 vis=0
+[lvdot_detector_main-6] [INFO] [1777429208.802693310] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429208.802707709] [lvdot_detector_node]: Pipeline stats: depth_samples=1603/285200 u_map=4 depth_boxes=4 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3313/167218 uv=0 db=1 lidar=19 fused=19 filtered=19 tracks=9 dynamic=0 dyn_points=0 raw_dyn_points=0 service=30/0 split=19->0 (19 outputs) fusion_components=19 visual_only=0 lidar_only=19 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 62 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 50 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429217.093728865] [lvdot_detector_node]: get_dynamic_obstacles responded with 0 obstacles from 0 tracked dynamic boxes.
+[lvdot_detector_main-6] [UV] 37 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [UV] 94 line groups → 5 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=5 d_boxes=5 valid_rows=5 invalid_rows=0
+[lvdot_detector_main-6] [UV] 13 line groups → 1 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=1 d_boxes=1 valid_rows=1 invalid_rows=0
+[lvdot_detector_main-6] [INFO] [1777429233.777785843] [lvdot_detector_node]: Input health: depth=132 color=132 lidar=132 pose=135 odom=135 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777429233.777915838] [lvdot_detector_node]: Stage timers: detection=266 lidar_detection=266 tracking=266 classification=266 vis=0
+[lvdot_detector_main-6] [INFO] [1777429233.777932538] [lvdot_detector_node]: Processing phases: detection=idle lidar_detection=idle tracking=idle classification=idle
+[lvdot_detector_main-6] [INFO] [1777429233.777939837] [lvdot_detector_node]: Pipeline stats: depth_samples=2009/285200 u_map=3 depth_boxes=3 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3040/134595 uv=0 db=0 lidar=18 fused=18 filtered=18 tracks=7 dynamic=0 dyn_points=0 raw_dyn_points=0 service=31/0 split=18->0 (18 outputs) fusion_components=18 visual_only=0 lidar_only=18 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 67 line groups → 3 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=3 d_boxes=3 valid_rows=3 invalid_rows=0
+[lvdot_detector_main-6] [UV] 58 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0
+[lvdot_detector_main-6] [UV] 61 line groups → 4 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=4 d_boxes=4 valid_rows=4 invalid_rows=0

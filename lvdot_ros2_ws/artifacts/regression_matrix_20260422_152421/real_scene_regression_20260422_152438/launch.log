@@ -1,0 +1,31 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-22-15-24-49-198493-DESKTOP-90MQDL6-552116
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [552161]
+[INFO] [parameter_bridge-2]: process started with pid [552162]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [552163]
+[INFO] [uav_trajectory_controller-4]: process started with pid [552164]
+[INFO] [image_pointcloud_relay-5]: process started with pid [552165]
+[INFO] [lvdot_yolo_node-6]: process started with pid [552166]
+[INFO] [lvdot_detector_main-7]: process started with pid [552167]
+[parameter_bridge-2] [INFO] [1776842689.456484026] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842689.462337172] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842689.463868481] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842689.464400556] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842689.465129521] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842689.466137325] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776842689.468217634] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[lvdot_detector_main-7] [INFO] [1776842689.589787284] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.20, 12.00] stage_timers=true
+[lvdot_detector_main-7] [INFO] [1776842689.699076040] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/camera/depth/image_rect_raw color=/camera/color/image_raw lidar=/pointcloud pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[gazebo-1] [INFO] [1776842690.700819574] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[uav_trajectory_controller-4] [WARN] [1776842690.809369837] [uav_trajectory_controller]: SetEntityPose service /world/pedestrian_prototype/set_pose/blocking is unavailable; UAV state publication is paused until Gazebo pose control is reachable.
+[lvdot_detector_main-7] [INFO] [1776842691.695088379] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=0 odom=0 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-7] [INFO] [1776842691.695245106] [lvdot_detector_node]: Stage timers: detection=60 lidar_detection=60 tracking=60 classification=60 vis=60
+[lvdot_detector_main-7] [INFO] [1776842691.695265179] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 fixed_size=0 size_reject=0
+[uav_trajectory_controller-4] [WARN] [1776842754.160738060] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776842754.161351319] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.
+[lvdot_detector_main-7] [INFO] [1776842867.198509991] [lvdot_detector_node]: Input health: depth=0 color=1 lidar=1 pose=2 odom=2 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-7] [INFO] [1776842867.198711607] [lvdot_detector_node]: Stage timers: detection=129 lidar_detection=130 tracking=130 classification=130 vis=130
+[lvdot_detector_main-7] [INFO] [1776842867.198741712] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=25980/155879 uv=0 db=0 lidar=9 fused=9 filtered=9 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=9->0 (9 outputs) fusion_components=9 visual_only=0 lidar_only=9 fixed_size=0 size_reject=0
+[lvdot_detector_main-7] [INFO] [1776843009.641407561] [lvdot_detector_node]: Input health: depth=2 color=3 lidar=3 pose=4 odom=4 yolo=2 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-7] [INFO] [1776843009.641538052] [lvdot_detector_node]: Stage timers: detection=131 lidar_detection=132 tracking=132 classification=132 vis=132
+[lvdot_detector_main-7] [INFO] [1776843009.641553392] [lvdot_detector_node]: Pipeline stats: depth_samples=123/71300 u_map=1 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=24119/144712 uv=0 db=2 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 fixed_size=0 size_reject=0

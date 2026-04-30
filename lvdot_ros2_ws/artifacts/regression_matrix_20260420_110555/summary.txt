@@ -1,0 +1,8 @@
+overall_result=DETECTOR_PASS_SCENE_ENV_BLOCKED
+artifact_dir=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_110555
+detector_summary=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_110555/detector_only_regression_20260420_110556/summary.txt
+detector_validation=PASS
+detector_failure_reason=none
+scene_summary=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_110555/real_scene_regression_20260420_110634/summary.txt
+scene_validation=FAIL
+scene_failure_reason=dds_environment_restricted

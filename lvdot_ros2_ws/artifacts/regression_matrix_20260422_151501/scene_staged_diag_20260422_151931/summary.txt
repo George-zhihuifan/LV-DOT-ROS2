@@ -1,0 +1,13 @@
+result=FAIL
+failure_reason=uav_state_chain_failed
+next_action=inspect_uav_controller_and_set_pose_service_chain
+artifact_dir=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_staged_diag_20260422_151931
+warmup_seconds=12
+stage_gazebo=PASS
+stage_bridge=PASS
+stage_sensors=PASS
+stage_uav_state=FAIL
+launch_log=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_staged_diag_20260422_151931/launch.log
+node_list=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_staged_diag_20260422_151931/node_list.txt
+topic_list=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_staged_diag_20260422_151931/topic_list.txt
+service_list=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_staged_diag_20260422_151931/service_list.txt

@@ -1,0 +1,5 @@
+requester: making request: lvdot_interfaces.srv.GetDynamicObstacles_Request(current_position=geometry_msgs.msg.Point(x=0.0, y=0.0, z=0.0), range=120.0)
+
+response:
+lvdot_interfaces.srv.GetDynamicObstacles_Response(position=[geometry_msgs.msg.Vector3(x=3.478470802307129, y=-0.2682795524597168, z=0.6698460578918457)], velocity=[geometry_msgs.msg.Vector3(x=0.0, y=0.0, z=0.0)], size=[geometry_msgs.msg.Vector3(x=0.8923735618591309, y=0.8878247141838074, z=1.4469757080078125)])
+

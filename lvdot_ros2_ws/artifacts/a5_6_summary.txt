@@ -1,0 +1,13 @@
+total_runs=7
+status_preflight_fail=7
+status_launch_fail=0
+status_runtime_crash=0
+status_completed=0
+completed_pass_runs=0
+completed_fail_runs=0
+crash_rate=0.000000
+hit_count_mean=0.000000
+hit_count_median=0.000000
+hit_count_p25=0.000000
+hit_count_p75=0.000000
+runs_csv=/home/skbt2/lvdot_ros2_ws/artifacts/a5_6_runs.csv

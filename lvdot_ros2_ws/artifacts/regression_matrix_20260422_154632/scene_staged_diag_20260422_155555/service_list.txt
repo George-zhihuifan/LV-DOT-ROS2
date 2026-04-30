@@ -1,0 +1,7 @@
+/pedestrian_pose_sync_system/describe_parameters [rcl_interfaces/srv/DescribeParameters]
+/pedestrian_pose_sync_system/get_parameter_types [rcl_interfaces/srv/GetParameterTypes]
+/pedestrian_pose_sync_system/get_parameters [rcl_interfaces/srv/GetParameters]
+/pedestrian_pose_sync_system/get_type_description [type_description_interfaces/srv/GetTypeDescription]
+/pedestrian_pose_sync_system/list_parameters [rcl_interfaces/srv/ListParameters]
+/pedestrian_pose_sync_system/set_parameters [rcl_interfaces/srv/SetParameters]
+/pedestrian_pose_sync_system/set_parameters_atomically [rcl_interfaces/srv/SetParametersAtomically]

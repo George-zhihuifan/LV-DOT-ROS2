@@ -1,0 +1,6 @@
+{
+  "result": "PASS",
+  "failure_reason": "none",
+  "next_action": "start_scene_behavior_review",
+  "artifact_dir": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856"
+}

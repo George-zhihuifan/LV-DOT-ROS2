@@ -1,0 +1,7 @@
+ready_result=ready
+ready_wait_seconds=10
+enable_yolo=true
+launch_yolo_node=true
+use_all_classes=false
+enable_color_fallback=false
+yolo_conf_threshold=0.65

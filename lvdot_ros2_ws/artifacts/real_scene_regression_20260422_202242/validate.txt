@@ -1,0 +1,36 @@
+=== Regression Validation ===
+[PASS] depth input: 614
+[PASS] color input: 1276
+[PASS] lidar input: 3
+[PASS] pose input: 16976
+[PASS] odom input: 16976
+[PASS] yolo input: 430
+[PASS] detection timer: 12538
+[PASS] lidar_detection timer: 12538
+[PASS] tracking timer: 12831
+[PASS] classification timer: 12816
+[PASS] vis timer: 12336
+[PASS] visual bbox count: 0
+[PASS] lidar bbox count: 1
+[PASS] filtered bbox count: 2
+[PASS] dynamic bbox count: 0
+[PASS] u_map box count: 3
+[PASS] projected depth box count: 0
+[PASS] u_map enhanced db count: 0
+[PASS] u_map enhanced visual count: 0
+[PASS] u_map enhanced fused count: 0
+[PASS] u_map enhanced filtered count: 0
+[PASS] service call count: 0
+[PASS] depth input delta: 94
+[PASS] color input delta: 163
+[PASS] lidar input delta: 2
+[PASS] pose input delta: 2405
+[PASS] odom input delta: 2404
+[PASS] detection timer delta: 1596
+[PASS] lidar_detection timer delta: 1596
+[PASS] tracking timer delta: 1802
+[PASS] classification timer delta: 1803
+[PASS] vis timer delta: 1737
+[FAIL] service type: missing
+failure_keys=service_type_invalid
+=== RESULT: FAIL ===

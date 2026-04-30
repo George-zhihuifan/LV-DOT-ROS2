@@ -1,0 +1,6 @@
+start_ts=2026-04-29 23:49:56
+end_ts=2026-04-29 23:55:01
+frames_parsed=76
+void_like_frames=0
+void_like_ratio=0.000000
+sample_void_cases=

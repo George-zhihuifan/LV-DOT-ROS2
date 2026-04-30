@@ -1,0 +1,7 @@
+/camera/imu
+/parameter_events
+/rgbd_camera/camera_info
+/rgbd_camera/depth_image
+/rgbd_camera/image
+/rgbd_camera/points
+/rosout

@@ -1,0 +1,8 @@
+=== Regression Validation ===
+[FAIL] dynamic bbox count: 0 (expected > 0)
+[FAIL] service call count: 0
+[FAIL] dynamic bbox count delta: 0
+[PASS] service call count delta: 0
+[PASS] service response: non-empty
+failure_keys=dynamic_bbox_count_zero_value_0,service_call_count_zero,dynamic_bbox_count_delta_non_positive
+=== RESULT: FAIL ===

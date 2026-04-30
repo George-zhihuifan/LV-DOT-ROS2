@@ -1,0 +1,246 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-20-15-04-12-580806-DESKTOP-90MQDL6-537
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [541]
+[INFO] [parameter_bridge-2]: process started with pid [542]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [543]
+[INFO] [uav_trajectory_controller-4]: process started with pid [544]
+[INFO] [image_pointcloud_relay-5]: process started with pid [545]
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] [37;1m2026-04-20 15:04:12.841 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[parameter_bridge-2] [37;1m2026-04-20 15:04:12.841 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] error in getifaddrs: Unknown error -1
+[gazebo-1] error in getifaddrs: Unknown error -1
+[ERROR] [gazebo-1]: process has died [pid 541, exit code 255, cmd 'gz sim -s -r /home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/share/depth_eval_bringup/worlds/pedestrian_prototype.sdf'].
+[INFO] [launch]: process[gazebo-1] was required: shutting down launched system
+[INFO] [image_pointcloud_relay-5]: sending signal 'SIGINT' to process[image_pointcloud_relay-5]
+[INFO] [uav_trajectory_controller-4]: sending signal 'SIGINT' to process[uav_trajectory_controller-4]
+[INFO] [pedestrian_state_publisher-3]: sending signal 'SIGINT' to process[pedestrian_state_publisher-3]
+[INFO] [parameter_bridge-2]: sending signal 'SIGINT' to process[parameter_bridge-2]
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] [37;1m2026-04-20 15:04:13.678 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[pedestrian_state_publisher-3] [37;1m2026-04-20 15:04:13.678 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] [37;1m2026-04-20 15:04:13.685 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[image_pointcloud_relay-5] [37;1m2026-04-20 15:04:13.685 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[ERROR] [parameter_bridge-2]: process has died [pid 542, exit code -11, cmd '/opt/ros/jazzy/lib/ros_gz_bridge/parameter_bridge /rgbd_camera/image@sensor_msgs/msg/Image[gz.msgs.Image /rgbd_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo /rgbd_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image /rgbd_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked /camera/imu@sensor_msgs/msg/Imu[gz.msgs.IMU /world/pedestrian_prototype/set_pose@ros_gz_interfaces/srv/SetEntityPose /world/pedestrian_prototype/set_pose/blocking@ros_gz_interfaces/srv/SetEntityPose --ros-args'].
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] [37;1m2026-04-20 15:04:13.880 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[uav_trajectory_controller-4] [37;1m2026-04-20 15:04:13.880 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] [WARN] [1776668654.563957442] [uav_trajectory_controller]: SetEntityPose service /world/pedestrian_prototype/set_pose/blocking is unavailable; UAV state publication is paused until Gazebo pose control is reachable.
+[ERROR] [image_pointcloud_relay-5]: process[image_pointcloud_relay-5] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+[ERROR] [uav_trajectory_controller-4]: process[uav_trajectory_controller-4] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+[ERROR] [pedestrian_state_publisher-3]: process[pedestrian_state_publisher-3] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+[INFO] [image_pointcloud_relay-5]: sending signal 'SIGTERM' to process[image_pointcloud_relay-5]
+[INFO] [uav_trajectory_controller-4]: sending signal 'SIGTERM' to process[uav_trajectory_controller-4]
+[INFO] [pedestrian_state_publisher-3]: sending signal 'SIGTERM' to process[pedestrian_state_publisher-3]
+[image_pointcloud_relay-5] Traceback (most recent call last):
+[image_pointcloud_relay-5]   File "/home/skbt2/ros2_depth_eval_ws/install/lvdot_ros2_adapter/lib/lvdot_ros2_adapter/image_pointcloud_relay", line 33, in <module>
+[image_pointcloud_relay-5]     sys.exit(load_entry_point('lvdot-ros2-adapter', 'console_scripts', 'image_pointcloud_relay')())
+[image_pointcloud_relay-5]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[image_pointcloud_relay-5]   File "/home/skbt2/ros2_depth_eval_ws/build/lvdot_ros2_adapter/lvdot_ros2_adapter/image_pointcloud_relay.py", line 39, in main
+[image_pointcloud_relay-5]     rclpy.spin(node)
+[image_pointcloud_relay-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[image_pointcloud_relay-5]     executor.spin_once()
+[image_pointcloud_relay-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 923, in spin_once
+[image_pointcloud_relay-5]     self._spin_once_impl(timeout_sec)
+[image_pointcloud_relay-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 904, in _spin_once_impl
+[image_pointcloud_relay-5]     handler, entity, node = self.wait_for_ready_callbacks(
+[image_pointcloud_relay-5]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[image_pointcloud_relay-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 874, in wait_for_ready_callbacks
+[image_pointcloud_relay-5]     return next(self._cb_iter)
+[image_pointcloud_relay-5]            ^^^^^^^^^^^^^^^^^^^
+[image_pointcloud_relay-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 782, in _wait_for_ready_callbacks
+[image_pointcloud_relay-5]     raise ExternalShutdownException()
+[image_pointcloud_relay-5] rclpy.executors.ExternalShutdownException
+[pedestrian_state_publisher-3] Traceback (most recent call last):
+[pedestrian_state_publisher-3]   File "/home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/lib/depth_eval_bringup/pedestrian_state_publisher", line 33, in <module>
+[pedestrian_state_publisher-3]     sys.exit(load_entry_point('depth-eval-bringup', 'console_scripts', 'pedestrian_state_publisher')())
+[pedestrian_state_publisher-3]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pedestrian_state_publisher-3]   File "/home/skbt2/ros2_depth_eval_ws/build/depth_eval_bringup/depth_eval_bringup/pedestrian_state_publisher.py", line 185, in main
+[pedestrian_state_publisher-3]     rclpy.spin(node)
+[pedestrian_state_publisher-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[pedestrian_state_publisher-3]     executor.spin_once()
+[pedestrian_state_publisher-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 923, in spin_once
+[pedestrian_state_publisher-3]     self._spin_once_impl(timeout_sec)
+[pedestrian_state_publisher-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+[pedestrian_state_publisher-3]     raise handler.exception()
+[pedestrian_state_publisher-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/task.py", line 286, in _execute_coroutine_step
+[pedestrian_state_publisher-3]     result = coro.send(None)
+[pedestrian_state_publisher-3]              ^^^^^^^^^^^^^^^
+[pedestrian_state_publisher-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 592, in handler
+[pedestrian_state_publisher-3]     await call_coroutine()
+[pedestrian_state_publisher-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 454, in _execute
+[pedestrian_state_publisher-3]     await await_or_execute(tmr.callback)
+[pedestrian_state_publisher-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 115, in await_or_execute
+[pedestrian_state_publisher-3]     return callback(*args)
+[pedestrian_state_publisher-3]            ^^^^^^^^^^^^^^^
+[pedestrian_state_publisher-3]   File "/home/skbt2/ros2_depth_eval_ws/build/depth_eval_bringup/depth_eval_bringup/pedestrian_state_publisher.py", line 51, in on_timer
+[pedestrian_state_publisher-3]     self.publish_snapshot(snapshots)
+[pedestrian_state_publisher-3]   File "/home/skbt2/ros2_depth_eval_ws/build/depth_eval_bringup/depth_eval_bringup/pedestrian_state_publisher.py", line 178, in publish_snapshot
+[pedestrian_state_publisher-3]     self.pose_pub.publish(named_pose_array)
+[pedestrian_state_publisher-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/publisher.py", line 70, in publish
+[pedestrian_state_publisher-3]     self.__publisher.publish(msg)
+[pedestrian_state_publisher-3] rclpy._rclpy_pybind11.RCLError: Failed to publish: publisher's context is invalid, at ./src/rcl/publisher.c:423
+[uav_trajectory_controller-4] Traceback (most recent call last):
+[uav_trajectory_controller-4]   File "/home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/lib/depth_eval_bringup/uav_trajectory_controller", line 33, in <module>
+[uav_trajectory_controller-4]     sys.exit(load_entry_point('depth-eval-bringup', 'console_scripts', 'uav_trajectory_controller')())
+[uav_trajectory_controller-4]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[uav_trajectory_controller-4]   File "/home/skbt2/ros2_depth_eval_ws/build/depth_eval_bringup/depth_eval_bringup/uav_trajectory_controller.py", line 246, in main
+[uav_trajectory_controller-4]     rclpy.spin(node)
+[uav_trajectory_controller-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[uav_trajectory_controller-4]     executor.spin_once()
+[uav_trajectory_controller-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 923, in spin_once
+[uav_trajectory_controller-4]     self._spin_once_impl(timeout_sec)
+[uav_trajectory_controller-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+[uav_trajectory_controller-4]     raise handler.exception()
+[uav_trajectory_controller-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/task.py", line 286, in _execute_coroutine_step
+[uav_trajectory_controller-4]     result = coro.send(None)
+[uav_trajectory_controller-4]              ^^^^^^^^^^^^^^^
+[uav_trajectory_controller-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 592, in handler
+[uav_trajectory_controller-4]     await call_coroutine()
+[uav_trajectory_controller-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 454, in _execute
+[uav_trajectory_controller-4]     await await_or_execute(tmr.callback)
+[uav_trajectory_controller-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 115, in await_or_execute
+[uav_trajectory_controller-4]     return callback(*args)
+[uav_trajectory_controller-4]            ^^^^^^^^^^^^^^^
+[uav_trajectory_controller-4]   File "/home/skbt2/ros2_depth_eval_ws/build/depth_eval_bringup/depth_eval_bringup/uav_trajectory_controller.py", line 234, in on_timer
+[uav_trajectory_controller-4]     if not self.try_ros_pose(pose, velocity):
+[uav_trajectory_controller-4]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[uav_trajectory_controller-4]   File "/home/skbt2/ros2_depth_eval_ws/build/depth_eval_bringup/depth_eval_bringup/uav_trajectory_controller.py", line 126, in try_ros_pose
+[uav_trajectory_controller-4]     self.use_ros_service = self.active_pose_cli.wait_for_service(timeout_sec=0.01)
+[uav_trajectory_controller-4]                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[uav_trajectory_controller-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/client.py", line 191, in wait_for_service
+[uav_trajectory_controller-4]     return self.service_is_ready()
+[uav_trajectory_controller-4]            ^^^^^^^^^^^^^^^^^^^^^^^
+[uav_trajectory_controller-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/client.py", line 170, in service_is_ready
+[uav_trajectory_controller-4]     return self.__client.service_server_is_available()
+[uav_trajectory_controller-4]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[uav_trajectory_controller-4] rclpy._rclpy_pybind11.RCLError: failed to check service availability: rcl node's context is invalid, at ./src/rcl/node.c:404
+[ERROR] [image_pointcloud_relay-5]: process has died [pid 545, exit code 1, cmd '/home/skbt2/ros2_depth_eval_ws/install/lvdot_ros2_adapter/lib/lvdot_ros2_adapter/image_pointcloud_relay --ros-args'].
+[ERROR] [pedestrian_state_publisher-3]: process has died [pid 543, exit code 1, cmd '/home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/lib/depth_eval_bringup/pedestrian_state_publisher --ros-args --params-file /tmp/launch_params_edvpu561'].
+[ERROR] [uav_trajectory_controller-4]: process has died [pid 544, exit code 1, cmd '/home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/lib/depth_eval_bringup/uav_trajectory_controller --ros-args --params-file /tmp/launch_params_zmyeujql'].

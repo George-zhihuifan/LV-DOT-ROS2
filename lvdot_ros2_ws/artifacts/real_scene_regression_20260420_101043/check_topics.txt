@@ -1,0 +1,1 @@
+/home/skbt2/lvdot_ros2_ws/install/lvdot_bringup/lib/lvdot_bringup/run_real_scene_regression_suite.sh: line 56: /check_real_scene_topics.sh: No such file or directory

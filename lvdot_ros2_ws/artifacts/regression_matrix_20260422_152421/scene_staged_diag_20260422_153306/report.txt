@@ -1,0 +1,19 @@
+Scene Staged Diagnostics Report
+
+result: PASS
+failure_reason: none
+next_action: start_scene_behavior_review
+
+stages:
+  gazebo: PASS
+  bridge: PASS
+  sensors: PASS
+  uav_state: PASS
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_152421/scene_staged_diag_20260422_153306
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_152421/scene_staged_diag_20260422_153306/summary.txt
+  launch_log: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_152421/scene_staged_diag_20260422_153306/launch.log
+  node_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_152421/scene_staged_diag_20260422_153306/node_list.txt
+  topic_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_152421/scene_staged_diag_20260422_153306/topic_list.txt
+  service_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_152421/scene_staged_diag_20260422_153306/service_list.txt

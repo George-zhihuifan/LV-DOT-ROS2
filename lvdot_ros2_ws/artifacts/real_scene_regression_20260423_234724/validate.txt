@@ -1,0 +1,7 @@
+=== Regression Validation ===
+total_samples=30
+hit_count=1
+hit_min_count=8
+[FAIL] window hit count: 1 < 8
+failure_keys=window_hit_count_insufficient
+=== RESULT: FAIL ===

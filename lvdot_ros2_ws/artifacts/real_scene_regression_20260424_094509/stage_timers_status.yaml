@@ -1,0 +1,6 @@
+detection_tick_count: 229
+lidar_detection_tick_count: 229
+tracking_tick_count: 229
+classification_tick_count: 229
+vis_tick_count: 0
+---

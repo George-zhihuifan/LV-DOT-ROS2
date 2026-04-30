@@ -1,0 +1,13 @@
+result=FAIL
+failure_reason=dds_environment_restricted
+next_action=fix_desktop_dds_or_network_permissions
+artifact_dir=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_172523/scene_staged_diag_20260421_172615
+warmup_seconds=12
+stage_gazebo=FAIL
+stage_bridge=FAIL
+stage_sensors=FAIL
+stage_uav_state=FAIL
+launch_log=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_172523/scene_staged_diag_20260421_172615/launch.log
+node_list=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_172523/scene_staged_diag_20260421_172615/node_list.txt
+topic_list=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_172523/scene_staged_diag_20260421_172615/topic_list.txt
+service_list=/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_172523/scene_staged_diag_20260421_172615/service_list.txt

@@ -1,0 +1,14 @@
+=== input_health ===
+
+=== input_health_status ===
+
+=== stage_timers ===
+
+=== stage_timers_status ===
+
+=== pipeline_stats ===
+Failed to create publisher: rcl node's context is invalid, at ./src/rcl/node.c:404
+
+=== pipeline_stats_status ===
+
+=== dynamic_obstacles service type ===

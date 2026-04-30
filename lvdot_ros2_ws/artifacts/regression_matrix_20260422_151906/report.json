@@ -1,0 +1,37 @@
+{
+  "overall_result": "FAIL",
+  "next_action": "inspect_detector_and_scene_summaries",
+  "artifact_dir": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151906",
+  "detector": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151906/detector_only_regression_20260422_151907/summary.txt",
+    "validation": "PASS",
+    "failure_reason": "none"
+  },
+  "scene": {
+    "summary": "",
+    "validation": "UNKNOWN",
+    "failure_reason": "unknown",
+    "ready_wait_seconds": "unknown",
+    "enable_yolo": "unknown",
+    "launch_yolo_node": "unknown",
+    "validate_failure_keys": "unknown",
+    "sample_delta": "unknown",
+    "depth_delta": "unknown",
+    "color_delta": "unknown",
+    "lidar_delta": "unknown",
+    "yolo_delta": "unknown",
+    "detection_tick_delta": "unknown",
+    "tracking_tick_delta": "unknown",
+    "dynamic_delta": "unknown"
+  },
+  "scene_diagnostics": {
+    "summary": "",
+    "result": "SKIPPED",
+    "failure_reason": "skipped"
+  },
+  "scene_staged": {
+    "summary": "",
+    "result": "SKIPPED",
+    "failure_reason": "skipped"
+  }
+}

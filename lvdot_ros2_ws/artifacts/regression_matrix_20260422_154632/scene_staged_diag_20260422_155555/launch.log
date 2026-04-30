@@ -1,0 +1,28 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-22-15-55-56-805013-DESKTOP-90MQDL6-587359
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [587363]
+[INFO] [parameter_bridge-2]: process started with pid [587364]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [587365]
+[INFO] [uav_trajectory_controller-4]: process started with pid [587366]
+[INFO] [image_pointcloud_relay-5]: process started with pid [587367]
+[parameter_bridge-2] [INFO] [1776844557.211455637] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.223495869] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/rgbd_camera/image (sensor_msgs/msg/Image) -> /rgbd_camera/image (gz.msgs.Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.227606232] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.235300338] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo) -> /rgbd_camera/camera_info (gz.msgs.CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.236676373] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.246962286] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/rgbd_camera/depth_image (sensor_msgs/msg/Image) -> /rgbd_camera/depth_image (gz.msgs.Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.249372638] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.254551915] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/rgbd_camera/points (sensor_msgs/msg/PointCloud2) -> /rgbd_camera/points (gz.msgs.PointCloudPacked)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.257668175] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.261492016] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/camera/imu (sensor_msgs/msg/Imu) -> /camera/imu (gz.msgs.IMU)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776844557.265847111] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776844557.270346107] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[gazebo-1] [INFO] [1776844559.774939015] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[parameter_bridge-2] [INFO] [1776844559.968442977] [ros_gz_bridge]: Passing message from ROS sensor_msgs/msg/Image to Gazebo gz.msgs.Image (showing msg only once per type)
+[parameter_bridge-2] [INFO] [1776844560.249229897] [ros_gz_bridge]: Passing message from ROS sensor_msgs/msg/PointCloud2 to Gazebo gz.msgs.PointCloudPacked (showing msg only once per type)
+[parameter_bridge-2] [INFO] [1776844560.792725252] [ros_gz_bridge]: Passing message from ROS sensor_msgs/msg/CameraInfo to Gazebo gz.msgs.CameraInfo (showing msg only once per type)
+[uav_trajectory_controller-4] [WARN] [1776844561.862344766] [uav_trajectory_controller]: SetEntityPose request timed out after 0.63s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776844561.863988891] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.
+[uav_trajectory_controller-4] [WARN] [1776844571.429854787] [uav_trajectory_controller]: SetEntityPose request timed out after 0.50s on /world/pedestrian_prototype/set_pose; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776844573.213691120] [uav_trajectory_controller]: SetEntityPose request timed out after 0.65s on /world/pedestrian_prototype/set_pose; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776844576.178508796] [uav_trajectory_controller]: SetEntityPose request timed out after 0.50s on /world/pedestrian_prototype/set_pose; dropping the pending request and retrying.

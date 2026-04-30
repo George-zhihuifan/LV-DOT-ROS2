@@ -1,0 +1,6 @@
+roi_depth_m,gt_depth_m,center_valid,foreground_support,foreground_purity
+2.42,2.50,1,1,1
+2.48,2.50,1,1,1
+4.83,5.00,1,1,1
+7.92,8.00,1,0.8,0.9
+11.99,8.00,0,0.2,0.3

@@ -1,0 +1,11 @@
+depth_count: 0
+color_count: 0
+lidar_count: 0
+pose_count: 0
+odom_count: 0
+yolo_count: 0
+depth_pose_sync_count: 0
+lidar_pose_sync_count: 0
+depth_odom_sync_count: 0
+lidar_odom_sync_count: 0
+---

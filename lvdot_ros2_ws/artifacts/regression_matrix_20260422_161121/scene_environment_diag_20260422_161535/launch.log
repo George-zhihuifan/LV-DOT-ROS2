@@ -1,0 +1,25 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-22-16-15-36-288080-DESKTOP-90MQDL6-605631
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [605635]
+[INFO] [parameter_bridge-2]: process started with pid [605636]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [605637]
+[INFO] [uav_trajectory_controller-4]: process started with pid [605638]
+[INFO] [image_pointcloud_relay-5]: process started with pid [605639]
+[parameter_bridge-2] [INFO] [1776845736.590132721] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.596244808] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/rgbd_camera/image (sensor_msgs/msg/Image) -> /rgbd_camera/image (gz.msgs.Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.598999085] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.601485349] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo) -> /rgbd_camera/camera_info (gz.msgs.CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.604738314] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.605707210] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/rgbd_camera/depth_image (sensor_msgs/msg/Image) -> /rgbd_camera/depth_image (gz.msgs.Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.607821337] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.612825338] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/rgbd_camera/points (sensor_msgs/msg/PointCloud2) -> /rgbd_camera/points (gz.msgs.PointCloudPacked)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.616549179] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.621912139] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/camera/imu (sensor_msgs/msg/Imu) -> /camera/imu (gz.msgs.IMU)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776845736.626094170] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776845736.630370416] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776845736.746171493] [ros_gz_bridge]: Passing message from ROS sensor_msgs/msg/CameraInfo to Gazebo gz.msgs.CameraInfo (showing msg only once per type)
+[parameter_bridge-2] [INFO] [1776845736.838748549] [ros_gz_bridge]: Passing message from ROS sensor_msgs/msg/Image to Gazebo gz.msgs.Image (showing msg only once per type)
+[parameter_bridge-2] [INFO] [1776845736.997606531] [ros_gz_bridge]: Passing message from ROS sensor_msgs/msg/PointCloud2 to Gazebo gz.msgs.PointCloudPacked (showing msg only once per type)
+[gazebo-1] [INFO] [1776845737.923061301] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[uav_trajectory_controller-4] [WARN] [1776845744.093952431] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776845744.095050357] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.

@@ -1,0 +1,214 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-20-10-23-49-376160-DESKTOP-90MQDL6-56
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [62]
+[INFO] [parameter_bridge-2]: process started with pid [63]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [64]
+[INFO] [uav_trajectory_controller-4]: process started with pid [65]
+[INFO] [image_pointcloud_relay-5]: process started with pid [66]
+[INFO] [lvdot_detector_main-6]: process started with pid [67]
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] [37;1m2026-04-20 10:23:49.632 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[parameter_bridge-2] [37;1m2026-04-20 10:23:49.633 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] getifaddrs: Operation not permitted
+[parameter_bridge-2] error in getifaddrs: Unknown error -1
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] [37;1m2026-04-20 10:23:49.829 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[lvdot_detector_main-6] [37;1m2026-04-20 10:23:49.831 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] [INFO] [1776651829.896237712] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.20, 12.00] stage_timers=true
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[gazebo-1] error in getifaddrs: Unknown error -1
+[ERROR] [gazebo-1]: process has died [pid 62, exit code 255, cmd 'gz sim -s -r /home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/share/depth_eval_bringup/worlds/pedestrian_prototype.sdf'].
+[INFO] [launch]: process[gazebo-1] was required: shutting down launched system
+[INFO] [lvdot_detector_main-6]: sending signal 'SIGINT' to process[lvdot_detector_main-6]
+[INFO] [image_pointcloud_relay-5]: sending signal 'SIGINT' to process[image_pointcloud_relay-5]
+[INFO] [uav_trajectory_controller-4]: sending signal 'SIGINT' to process[uav_trajectory_controller-4]
+[INFO] [pedestrian_state_publisher-3]: sending signal 'SIGINT' to process[pedestrian_state_publisher-3]
+[INFO] [parameter_bridge-2]: sending signal 'SIGINT' to process[parameter_bridge-2]
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] [INFO] [1776651829.947391202] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[lvdot_detector_main-6] getifaddrs: Operation not permitted
+[lvdot_detector_main-6] terminate called after throwing an instance of 'rclcpp::exceptions::RCLError'
+[lvdot_detector_main-6]   what():  could not create publisher: rcl node's context is invalid, at ./src/rcl/node.c:404
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] [37;1m2026-04-20 10:23:50.379 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[image_pointcloud_relay-5] [37;1m2026-04-20 10:23:50.380 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] [37;1m2026-04-20 10:23:50.433 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[pedestrian_state_publisher-3] [37;1m2026-04-20 10:23:50.433 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] [37;1m2026-04-20 10:23:50.490 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[uav_trajectory_controller-4] [37;1m2026-04-20 10:23:50.495 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[ERROR] [parameter_bridge-2]: process has died [pid 63, exit code -11, cmd '/opt/ros/jazzy/lib/ros_gz_bridge/parameter_bridge /rgbd_camera/image@sensor_msgs/msg/Image[gz.msgs.Image /rgbd_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo /rgbd_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image /rgbd_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked /camera/imu@sensor_msgs/msg/Imu[gz.msgs.IMU /world/pedestrian_prototype/set_pose@ros_gz_interfaces/srv/SetEntityPose /world/pedestrian_prototype/set_pose/blocking@ros_gz_interfaces/srv/SetEntityPose --ros-args'].
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[image_pointcloud_relay-5] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] getifaddrs: Operation not permitted
+[pedestrian_state_publisher-3] getifaddrs: Operation not permitted
+[uav_trajectory_controller-4] [WARN] [1776651831.228714438] [uav_trajectory_controller]: SetEntityPose service /world/pedestrian_prototype/set_pose/blocking is unavailable; UAV state publication is paused until Gazebo pose control is reachable.
+[ERROR] [lvdot_detector_main-6]: process has died [pid 67, exit code -6, cmd '/home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main --ros-args -r __node:=lvdot_detector_node --params-file /home/skbt2/lvdot_ros2_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param.yaml --params-file /tmp/launch_params_ix9eu2z8'].

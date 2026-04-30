@@ -1,0 +1,27 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-22-15-08-46-159567-DESKTOP-90MQDL6-529856
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [529893]
+[INFO] [parameter_bridge-2]: process started with pid [529894]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [529895]
+[INFO] [uav_trajectory_controller-4]: process started with pid [529896]
+[INFO] [image_pointcloud_relay-5]: process started with pid [529897]
+[INFO] [lvdot_yolo_node-6]: process started with pid [529898]
+[INFO] [lvdot_detector_main-7]: process started with pid [529899]
+[parameter_bridge-2] [INFO] [1776841726.472734350] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776841726.477899235] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776841726.479719780] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776841726.480595912] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776841726.481467539] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776841726.482560126] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776841726.484114658] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[lvdot_detector_main-7] [INFO] [1776841726.627390958] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.20, 12.00] stage_timers=true
+[lvdot_detector_main-7] [INFO] [1776841727.041611552] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/camera/depth/image_rect_raw color=/camera/color/image_raw lidar=/pointcloud pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[gazebo-1] [INFO] [1776841727.642252410] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[uav_trajectory_controller-4] [WARN] [1776841728.096497323] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776841728.097243902] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.
+[lvdot_detector_main-7] [INFO] [1776841729.038817965] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=3 odom=3 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-7] [INFO] [1776841729.038914779] [lvdot_detector_node]: Stage timers: detection=60 lidar_detection=60 tracking=60 classification=60 vis=60
+[lvdot_detector_main-7] [INFO] [1776841729.038929396] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-7] [INFO] [1776841899.086407551] [lvdot_detector_node]: Input health: depth=3 color=4 lidar=1 pose=20 odom=20 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-7] [INFO] [1776841899.086521542] [lvdot_detector_node]: Stage timers: detection=121 lidar_detection=121 tracking=121 classification=121 vis=121
+[lvdot_detector_main-7] [INFO] [1776841899.086534621] [lvdot_detector_node]: Pipeline stats: depth_samples=105/71300 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=25798/154785 uv=0 db=1 lidar=5 fused=5 filtered=5 tracks=5 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=5->0 (5 outputs) fusion_components=5 visual_only=0 lidar_only=5 fixed_size=0 size_reject=0

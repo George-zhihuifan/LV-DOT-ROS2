@@ -1,0 +1,34 @@
+=== input_health ===
+data: depth=214 color=214 lidar=15 pose=226 odom=226 yolo=211 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+---
+
+=== input_health_status ===
+depth_count: 216
+color_count: 216
+lidar_count: 15
+pose_count: 228
+odom_count: 228
+yolo_count: 213
+depth_pose_sync_count: 0
+lidar_pose_sync_count: 0
+depth_odom_sync_count: 0
+lidar_odom_sync_count: 0
+---
+
+=== stage_timers ===
+data: detection=285 lidar_detection=285 tracking=285 classification=285 vis=0 det_phase=idle lidar_phase=waiting_new_lidar track_phase...
+---
+
+=== stage_timers_status ===
+detection_tick_count: 289
+lidar_detection_tick_count: 289
+tracking_tick_count: 289
+classification_tick_count: 289
+vis_tick_count: 0
+---
+
+=== pipeline_stats ===
+
+=== pipeline_stats_status ===
+
+=== dynamic_obstacles service type ===

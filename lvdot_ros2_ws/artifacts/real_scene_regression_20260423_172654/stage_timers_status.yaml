@@ -1,0 +1,6 @@
+detection_tick_count: 779
+lidar_detection_tick_count: 700
+tracking_tick_count: 3396
+classification_tick_count: 2156
+vis_tick_count: 3393
+---

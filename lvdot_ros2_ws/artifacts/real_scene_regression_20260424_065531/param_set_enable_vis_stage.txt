@@ -1,0 +1,1 @@
+Failed to create publisher: rcl node's context is invalid, at ./src/rcl/node.c:404

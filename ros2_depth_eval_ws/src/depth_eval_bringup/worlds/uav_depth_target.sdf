@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<sdf version="1.10">
+  <world name="uav_depth_target">
+    <gravity>0 0 -9.8</gravity>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1.0</diffuse>
+      <specular>0.2 0.2 0.2 1.0</specular>
+      <direction>-0.35 0.15 -0.92</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>30 30</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>30 30</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.28 0.30 0.32 1</ambient>
+            <diffuse>0.32 0.34 0.36 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="depth_target_panel">
+      <static>true</static>
+      <pose>5.0 0.0 1.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.10 4.00 3.00</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.10 4.00 3.00</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.82 0.82 0.84 1</ambient>
+            <diffuse>0.92 0.92 0.94 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <include>
+      <uri>model://uav_d435i_platform</uri>
+      <name>uav_main</name>
+      <pose>3.21 0.0 1.0 0 0 0</pose>
+    </include>
+  </world>
+</sdf>

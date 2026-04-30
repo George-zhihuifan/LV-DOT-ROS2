@@ -1,0 +1,32 @@
+LV-DOT ROS2 Regression Matrix Report
+
+overall_result: ENVIRONMENT_RESTRICTED
+next_action: dds_environment_restricted
+
+detector_only:
+  validation: PASS
+  failure_reason: none
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_153619/detector_only_regression_20260421_153620/summary.txt
+
+scene_regression:
+  validation: FAIL
+  failure_reason: dds_environment_restricted
+  ready_wait_seconds: 5
+  enable_yolo: true
+  launch_yolo_node: true
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_153619/real_scene_regression_20260421_153808/summary.txt
+
+scene_diagnostics:
+  result: FAIL
+  failure_reason: dds_environment_restricted
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_153619/scene_environment_diag_20260421_153833/summary.txt
+
+scene_staged:
+  result: FAIL
+  failure_reason: dds_environment_restricted
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_153619/scene_staged_diag_20260421_153848/summary.txt
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_153619
+  matrix_summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_153619/summary.txt
+  matrix_report: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_153619/report.txt

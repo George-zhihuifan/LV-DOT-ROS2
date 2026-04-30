@@ -1,0 +1,19 @@
+=== input_health ===
+
+=== input_health_status ===
+
+=== stage_timers ===
+
+=== stage_timers_status ===
+detection_tick_count: 278
+lidar_detection_tick_count: 8586
+tracking_tick_count: 10798
+classification_tick_count: 10820
+vis_tick_count: 6137
+---
+
+=== pipeline_stats ===
+
+=== pipeline_stats_status ===
+
+=== dynamic_obstacles service type ===

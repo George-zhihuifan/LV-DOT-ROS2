@@ -1,0 +1,14 @@
+[PASS] command: ros2
+[PASS] command: gz
+[PASS] file: /home/skbt2/ros2_depth_eval_ws/install/setup.bash
+[PASS] file: /home/skbt2/lvdot_ros2_ws/install/setup.bash
+[PASS] file: /home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/share/depth_eval_bringup/worlds/pedestrian_prototype.sdf
+[FAIL] ros2_cli_runtime: 
+[FAIL] detector_launch_smoke_test
+--- stdout ---
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-24-10-38-28-254745-DESKTOP-90MQDL6-4447
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [lvdot_detector_main-1]: process started with pid [4467]
+--- stderr ---
+[PASS] gazebo_smoke_test
+=== RESULT: FAIL ===

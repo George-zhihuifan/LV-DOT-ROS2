@@ -1,0 +1,48 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Enabled: true
+      Name: Grid
+      Plane: XY
+      Plane Cell Count: 80
+      Cell Size: 1
+      Color: 160; 160; 160
+      Alpha: 0.35
+      Reference Frame: <Fixed Frame>
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: true
+      Name: Raw LiDAR Point Cloud
+      Topic:
+        Value: /onboard_detector/raw_lidar_point_cloud
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 1
+      Color Transformer: FlatColor
+      Color: 255; 255; 255
+      Style: Points
+      Size (Pixels): 2
+      Queue Size: 2
+      Use Fixed Frame: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: LiDAR BBoxes
+      Topic:
+        Value: /onboard_detector/lidar_bboxes
+      Queue Size: 100
+  Enabled: true
+  Global Options:
+    Fixed Frame: map
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+      Line color: 128; 128; 0
+  Value: true

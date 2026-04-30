@@ -1,0 +1,11 @@
+depth_count: 751
+color_count: 654
+lidar_count: 675
+pose_count: 1024
+odom_count: 1024
+yolo_count: 238
+depth_pose_sync_count: 0
+lidar_pose_sync_count: 0
+depth_odom_sync_count: 0
+lidar_odom_sync_count: 0
+---

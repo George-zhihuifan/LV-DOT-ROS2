@@ -1,0 +1,54 @@
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+[37;1m2026-04-23 17:26:18.880 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[37;1m2026-04-23 17:26:18.880 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+/camera/color/image_raw
+/camera/depth/image_rect_raw
+/mavros/local_position/odom
+/mavros/local_position/pose
+/onboard_detector/dbscan_bboxes
+/onboard_detector/detected_color_image
+/onboard_detector/detected_depth_map
+/onboard_detector/detected_u_depth_map
+/onboard_detector/downsampled_point_cloud
+/onboard_detector/dynamic_bboxes
+/onboard_detector/dynamic_point_cloud
+/onboard_detector/filtered_bboxes
+/onboard_detector/filtered_before_yolo_bboxes
+/onboard_detector/filtered_depth_cloud
+/onboard_detector/filtered_point_cloud
+/onboard_detector/history_trajectories
+/onboard_detector/input_health
+/onboard_detector/input_health_status
+/onboard_detector/lidar_bboxes
+/onboard_detector/lidar_clusters
+/onboard_detector/pipeline_stats
+/onboard_detector/pipeline_stats_status
+/onboard_detector/raw_dynamic_point_cloud
+/onboard_detector/raw_lidar_point_cloud
+/onboard_detector/stage_timers
+/onboard_detector/stage_timers_status
+/onboard_detector/tracked_bboxes
+/onboard_detector/u_depth_bird_view
+/onboard_detector/uv_bboxes
+/onboard_detector/velocity_visualizaton
+/onboard_detector/visual_bboxes
+/parameter_events
+/pointcloud
+/rosout
+/yolo_detector/detected_bounding_boxes

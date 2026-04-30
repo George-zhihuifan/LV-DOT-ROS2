@@ -1,0 +1,5 @@
+run_id,artifact_dir,execution_status,validation,failure_reason,hit_count,window_service_position_count,service_timeout_count,runtime_crash,sigsegv,log_path
+1,/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_110410,completed,FAIL,validation_failed,1,0,26,false,false,/home/skbt2/lvdot_ros2_ws/artifacts/t5_run_1_20260424_110409.log
+2,/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_111024,completed,FAIL,validation_failed,0,0,14,false,false,/home/skbt2/lvdot_ros2_ws/artifacts/t5_run_2_20260424_111023.log
+3,/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_111636,completed,FAIL,validation_failed,0,0,25,false,false,/home/skbt2/lvdot_ros2_ws/artifacts/t5_run_3_20260424_111634.log
+4,/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_112351,completed,FAIL,validation_failed,0,1,12,false,false,/home/skbt2/lvdot_ros2_ws/artifacts/t5_run_4_20260424_112347.log

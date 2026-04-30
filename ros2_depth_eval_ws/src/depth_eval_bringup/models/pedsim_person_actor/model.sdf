@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<sdf version="1.10">
+  <actor name="pedsim_person_actor">
+    <pose>0 0 0 0 0 0</pose>
+    <skin>
+      <filename>model://pedsim_person_actor/meshes/walk.dae</filename>
+      <scale>1.0</scale>
+    </skin>
+    <animation name="walking">
+      <filename>model://pedsim_person_actor/meshes/walk.dae</filename>
+      <scale>1.0</scale>
+      <interpolate_x>true</interpolate_x>
+    </animation>
+  </actor>
+</sdf>

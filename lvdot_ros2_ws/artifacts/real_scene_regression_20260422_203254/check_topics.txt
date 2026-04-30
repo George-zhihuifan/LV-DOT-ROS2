@@ -1,0 +1,21 @@
+=== input_health ===
+data: depth=120 color=269 lidar=1 pose=3684 odom=3684 yolo=89 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+---
+
+=== input_health_status ===
+
+=== stage_timers ===
+
+=== stage_timers_status ===
+detection_tick_count: 325
+lidar_detection_tick_count: 3164
+tracking_tick_count: 3298
+classification_tick_count: 3299
+vis_tick_count: 3154
+---
+
+=== pipeline_stats ===
+
+=== pipeline_stats_status ===
+
+=== dynamic_obstacles service type ===

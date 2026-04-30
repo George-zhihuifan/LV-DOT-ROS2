@@ -1,0 +1,25 @@
+=== input_health ===
+WARNING: topic [/onboard_detector/input_health] does not appear to be published yet
+Could not determine the type for the passed topic
+
+=== input_health_status ===
+WARNING: topic [/onboard_detector/input_health_status] does not appear to be published yet
+Could not determine the type for the passed topic
+
+=== stage_timers ===
+WARNING: topic [/onboard_detector/stage_timers] does not appear to be published yet
+Could not determine the type for the passed topic
+
+=== stage_timers_status ===
+WARNING: topic [/onboard_detector/stage_timers_status] does not appear to be published yet
+Could not determine the type for the passed topic
+
+=== pipeline_stats ===
+WARNING: topic [/onboard_detector/pipeline_stats] does not appear to be published yet
+Could not determine the type for the passed topic
+
+=== pipeline_stats_status ===
+WARNING: topic [/onboard_detector/pipeline_stats_status] does not appear to be published yet
+Could not determine the type for the passed topic
+
+=== dynamic_obstacles service type ===

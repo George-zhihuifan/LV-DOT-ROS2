@@ -1,0 +1,2 @@
+ready_result=launch_exited_early
+ready_wait_seconds=70

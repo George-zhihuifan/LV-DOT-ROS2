@@ -1,0 +1,2 @@
+samples,sample_stride,warmup_sec,duration_sec,finite_ratio,positive_ratio,valid_ratio,center50_valid_ratio,center25_valid_ratio,saturation_ratio,min_depth_m,p10_depth_m,p50_depth_m,p90_depth_m,max_depth_m
+18,10,1.0,10.0,0.5018252676504631,0.5018252676504631,0.5018252676504631,0.4954962384259259,0.4871469907407407,0.0,1.380416989326477,1.5313973824183147,2.765790787008074,6.517420501179166,11.619826740688747

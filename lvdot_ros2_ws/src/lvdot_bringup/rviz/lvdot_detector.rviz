@@ -1,0 +1,226 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Enabled: true
+      Name: Grid
+      Plane: XY
+      Plane Cell Count: 80
+      Cell Size: 1
+      Color: 160; 160; 160
+      Alpha: 0.35
+      Reference Frame: <Fixed Frame>
+    - Class: rviz_default_plugins/Pose
+      Enabled: true
+      Name: Robot Pose
+      Topic:
+        Value: /mavros/local_position/pose
+      Shape: Arrow
+      Color: 255; 25; 0
+      Queue Size: 10
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: UV BBoxes
+      Marker Topic: /onboard_detector/uv_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: DB BBoxes
+      Marker Topic: /onboard_detector/dbscan_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: Visual BBoxes
+      Marker Topic: /onboard_detector/visual_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: LiDAR BBoxes
+      Marker Topic: /onboard_detector/lidar_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: Filtered BBoxes Before YOLO
+      Marker Topic: /onboard_detector/filtered_before_yolo_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Filtered BBoxes
+      Marker Topic: /onboard_detector/filtered_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Tracked BBoxes
+      Marker Topic: /onboard_detector/tracked_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: Dynamic BBoxes
+      Marker Topic: /onboard_detector/dynamic_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: Velocity
+      Marker Topic: /onboard_detector/velocity_visualizaton
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: History Trajectory
+      Marker Topic: /onboard_detector/history_trajectories
+      Queue Size: 100
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: true
+      Name: Filtered Point Cloud
+      Topic:
+        Value: /onboard_detector/filtered_point_cloud
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 1
+      Color Transformer: FlatColor
+      Color: 180; 220; 255
+      Style: Points
+      Size (Pixels): 1
+      Queue Size: 2
+      Use Fixed Frame: true
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: true
+      Name: Dynamic Point Cloud
+      Topic:
+        Value: /onboard_detector/dynamic_point_cloud
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 1
+      Color Transformer: RGB8
+      Style: Points
+      Size (Pixels): 4
+      Queue Size: 2
+      Use Fixed Frame: true
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: false
+      Name: Raw Dynamic Point Cloud
+      Topic:
+        Value: /onboard_detector/raw_dynamic_point_cloud
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 1
+      Color Transformer: AxisColor
+      Axis: Z
+      Style: Points
+      Size (Pixels): 2
+      Queue Size: 2
+      Use Fixed Frame: true
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: true
+      Name: Raw LiDAR Point Cloud
+      Topic:
+        Value: /onboard_detector/raw_lidar_point_cloud
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 1
+      Color Transformer: FlatColor
+      Color: 255; 255; 255
+      Style: Points
+      Size (Pixels): 3
+      Queue Size: 2
+      Use Fixed Frame: true
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: false
+      Name: LiDAR Clusters
+      Topic:
+        Value: /onboard_detector/lidar_clusters
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 5
+      Color Transformer: RGB8
+      Style: Flat Squares
+      Size (Pixels): 3
+      Queue Size: 10
+      Use Fixed Frame: true
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: false
+      Name: Downsampled Point Cloud
+      Topic:
+        Value: /onboard_detector/downsampled_point_cloud
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 5
+      Color Transformer: AxisColor
+      Axis: Z
+      Style: Flat Squares
+      Size (Pixels): 2
+      Queue Size: 10
+      Use Fixed Frame: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Name: Detected RGB Image
+      Topic:
+        Value: /yolo_detector/detected_image
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 1
+      Queue Size: 1
+      Normalize Range: true
+    - Class: rviz_default_plugins/Image
+      Enabled: false
+      Name: Detected Depth Map
+      Topic:
+        Value: /onboard_detector/detected_depth_map
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 1
+      Queue Size: 1
+      Normalize Range: true
+    - Class: rviz_default_plugins/Image
+      Enabled: false
+      Name: U Depth Map
+      Topic:
+        Value: /onboard_detector/detected_u_depth_map
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 1
+      Queue Size: 1
+      Normalize Range: true
+  Enabled: true
+  Global Options:
+    Fixed Frame: map
+    Background Color: 48; 48; 48
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+    - Class: rviz_default_plugins/SetInitialPose
+      Topic:
+        Value: /initialpose
+    - Class: rviz_default_plugins/SetGoal
+      Topic:
+        Value: /goal_pose
+    - Class: rviz_default_plugins/PublishPoint
+      Topic:
+        Value: /clicked_point
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 27
+      Focal Point:
+        X: 8
+        Y: 0
+        Z: 1
+      Pitch: 0.75
+      Yaw: 4.7
+Window Geometry:
+  Height: 960
+  Width: 1600

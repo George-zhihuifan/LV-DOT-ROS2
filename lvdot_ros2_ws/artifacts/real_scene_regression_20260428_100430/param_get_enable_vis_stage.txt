@@ -1,0 +1,1 @@
+Failed to publish: publisher's context is invalid, at ./src/rcl/publisher.c:423

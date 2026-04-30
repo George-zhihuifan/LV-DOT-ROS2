@@ -1,0 +1,28 @@
+{
+  "overall_result": "FAIL",
+  "next_action": "inspect_detector_and_scene_summaries",
+  "artifact_dir": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_190845",
+  "detector": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_190845/detector_only_regression_20260421_190846/summary.txt",
+    "validation": "PASS",
+    "failure_reason": "none"
+  },
+  "scene": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_190845/real_scene_regression_20260421_190902/summary.txt",
+    "validation": "FAIL",
+    "failure_reason": "ready_timeout",
+    "ready_wait_seconds": "180",
+    "enable_yolo": "true",
+    "launch_yolo_node": "true"
+  },
+  "scene_diagnostics": {
+    "summary": "",
+    "result": "SKIPPED",
+    "failure_reason": "skipped"
+  },
+  "scene_staged": {
+    "summary": "",
+    "result": "SKIPPED",
+    "failure_reason": "skipped"
+  }
+}

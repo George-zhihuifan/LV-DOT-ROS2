@@ -1,0 +1,17 @@
+[suite] artifact_dir=/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_105447
+[suite] running preflight
+[suite] launching scene + detector
+[suite] waiting for detector readiness (timeout=900s, poll=5s, min_uptime=20s)
+[suite] detector ready after 30s
+[suite] applying runtime stability overrides
+[suite] capturing baseline counters
+[suite] collecting window series (window=30s, hz=1)
+[suite] sampling for 60s
+[suite] capturing post-sample counters
+[suite] checking topics
+[suite] capturing service response
+[suite] validating regression
+[suite] capturing structured status
+[suite] writing summary
+[suite] validation=FAIL
+[suite] summary=/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_105447/summary.txt

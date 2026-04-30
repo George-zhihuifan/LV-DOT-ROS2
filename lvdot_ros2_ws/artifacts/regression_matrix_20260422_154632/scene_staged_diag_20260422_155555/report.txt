@@ -1,0 +1,19 @@
+Scene Staged Diagnostics Report
+
+result: FAIL
+failure_reason: bridge_failed
+next_action: inspect_parameter_bridge_arguments_and_ros_gz_install
+
+stages:
+  gazebo: PASS
+  bridge: FAIL
+  sensors: FAIL
+  uav_state: FAIL
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_154632/scene_staged_diag_20260422_155555
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_154632/scene_staged_diag_20260422_155555/summary.txt
+  launch_log: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_154632/scene_staged_diag_20260422_155555/launch.log
+  node_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_154632/scene_staged_diag_20260422_155555/node_list.txt
+  topic_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_154632/scene_staged_diag_20260422_155555/topic_list.txt
+  service_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_154632/scene_staged_diag_20260422_155555/service_list.txt

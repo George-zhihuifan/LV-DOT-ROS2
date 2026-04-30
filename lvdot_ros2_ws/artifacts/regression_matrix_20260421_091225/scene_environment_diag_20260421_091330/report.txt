@@ -1,0 +1,19 @@
+Scene Environment Diagnostics Report
+
+result: FAIL
+failure_reason: dds_environment_restricted
+next_action: fix_desktop_dds_or_network_permissions
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/summary.txt
+  launch_log: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/launch.log
+  node_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/node_list.txt
+  topic_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/topic_list.txt
+  service_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/service_list.txt
+  camera_info: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/camera_info.txt
+  depth_image: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/depth_image.txt
+  color_image: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/color_image.txt
+  pointcloud: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/pointcloud.txt
+  pose: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/pose.txt
+  odom: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/odom.txt

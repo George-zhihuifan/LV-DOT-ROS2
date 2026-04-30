@@ -1,0 +1,9 @@
+=== Regression Validation ===
+total_samples=30
+hit_count=5
+hit_min_count=8
+[FAIL] window hit count: 5 < 8
+[PASS] service_response.position: non-empty
+[PASS] yolo_count: 210
+failure_keys=window_hit_count_insufficient
+=== RESULT: FAIL ===

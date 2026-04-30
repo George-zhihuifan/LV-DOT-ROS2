@@ -1,0 +1,14 @@
+ready_result=ready
+ready_wait_seconds=30
+ready_min_uptime_seconds=20
+ready_stable_uptime_seconds=24
+enable_yolo=true
+launch_yolo_node=true
+use_all_classes=false
+enable_color_fallback=false
+enable_vis_stage=false
+executor_threads=1
+yolo_conf_threshold=0.25
+yolo_inference_hz=10.0
+executor_threads_applied=false
+enable_vis_stage_applied=false

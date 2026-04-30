@@ -1,0 +1,10 @@
+validation=FAIL
+failure_reason=expected_topics_or_service_missing
+artifact_dir=/home/skbt2/lvdot_ros2_ws/artifacts/detector_only_regression_20260420_110003
+warmup_seconds=6
+launch_log=/home/skbt2/lvdot_ros2_ws/artifacts/detector_only_regression_20260420_110003/launch.log
+topics=/home/skbt2/lvdot_ros2_ws/artifacts/detector_only_regression_20260420_110003/topics.txt
+services=/home/skbt2/lvdot_ros2_ws/artifacts/detector_only_regression_20260420_110003/services.txt
+input_health_status=/home/skbt2/lvdot_ros2_ws/artifacts/detector_only_regression_20260420_110003/input_health_status.yaml
+stage_timers_status=/home/skbt2/lvdot_ros2_ws/artifacts/detector_only_regression_20260420_110003/stage_timers_status.yaml
+pipeline_stats_status=/home/skbt2/lvdot_ros2_ws/artifacts/detector_only_regression_20260420_110003/pipeline_stats_status.yaml

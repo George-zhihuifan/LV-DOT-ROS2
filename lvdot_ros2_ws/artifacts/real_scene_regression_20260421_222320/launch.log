@@ -1,0 +1,55 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-21-22-23-31-708780-DESKTOP-90MQDL6-142529
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [142553]
+[INFO] [parameter_bridge-2]: process started with pid [142555]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [142559]
+[INFO] [uav_trajectory_controller-4]: process started with pid [142561]
+[INFO] [image_pointcloud_relay-5]: process started with pid [142564]
+[INFO] [lvdot_yolo_node-6]: process started with pid [142568]
+[INFO] [lvdot_detector_main-7]: process started with pid [142569]
+[parameter_bridge-2] [INFO] [1776781412.038129076] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776781412.046068218] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776781412.049265659] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776781412.050797558] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776781412.053996459] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776781412.057097535] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776781412.060191604] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[lvdot_detector_main-7] [INFO] [1776781412.246130645] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.20, 12.00] stage_timers=true
+[lvdot_detector_main-7] [INFO] [1776781412.401284352] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/camera/depth/image_rect_raw color=/camera/color/image_raw lidar=/pointcloud pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[gazebo-1] [INFO] [1776781413.502169625] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[lvdot_detector_main-7] 
+[lvdot_detector_main-7] === FATAL SIGNAL 11 received, backtrace (depth=19) ===
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(+0xa01f01)[0x5e5230bd2f01]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(+0x45330)[0x7b1d48c45330]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(+0xc1f141)[0x5e5230df0141]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN10lvdot_ros221build_detection_inputERKNS_17LVdotRuntimeStateERKNS_19LVdotDetectorConfigE+0x6d)[0x5e5230df2345]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN10lvdot_ros217LVdotDetectorNode18on_detection_timerEv+0x25d)[0x5e5230be671d]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZSt13__invoke_implIvRMN10lvdot_ros217LVdotDetectorNodeEFvvERPS1_JEET_St21__invoke_memfun_derefOT0_OT1_DpOT2_+0x6a)[0x5e5230ddc126]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZSt8__invokeIRMN10lvdot_ros217LVdotDetectorNodeEFvvEJRPS1_EENSt15__invoke_resultIT_JDpT0_EE4typeEOS8_DpOS9_+0x3b)[0x5e5230dcf64b]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS1_EE6__callIvJEJLm0EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE+0x5b)[0x5e5230dbc71f]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS1_EEclIJEvEET0_DpOT_+0x37)[0x5e5230d95b79]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN6rclcpp12GenericTimerISt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS3_EELPv0EE25execute_callback_delegateIS8_LS9_0EEEvRK21rcl_timer_call_info_s+0x24)[0x5e5230d882c6]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN6rclcpp12GenericTimerISt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS3_EELPv0EE16execute_callbackERKSt10shared_ptrIvE+0x47)[0x5e5230d6f083]
+[lvdot_detector_main-7] /opt/ros/jazzy/lib/librclcpp.so(_ZN6rclcpp8Executor22execute_any_executableERNS_13AnyExecutableE+0x81)[0x7b1d49f09291]
+[lvdot_detector_main-7] /opt/ros/jazzy/lib/librclcpp.so(_ZN6rclcpp9executors22SingleThreadedExecutor4spinEv+0x104)[0x7b1d49f1b1d4]
+[lvdot_detector_main-7] /opt/ros/jazzy/lib/librclcpp.so(_ZN6rclcpp4spinESt10shared_ptrINS_15node_interfaces17NodeBaseInterfaceEE+0x129)[0x7b1d49f134f9]
+[lvdot_detector_main-7] /opt/ros/jazzy/lib/librclcpp.so(_ZN6rclcpp4spinESt10shared_ptrINS_4NodeEE+0x33)[0x7b1d49f13643]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(main+0x17b)[0x5e5230bd31b9]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(+0x2a1ca)[0x7b1d48c2a1ca]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x8b)[0x7b1d48c2a28b]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_start+0x25)[0x5e5230bd2e05]
+[lvdot_detector_main-7] === end backtrace ===
+[ERROR] [lvdot_detector_main-7]: process has died [pid 142569, exit code -11, cmd '/home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main --ros-args -r __node:=lvdot_detector_node --params-file /home/skbt2/lvdot_ros2_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param.yaml --params-file /tmp/launch_params_pm6ebz5q'].
+[lvdot_yolo_node-6] Traceback (most recent call last):
+[lvdot_yolo_node-6]   File "/home/skbt2/ros2_depth_eval_ws/install/lvdot_ros2_adapter/lib/lvdot_ros2_adapter/lvdot_yolo_node", line 33, in <module>
+[lvdot_yolo_node-6]     sys.exit(load_entry_point('lvdot-ros2-adapter', 'console_scripts', 'lvdot_yolo_node')())
+[lvdot_yolo_node-6]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[lvdot_yolo_node-6]   File "/home/skbt2/ros2_depth_eval_ws/build/lvdot_ros2_adapter/lvdot_ros2_adapter/lvdot_yolo_node.py", line 194, in main
+[lvdot_yolo_node-6]     node = LvDotYoloNode()
+[lvdot_yolo_node-6]            ^^^^^^^^^^^^^^^
+[lvdot_yolo_node-6]   File "/home/skbt2/ros2_depth_eval_ws/build/lvdot_ros2_adapter/lvdot_ros2_adapter/lvdot_yolo_node.py", line 71, in __init__
+[lvdot_yolo_node-6]     raise RuntimeError(
+[lvdot_yolo_node-6] RuntimeError: enable_yolo=true but no valid weight file was provided. Set the weight_path parameter or LVDOT_YOLO_WEIGHT.
+[ERROR] [lvdot_yolo_node-6]: process has died [pid 142568, exit code 1, cmd '/home/skbt2/ros2_depth_eval_ws/install/lvdot_ros2_adapter/lib/lvdot_ros2_adapter/lvdot_yolo_node --ros-args --params-file /tmp/launch_params_xl6v94ay'].
+[uav_trajectory_controller-4] [WARN] [1776781439.383978892] [uav_trajectory_controller]: SetEntityPose request timed out after 1.18s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776781439.385252599] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.

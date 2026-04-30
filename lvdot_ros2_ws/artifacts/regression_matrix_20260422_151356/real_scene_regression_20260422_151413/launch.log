@@ -1,0 +1,27 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-22-15-14-24-044572-DESKTOP-90MQDL6-536839
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [536849]
+[INFO] [parameter_bridge-2]: process started with pid [536850]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [536851]
+[INFO] [uav_trajectory_controller-4]: process started with pid [536852]
+[INFO] [image_pointcloud_relay-5]: process started with pid [536853]
+[INFO] [lvdot_yolo_node-6]: process started with pid [536854]
+[INFO] [lvdot_detector_main-7]: process started with pid [536855]
+[parameter_bridge-2] [INFO] [1776842064.305058053] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842064.310780851] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842064.312458862] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842064.313219982] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842064.314477718] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776842064.316204663] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776842064.318938295] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[lvdot_detector_main-7] [INFO] [1776842064.438748695] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.20, 12.00] stage_timers=true
+[lvdot_detector_main-7] [INFO] [1776842064.510908050] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/camera/depth/image_rect_raw color=/camera/color/image_raw lidar=/pointcloud pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[gazebo-1] [INFO] [1776842065.545702466] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[uav_trajectory_controller-4] [WARN] [1776842112.220600531] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776842112.221574055] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.
+[lvdot_detector_main-7] [INFO] [1776842170.630713110] [lvdot_detector_node]: Input health: depth=3 color=2 lidar=1 pose=4 odom=4 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-7] [INFO] [1776842170.630849151] [lvdot_detector_node]: Stage timers: detection=37 lidar_detection=37 tracking=37 classification=37 vis=37
+[lvdot_detector_main-7] [INFO] [1776842170.630897043] [lvdot_detector_node]: Pipeline stats: depth_samples=125/71300 u_map=2 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=24731/148381 uv=0 db=2 lidar=6 fused=6 filtered=6 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=6->0 (6 outputs) fusion_components=6 visual_only=0 lidar_only=6 fixed_size=0 size_reject=0
+[uav_trajectory_controller-4] [WARN] [1776842179.761829072] [uav_trajectory_controller]: SetEntityPose request timed out after 0.59s on /world/pedestrian_prototype/set_pose; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776842256.546949788] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776842257.671114408] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose; dropping the pending request and retrying.

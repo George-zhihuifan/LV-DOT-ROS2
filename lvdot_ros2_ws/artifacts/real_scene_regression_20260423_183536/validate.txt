@@ -1,0 +1,37 @@
+=== Regression Validation ===
+[PASS] depth input: 614
+[PASS] color input: 573
+[PASS] lidar input: 591
+[PASS] pose input: 750
+[PASS] odom input: 750
+[PASS] yolo input: 184
+[PASS] detection timer: 327
+[PASS] lidar_detection timer: 158
+[PASS] tracking timer: 2963
+[PASS] classification timer: 2955
+[PASS] vis timer: 2917
+[PASS] visual bbox count: 0
+[PASS] lidar bbox count: 1
+[PASS] filtered bbox count: 1
+[FAIL] dynamic bbox count: 0 (expected > 0)
+[PASS] u_map box count: 2
+[PASS] projected depth box count: 0
+[PASS] u_map enhanced db count: 0
+[PASS] u_map enhanced visual count: 0
+[PASS] u_map enhanced fused count: 0
+[PASS] u_map enhanced filtered count: 0
+[PASS] service call count: 0
+[PASS] depth input delta: 589
+[PASS] color input delta: 547
+[PASS] lidar input delta: 564
+[PASS] pose input delta: 714
+[PASS] odom input delta: 714
+[PASS] yolo input delta: 177
+[PASS] detection timer delta: 200
+[PASS] lidar_detection timer delta: 40
+[PASS] tracking timer delta: 2721
+[PASS] classification timer delta: 2713
+[PASS] vis timer delta: 2675
+[PASS] service type: lvdot_interfaces/srv/GetDynamicObstacles
+failure_keys=dynamic_bbox_count_zero_value_0
+=== RESULT: FAIL ===

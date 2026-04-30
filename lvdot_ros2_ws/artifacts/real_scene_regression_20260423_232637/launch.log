@@ -1,0 +1,62 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-23-23-26-48-825752-DESKTOP-90MQDL6-175051
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [175090]
+[INFO] [parameter_bridge-2]: process started with pid [175091]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [175092]
+[INFO] [uav_trajectory_controller-4]: process started with pid [175093]
+[INFO] [image_pointcloud_relay-5]: process started with pid [175094]
+[INFO] [lvdot_yolo_node-6]: process started with pid [175095]
+[INFO] [lvdot_detector_main-7]: process started with pid [175096]
+[parameter_bridge-2] [INFO] [1776958009.058185510] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776958009.062763802] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776958009.064428011] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776958009.065374744] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776958009.066773119] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776958009.067883844] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776958009.069441169] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[lvdot_detector_main-7] [INFO] [1776958009.254597584] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.20, 12.00] stage_timers=true
+[lvdot_detector_main-7] [INFO] [1776958009.489055545] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/camera/depth/image_rect_raw color=/camera/color/image_raw lidar=/rgbd_camera/points pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[gazebo-1] [INFO] [1776958010.155621773] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[uav_trajectory_controller-4] [WARN] [1776958010.593715141] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776958010.594295849] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.
+[lvdot_detector_main-7] [INFO] [1776958011.489561679] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=3 odom=3 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-7] [INFO] [1776958011.489748479] [lvdot_detector_node]: Stage timers: detection=60 lidar_detection=60 tracking=60 classification=60 vis=60
+[lvdot_detector_main-7] [INFO] [1776958011.489771779] [lvdot_detector_node]: Processing phases: detection=waiting_depth lidar_detection=waiting_new_lidar tracking=waiting_new_filtered_update classification=waiting_new_tracking_update
+[lvdot_detector_main-7] [INFO] [1776958011.489780979] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-7] [INFO] [1776958017.492519037] [lvdot_detector_node]: Input health: depth=24 color=27 lidar=23 pose=51 odom=51 yolo=2 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-7] [INFO] [1776958017.492582154] [lvdot_detector_node]: Stage timers: detection=132 lidar_detection=127 tracking=242 classification=242 vis=241
+[lvdot_detector_main-7] [INFO] [1776958017.492593523] [lvdot_detector_node]: Processing phases: detection=run_core lidar_detection=run_lidar_detector/dbscan tracking=waiting_new_filtered_update classification=waiting_new_tracking_update
+[lvdot_detector_main-7] [INFO] [1776958017.492603029] [lvdot_detector_node]: Pipeline stats: depth_samples=1420/71300 u_map=3 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=3171/123039 uv=1 db=6 lidar=10 fused=11 filtered=11 tracks=11 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=11->0 (11 outputs) fusion_components=11 visual_only=1 lidar_only=10 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-7] malloc(): invalid next size (unsorted)
+[lvdot_detector_main-7] 
+[lvdot_detector_main-7] === FATAL SIGNAL 6 received, backtrace (depth=28) ===
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(+0xa0efc1)[0x5944b8023fc1]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(+0x45330)[0x7ad8f9645330]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x11c)[0x7ad8f969eb2c]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(gsignal+0x1e)[0x7ad8f964527e]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(abort+0xdf)[0x7ad8f96288ff]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(+0x297b6)[0x7ad8f96297b6]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(+0xa8ff5)[0x7ad8f96a8ff5]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(+0xabbc4)[0x7ad8f96abbc4]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(malloc+0xa4)[0x7ad8f96ad714]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libopencv_core.so.406(_ZN2cv10fastMallocEm+0x89)[0x7ad8f9e78629]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libopencv_core.so.406(+0x14751c)[0x7ad8f9f4751c]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libopencv_core.so.406(_ZN2cv3Mat6createEiPKii+0x167)[0x7ad8f9f3d637]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libopencv_core.so.406(_ZN2cv3Mat6createEiii+0x40)[0x7ad8f9f3d990]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libopencv_imgproc.so.406(_ZN2cv6resizeERKNS_11_InputArrayERKNS_12_OutputArrayENS_5Size_IiEEddi+0x223)[0x7ad8fa4039c3]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(+0xc61caa)[0x5944b8276caa]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN10lvdot_ros220make_bird_view_imageERKNS_17LVdotRuntimeStateERKNS_19LVdotDetectorConfigERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN6rclcpp4TimeE+0x62)[0x5944b8279a42]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN10lvdot_ros217LVdotDetectorNode12on_vis_timerEv+0x3df)[0x5944b8035777]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZSt13__invoke_implIvRMN10lvdot_ros217LVdotDetectorNodeEFvvERPS1_JEET_St21__invoke_memfun_derefOT0_OT1_DpOT2_+0x6a)[0x5944b82437fe]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZSt8__invokeIRMN10lvdot_ros217LVdotDetectorNodeEFvvEJRPS1_EENSt15__invoke_resultIT_JDpT0_EE4typeEOS8_DpOS9_+0x3b)[0x5944b8236cb5]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS1_EE6__callIvJEJLm0EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE+0x5b)[0x5944b8223cf3]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS1_EEclIJEvEET0_DpOT_+0x37)[0x5944b81fd0d1]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN6rclcpp12GenericTimerISt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS3_EELPv0EE25execute_callback_delegateIS8_LS9_0EEEvRK21rcl_timer_call_info_s+0x24)[0x5944b81ef81e]
+[lvdot_detector_main-7] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN6rclcpp12GenericTimerISt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS3_EELPv0EE16execute_callbackERKSt10shared_ptrIvE+0x47)[0x5944b81d64f3]
+[lvdot_detector_main-7] /opt/ros/jazzy/lib/librclcpp.so(_ZN6rclcpp8Executor22execute_any_executableERNS_13AnyExecutableE+0x81)[0x7ad8fa909291]
+[lvdot_detector_main-7] /opt/ros/jazzy/lib/librclcpp.so(_ZN6rclcpp9executors21MultiThreadedExecutor3runEm+0x1b7)[0x7ad8fa91bd57]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libstdc++.so.6(+0xecdb4)[0x7ad8f9aecdb4]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4)[0x7ad8f969caa4]
+[lvdot_detector_main-7] /lib/x86_64-linux-gnu/libc.so.6(+0x129c6c)[0x7ad8f9729c6c]
+[lvdot_detector_main-7] === end backtrace ===
+[ERROR] [lvdot_detector_main-7]: process has died [pid 175096, exit code -6, cmd '/home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main --ros-args -r __node:=lvdot_detector_node --params-file /home/skbt2/lvdot_ros2_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param.yaml --params-file /tmp/launch_params_gd30bain'].

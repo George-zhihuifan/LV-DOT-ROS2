@@ -1,0 +1,62 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-24-09-19-22-895680-DESKTOP-90MQDL6-28876
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [28914]
+[INFO] [parameter_bridge-2]: process started with pid [28915]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [28916]
+[INFO] [uav_trajectory_controller-4]: process started with pid [28917]
+[INFO] [image_pointcloud_relay-5]: process started with pid [28918]
+[INFO] [image_pointcloud_relay-6]: process started with pid [28919]
+[INFO] [lvdot_yolo_node-7]: process started with pid [28920]
+[INFO] [lvdot_detector_main-8]: process started with pid [28921]
+[lvdot_detector_main-8] [INFO] [1776993563.430134050] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.50, 5.00] stage_timers=true
+[lvdot_detector_main-8] [INFO] [1776993563.463129119] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/camera/depth/image_rect_raw color=/camera/color/image_raw lidar=/pointcloud pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[parameter_bridge-2] [INFO] [1776993564.307132721] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776993565.066752010] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776993565.069351212] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776993565.071365142] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776993565.074967419] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776993565.077138413] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[lvdot_detector_main-8] [INFO] [1776993565.463804833] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=0 odom=0 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-8] [INFO] [1776993565.464084729] [lvdot_detector_node]: Stage timers: detection=60 lidar_detection=60 tracking=60 classification=60 vis=58
+[lvdot_detector_main-8] [INFO] [1776993565.464125770] [lvdot_detector_node]: Processing phases: detection=waiting_sensor_pose lidar_detection=waiting_new_lidar tracking=waiting_new_filtered_update classification=waiting_new_tracking_update
+[lvdot_detector_main-8] [INFO] [1776993565.464144929] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[parameter_bridge-2] [INFO] [1776993565.467461864] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[uav_trajectory_controller-4] [WARN] [1776993566.350447472] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776993566.351039845] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.
+[gazebo-1] [INFO] [1776993566.732975844] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[lvdot_detector_main-8] [INFO] [1776993571.463328562] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=38 odom=38 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-8] [INFO] [1776993571.463542585] [lvdot_detector_node]: Stage timers: detection=242 lidar_detection=242 tracking=242 classification=242 vis=240
+[lvdot_detector_main-8] [INFO] [1776993571.463554540] [lvdot_detector_node]: Processing phases: detection=waiting_depth lidar_detection=waiting_new_lidar tracking=waiting_new_filtered_update classification=waiting_new_tracking_update
+[lvdot_detector_main-8] [INFO] [1776993571.463562219] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-8] [INFO] [1776993577.463437062] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=86 odom=86 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-8] [INFO] [1776993577.463615069] [lvdot_detector_node]: Stage timers: detection=424 lidar_detection=424 tracking=424 classification=424 vis=422
+[lvdot_detector_main-8] [INFO] [1776993577.463640137] [lvdot_detector_node]: Processing phases: detection=waiting_depth lidar_detection=waiting_new_lidar tracking=waiting_new_filtered_update classification=waiting_new_tracking_update
+[lvdot_detector_main-8] [INFO] [1776993577.463661028] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-8] 
+[lvdot_detector_main-8] === FATAL SIGNAL 11 received, backtrace (depth=16) ===
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(+0xa0efc1)[0x5f423e4a5fc1]
+[lvdot_detector_main-8] /lib/x86_64-linux-gnu/libc.so.6(+0x45330)[0x742a92245330]
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(+0xc614f5)[0x5f423e6f84f5]
+[lvdot_detector_main-8] [INFO] [1776993583.465410609] [lvdot_detector_node]: Input health: depth=19 color=18 lidar=7 pose=134 odom=134 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-8] [INFO] [1776993583.465494948] [lvdot_detector_node]: Stage timers: detection=574 lidar_detection=576 tracking=606 classification=606 vis=598
+[lvdot_detector_main-8] [INFO] [1776993583.465513215] [lvdot_detector_node]: Processing phases: detection=run_core lidar_detection=run_lidar_detector/dbscan tracking=waiting_new_filtered_update classification=waiting_new_tracking_update
+[lvdot_detector_main-8] [INFO] [1776993583.465530899] [lvdot_detector_node]: Pipeline stats: depth_samples=1322/71300 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=14 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN10lvdot_ros220make_bird_view_imageERKNS_17LVdotRuntimeStateERKNS_19LVdotDetectorConfigERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN6rclcpp4TimeE+0x62)[0x5f423e6fba42]
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN10lvdot_ros217LVdotDetectorNode12on_vis_timerEv+0x3df)[0x5f423e4b7777]
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZSt13__invoke_implIvRMN10lvdot_ros217LVdotDetectorNodeEFvvERPS1_JEET_St21__invoke_memfun_derefOT0_OT1_DpOT2_+0x6a)[0x5f423e6c57fe]
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZSt8__invokeIRMN10lvdot_ros217LVdotDetectorNodeEFvvEJRPS1_EENSt15__invoke_resultIT_JDpT0_EE4typeEOS8_DpOS9_+0x3b)[0x5f423e6b8cb5]
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS1_EE6__callIvJEJLm0EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE+0x5b)[0x5f423e6a5cf3]
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZNSt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS1_EEclIJEvEET0_DpOT_+0x37)[0x5f423e67f0d1]
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN6rclcpp12GenericTimerISt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS3_EELPv0EE25execute_callback_delegateIS8_LS9_0EEEvRK21rcl_timer_call_info_s+0x24)[0x5f423e67181e]
+[lvdot_detector_main-8] /home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main(_ZN6rclcpp12GenericTimerISt5_BindIFMN10lvdot_ros217LVdotDetectorNodeEFvvEPS3_EELPv0EE16execute_callbackERKSt10shared_ptrIvE+0x47)[0x5f423e6584f3]
+[lvdot_detector_main-8] /opt/ros/jazzy/lib/librclcpp.so(_ZN6rclcpp8Executor22execute_any_executableERNS_13AnyExecutableE+0x81)[0x742a93509291]
+[lvdot_detector_main-8] /opt/ros/jazzy/lib/librclcpp.so(_ZN6rclcpp9executors21MultiThreadedExecutor3runEm+0x1b7)[0x742a9351bd57]
+[lvdot_detector_main-8] /lib/x86_64-linux-gnu/libstdc++.so.6(+0xecdb4)[0x742a926ecdb4]
+[lvdot_detector_main-8] /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4)[0x742a9229caa4]
+[lvdot_detector_main-8] /lib/x86_64-linux-gnu/libc.so.6(+0x129c6c)[0x742a92329c6c]
+[lvdot_detector_main-8] === end backtrace ===
+[ERROR] [lvdot_detector_main-8]: process has died [pid 28921, exit code -11, cmd '/home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main --ros-args -r __node:=lvdot_detector_node --params-file /home/skbt2/lvdot_ros2_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param.yaml --params-file /tmp/launch_params_bxvjcj93'].
+[lvdot_yolo_node-7] WARNING ⚠️ user config directory '/home/skbt2/.config/Ultralytics' is not writable, using '/tmp/Ultralytics'. Set YOLO_CONFIG_DIR to override.
+[lvdot_yolo_node-7] Creating new Ultralytics Settings v0.0.6 file ✅ 
+[lvdot_yolo_node-7] View Ultralytics Settings with 'yolo settings' or at '/tmp/Ultralytics/settings.json'
+[lvdot_yolo_node-7] Update Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=path/to/dir'. For help see https://docs.ultralytics.com/quickstart/#ultralytics-settings.

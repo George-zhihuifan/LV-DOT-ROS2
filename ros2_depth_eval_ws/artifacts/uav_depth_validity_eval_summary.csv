@@ -1,0 +1,2 @@
+samples,sample_stride,warmup_sec,lap_duration_sec,lap_count,total_duration_sec,finite_ratio,positive_ratio,valid_ratio,saturation_ratio,min_depth_m,p10_depth_m,p50_depth_m,p90_depth_m,max_depth_m
+23,10,1.0,17.640924539406328,1.0,18.640924539406328,0.5501085541213768,0.5501085541213768,0.5501085541213768,0.0,1.0861441661482272,1.227809866355813,2.0577611327171326,5.178539334172788,11.631797624670941

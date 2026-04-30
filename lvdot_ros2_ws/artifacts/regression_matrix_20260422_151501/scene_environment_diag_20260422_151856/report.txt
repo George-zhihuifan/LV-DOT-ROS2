@@ -1,0 +1,19 @@
+Scene Environment Diagnostics Report
+
+result: PASS
+failure_reason: none
+next_action: start_scene_behavior_review
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/summary.txt
+  launch_log: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/launch.log
+  node_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/node_list.txt
+  topic_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/topic_list.txt
+  service_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/service_list.txt
+  camera_info: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/camera_info.txt
+  depth_image: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/depth_image.txt
+  color_image: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/color_image.txt
+  pointcloud: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/pointcloud.txt
+  pose: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/pose.txt
+  odom: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/odom.txt

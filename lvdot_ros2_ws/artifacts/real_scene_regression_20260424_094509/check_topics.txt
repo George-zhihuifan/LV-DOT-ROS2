@@ -1,0 +1,15 @@
+=== input_health ===
+
+=== input_health_status ===
+
+=== stage_timers ===
+data: detection=215 lidar_detection=215 tracking=215 classification=215 vis=0 det_phase=idle lidar_phase=idle track_phase=idle cls_pha...
+---
+
+=== stage_timers_status ===
+
+=== pipeline_stats ===
+
+=== pipeline_stats_status ===
+
+=== dynamic_obstacles service type ===

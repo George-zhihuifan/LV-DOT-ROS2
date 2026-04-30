@@ -1,0 +1,4 @@
+name,expected_range_group,gt_depth_reference,gt_center_depth_m,gt_front_surface_depth_m,gt_depth_m,center_u_px,center_v_px,roi_xmin_px,roi_ymin_px,roi_xmax_px,roi_ymax_px
+near_target,near,front_surface,2.5,2.225,2.225,397.61,306.53,336.63,112.49,458.6,500.56
+mid_target,mid,front_surface,5.0,4.725,4.725,491.86,273.26,461.37,176.25,522.35,370.28
+far_target,far,front_surface,7.5,7.225,7.225,279.35,262.18,259.02,197.5,299.67,326.85

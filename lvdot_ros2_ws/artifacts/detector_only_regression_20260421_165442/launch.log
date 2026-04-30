@@ -1,0 +1,76 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-21-16-54-44-611818-DESKTOP-90MQDL6-41
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [lvdot_detector_main-1]: process started with pid [47]
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] [37;1m2026-04-21 16:54:50.331 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[lvdot_detector_main-1] [37;1m2026-04-21 16:54:50.332 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] [INFO] [1776761690.783468340] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.20, 12.00] stage_timers=false
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] getifaddrs: Operation not permitted
+[lvdot_detector_main-1] [INFO] [1776761691.445441675] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/camera/depth/image_rect_raw color=/camera/color/image_raw lidar=/pointcloud pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[lvdot_detector_main-1] [INFO] [1776761693.358711101] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=0 odom=0 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-1] [INFO] [1776761693.358856244] [lvdot_detector_node]: Stage timers: detection=0 lidar_detection=0 tracking=0 classification=0 vis=0
+[lvdot_detector_main-1] [INFO] [1776761693.358874042] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-1] [INFO] [1776761699.358259684] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=0 odom=0 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-1] [INFO] [1776761699.358335200] [lvdot_detector_node]: Stage timers: detection=0 lidar_detection=0 tracking=0 classification=0 vis=0
+[lvdot_detector_main-1] [INFO] [1776761699.358344787] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-1] [INFO] [1776761705.358457995] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=0 odom=0 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-1] [INFO] [1776761705.358573909] [lvdot_detector_node]: Stage timers: detection=0 lidar_detection=0 tracking=0 classification=0 vis=0
+[lvdot_detector_main-1] [INFO] [1776761705.358594852] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-1] [INFO] [1776761712.020692505] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=0 odom=0 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-1] [INFO] [1776761712.020774805] [lvdot_detector_node]: Stage timers: detection=0 lidar_detection=0 tracking=0 classification=0 vis=0
+[lvdot_detector_main-1] [INFO] [1776761712.020784405] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 fixed_size=0 size_reject=0

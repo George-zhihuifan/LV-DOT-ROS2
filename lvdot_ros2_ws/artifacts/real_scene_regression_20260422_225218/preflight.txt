@@ -1,0 +1,13 @@
+[PASS] command: ros2
+[PASS] command: gz
+[PASS] file: /home/skbt2/ros2_depth_eval_ws/install/setup.bash
+[PASS] file: /home/skbt2/lvdot_ros2_ws/install/setup.bash
+[PASS] file: /home/skbt2/ros2_depth_eval_ws/install/depth_eval_bringup/share/depth_eval_bringup/worlds/pedestrian_prototype.sdf
+[FAIL] ros2_cli_runtime: [ERROR] [1776869541.869232712] [rcl]: Error getting RMW implementation identifier / RMW implementation not installed (expected identifier of 'rmw_cyclonedds_cpp'), with error message 'failed to load shared library 'librmw_cyclonedds_cpp.so' due to dlopen error: librmw_cyclonedds_cpp.so: cannot open shared object file: No such file or directory, at ./src/shared_library.c:99, at ./src/functions.cpp:65', exiting with 1., at ./src/rcl/rmw_implementation_identifier_check.c:143  
+[FAIL] detector_launch_smoke_test
+--- stdout ---
+--- stderr ---
+[ERROR] [1776869544.205219715] [rcl]: Error getting RMW implementation identifier / RMW implementation not installed (expected identifier of 'rmw_cyclonedds_cpp'), with error message 'failed to load shared library 'librmw_cyclonedds_cpp.so' due to dlopen error: librmw_cyclonedds_cpp.so: cannot open shared object file: No such file or directory, at ./src/shared_library.c:99, at ./src/functions.cpp:65', exiting with 1., at ./src/rcl/rmw_implementation_identifier_check.c:143
+
+[PASS] gazebo_smoke_test
+=== RESULT: FAIL ===

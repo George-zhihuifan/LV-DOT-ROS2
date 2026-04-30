@@ -1,0 +1,6 @@
+{
+  "result": "FAIL",
+  "failure_reason": "dds_environment_restricted",
+  "next_action": "fix_desktop_dds_or_network_permissions",
+  "artifact_dir": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330"
+}

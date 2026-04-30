@@ -1,0 +1,21 @@
+=== input_health ===
+
+=== input_health_status ===
+
+=== stage_timers ===
+
+=== stage_timers_status ===
+detection_tick_count: 229
+lidar_detection_tick_count: 229
+tracking_tick_count: 229
+classification_tick_count: 229
+vis_tick_count: 0
+---
+
+=== pipeline_stats ===
+data: depth_samples=1454/71300 u_map=2 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samp...
+---
+
+=== pipeline_stats_status ===
+
+=== dynamic_obstacles service type ===

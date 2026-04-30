@@ -1,0 +1,37 @@
+{
+  "overall_result": "FAIL",
+  "next_action": "inspect_detector_and_scene_summaries",
+  "artifact_dir": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501",
+  "detector": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/detector_only_regression_20260422_151502/summary.txt",
+    "validation": "PASS",
+    "failure_reason": "none"
+  },
+  "scene": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/real_scene_regression_20260422_151527/summary.txt",
+    "validation": "FAIL",
+    "failure_reason": "validation_failed",
+    "ready_wait_seconds": "70",
+    "enable_yolo": "true",
+    "launch_yolo_node": "true",
+    "validate_failure_keys": "unknown",
+    "sample_delta": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/real_scene_regression_20260422_151527/sample_delta.txt",
+    "depth_delta": "",
+    "color_delta": "",
+    "lidar_delta": "",
+    "yolo_delta": "",
+    "detection_tick_delta": "",
+    "tracking_tick_delta": "",
+    "dynamic_delta": ""
+  },
+  "scene_diagnostics": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/summary.txt",
+    "result": "PASS",
+    "failure_reason": "none"
+  },
+  "scene_staged": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_staged_diag_20260422_151931/summary.txt",
+    "result": "FAIL",
+    "failure_reason": "uav_state_chain_failed"
+  }
+}

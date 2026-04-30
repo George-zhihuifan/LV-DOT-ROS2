@@ -1,0 +1,24 @@
+=== Regression Validation ===
+[FAIL] depth input: no message
+[FAIL] color input: no message
+[FAIL] lidar input: no message
+[FAIL] pose input: no message
+[FAIL] odom input: no message
+[FAIL] detection timer: no message
+[FAIL] lidar_detection timer: no message
+[FAIL] tracking timer: no message
+[FAIL] classification timer: no message
+[FAIL] vis timer: no message
+[FAIL] visual bbox count: no message
+[FAIL] lidar bbox count: no message
+[FAIL] filtered bbox count: no message
+[FAIL] dynamic bbox count: no message
+[FAIL] u_map box count: no message
+[FAIL] projected depth box count: no message
+[FAIL] u_map enhanced db count: no message
+[FAIL] u_map enhanced visual count: no message
+[FAIL] u_map enhanced fused count: no message
+[FAIL] u_map enhanced filtered count: no message
+[FAIL] service call count: no message
+[FAIL] service type: missing
+=== RESULT: FAIL ===

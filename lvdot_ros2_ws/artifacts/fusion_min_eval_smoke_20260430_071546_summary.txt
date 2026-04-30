@@ -1,0 +1,14 @@
+csv=/home/skbt2/lvdot_ros2_ws/artifacts/fusion_min_eval_smoke_20260430_071546.csv
+frames=52
+source_frames=29
+void_like_frames=0
+void_like_ratio=0.000000
+fusion_nonzero_rate=1.000000
+track_step_p95_m=0.000000
+threshold_void_ratio_lt=0.01
+threshold_fusion_nonzero_gt=0.95
+threshold_jitter_p95_lt_m=0.5
+check_void_ratio=PASS
+check_fusion_nonzero=PASS
+check_jitter_p95=PASS
+overall=PASS

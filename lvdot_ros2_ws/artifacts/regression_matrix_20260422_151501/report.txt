@@ -1,0 +1,41 @@
+LV-DOT ROS2 Regression Matrix Report
+
+overall_result: FAIL
+next_action: inspect_detector_and_scene_summaries
+
+detector_only:
+  validation: PASS
+  failure_reason: none
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/detector_only_regression_20260422_151502/summary.txt
+
+scene_regression:
+  validation: FAIL
+  failure_reason: validation_failed
+  ready_wait_seconds: 70
+  enable_yolo: true
+  launch_yolo_node: true
+  validate_failure_keys: unknown
+  sample_delta: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/real_scene_regression_20260422_151527/sample_delta.txt
+  depth_delta: 
+  color_delta: 
+  lidar_delta: 
+  yolo_delta: 
+  detection_tick_delta: 
+  tracking_tick_delta: 
+  dynamic_delta: 
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/real_scene_regression_20260422_151527/summary.txt
+
+scene_diagnostics:
+  result: PASS
+  failure_reason: none
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_environment_diag_20260422_151856/summary.txt
+
+scene_staged:
+  result: FAIL
+  failure_reason: uav_state_chain_failed
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/scene_staged_diag_20260422_151931/summary.txt
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501
+  matrix_summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/summary.txt
+  matrix_report: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260422_151501/report.txt

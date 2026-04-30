@@ -1,0 +1,10 @@
+uint64 depth_count
+uint64 color_count
+uint64 lidar_count
+uint64 pose_count
+uint64 odom_count
+uint64 yolo_count
+uint64 depth_pose_sync_count
+uint64 lidar_pose_sync_count
+uint64 depth_odom_sync_count
+uint64 lidar_odom_sync_count

@@ -1,0 +1,4 @@
+/mavros/local_position/odom
+/mavros/local_position/pose
+/parameter_events
+/rosout

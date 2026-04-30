@@ -1,0 +1,79 @@
+=== input_health ===
+
+=== input_health_status ===
+depth_count: 278
+color_count: 277
+lidar_count: 31
+pose_count: 282
+odom_count: 282
+yolo_count: 270
+depth_pose_sync_count: 0
+lidar_pose_sync_count: 0
+depth_odom_sync_count: 0
+lidar_odom_sync_count: 0
+---
+
+=== stage_timers ===
+
+=== stage_timers_status ===
+detection_tick_count: 325
+lidar_detection_tick_count: 325
+tracking_tick_count: 325
+classification_tick_count: 325
+vis_tick_count: 0
+---
+
+=== pipeline_stats ===
+data: depth_samples=1123/50169 u_map=4 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samp...
+---
+
+=== pipeline_stats_status ===
+projected_depth_sample_count: 71300
+filtered_depth_sample_count: 1316
+u_map_box_count: 0
+projected_depth_box_count: 0
+u_map_db_merge_count: 0
+u_map_enhanced_db_count: 0
+u_map_enhanced_visual_count: 0
+u_map_enhanced_filtered_before_yolo_count: 0
+u_map_enhanced_filtered_count: 0
+raw_lidar_sample_count: 120789
+filtered_lidar_sample_count: 3336
+visual_bbox_count: 0
+db_bbox_count: 9
+lidar_bbox_count: 17
+filtered_before_yolo_count: 17
+filtered_bbox_count: 17
+track_count: 17
+dynamic_count: 1
+split_source_boxes: 17
+split_success_boxes: 0
+split_output_boxes: 17
+fusion_component_count: 17
+visual_only_component_count: 0
+lidar_only_component_count: 17
+fixed_size_count: 17
+dynamic_rejected_by_size: 0
+dynamic_filtered_point_count: 0
+raw_dynamic_point_count: 0
+service_call_count: 30
+service_response_count: 1
+---
+
+=== dynamic_obstacles service type ===
+/home/skbt2/lvdot_ros2_ws/install/lvdot_bringup/lib/lvdot_bringup/check_real_scene_topics.sh: line 41: rg: command not found
+Traceback (most recent call last):
+  File "/opt/ros/jazzy/bin/ros2", line 33, in <module>
+    sys.exit(load_entry_point('ros2cli==0.32.8', 'console_scripts', 'ros2')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2cli/cli.py", line 91, in main
+    rc = extension.main(parser=parser, args=args)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2service/command/service.py", line 41, in main
+    return extension.main(args=args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2service/verb/list.py", line 51, in main
+    print(msg)
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe

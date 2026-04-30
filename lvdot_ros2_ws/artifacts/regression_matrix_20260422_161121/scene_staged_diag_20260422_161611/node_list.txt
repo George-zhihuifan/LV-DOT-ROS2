@@ -1,0 +1,4 @@
+WARNING: Be aware that there are nodes in the graph that share an exact name, which can have unintended side effects.
+/pedestrian_pose_sync_system
+/uav_trajectory_controller
+/uav_trajectory_controller

@@ -1,0 +1,67 @@
+=== input_health ===
+data: depth=254 color=268 lidar=192 pose=610 odom=610 yolo=198 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+---
+
+=== input_health_status ===
+depth_count: 264
+color_count: 281
+lidar_count: 200
+pose_count: 640
+odom_count: 640
+yolo_count: 205
+depth_pose_sync_count: 0
+lidar_pose_sync_count: 0
+depth_odom_sync_count: 0
+lidar_odom_sync_count: 0
+---
+
+=== stage_timers ===
+data: detection=229 lidar_detection=157 tracking=2576 classification=2563 vis=2335 det_phase=run_core lidar_phase=run_lidar_detector/d...
+---
+
+=== stage_timers_status ===
+detection_tick_count: 232
+lidar_detection_tick_count: 158
+tracking_tick_count: 2636
+classification_tick_count: 2623
+vis_tick_count: 2395
+---
+
+=== pipeline_stats ===
+data: depth_samples=1635/71300 u_map=3 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samp...
+---
+
+=== pipeline_stats_status ===
+projected_depth_sample_count: 71300
+filtered_depth_sample_count: 1627
+u_map_box_count: 2
+projected_depth_box_count: 0
+u_map_db_merge_count: 0
+u_map_enhanced_db_count: 0
+u_map_enhanced_visual_count: 0
+u_map_enhanced_filtered_before_yolo_count: 0
+u_map_enhanced_filtered_count: 0
+raw_lidar_sample_count: 133501
+filtered_lidar_sample_count: 3095
+visual_bbox_count: 2
+db_bbox_count: 11
+lidar_bbox_count: 15
+filtered_before_yolo_count: 35
+filtered_bbox_count: 35
+track_count: 35
+dynamic_count: 1
+split_source_boxes: 35
+split_success_boxes: 1
+split_output_boxes: 35
+fusion_component_count: 35
+visual_only_component_count: 2
+lidar_only_component_count: 33
+fixed_size_count: 0
+dynamic_rejected_by_size: 0
+dynamic_filtered_point_count: 69
+raw_dynamic_point_count: 1128
+service_call_count: 0
+service_response_count: 0
+---
+
+=== dynamic_obstacles service type ===

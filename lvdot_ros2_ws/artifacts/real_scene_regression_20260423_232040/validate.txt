@@ -1,0 +1,11 @@
+=== Regression Validation ===
+window_dynamic_count=0
+window_service_position_count=0
+service_dynamic_window_tolerance=0
+[FAIL] dynamic bbox count: 0 (expected > 0)
+[FAIL] service_position_count: 0 (expected > 0)
+window_abs_diff=0
+[PASS] dynamic/service window diff: 0 (tolerance=0)
+[FAIL] service_response.position: empty_or_missing
+failure_keys=dynamic_count_zero,service_position_count_zero,service_response_position_empty
+=== RESULT: FAIL ===

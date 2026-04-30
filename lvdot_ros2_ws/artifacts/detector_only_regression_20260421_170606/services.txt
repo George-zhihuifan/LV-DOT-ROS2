@@ -1,0 +1,27 @@
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+[37;1m2026-04-21 17:06:15.880 [31;1m[[37;1mTRANSPORT_UDP[31;1m Error] [37mError creating socket: Operation not permitted[34;1m -> Function [36minit[m
+[37;1m2026-04-21 17:06:15.880 [31;1m[[37;1mRTPS_PARTICIPANT[31;1m Error] [37mUser transport failed to register.[34;1m -> Function [36mRTPSParticipantImpl[m
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+getifaddrs: Operation not permitted
+/lvdot_detector_node/describe_parameters [rcl_interfaces/srv/DescribeParameters]
+/lvdot_detector_node/get_parameter_types [rcl_interfaces/srv/GetParameterTypes]
+/lvdot_detector_node/get_parameters [rcl_interfaces/srv/GetParameters]
+/lvdot_detector_node/get_type_description [type_description_interfaces/srv/GetTypeDescription]
+/lvdot_detector_node/list_parameters [rcl_interfaces/srv/ListParameters]
+/lvdot_detector_node/set_parameters [rcl_interfaces/srv/SetParameters]
+/lvdot_detector_node/set_parameters_atomically [rcl_interfaces/srv/SetParametersAtomically]
+/onboard_detector/get_dynamic_obstacles [lvdot_interfaces/srv/GetDynamicObstacles]

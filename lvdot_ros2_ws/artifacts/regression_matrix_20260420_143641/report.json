@@ -1,0 +1,15 @@
+{
+  "overall_result": "FAIL",
+  "next_action": "inspect_detector_and_scene_summaries",
+  "artifact_dir": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260420_143641",
+  "detector": {
+    "summary": "",
+    "validation": "UNKNOWN",
+    "failure_reason": "unknown"
+  },
+  "scene": {
+    "summary": "",
+    "validation": "UNKNOWN",
+    "failure_reason": "unknown"
+  }
+}

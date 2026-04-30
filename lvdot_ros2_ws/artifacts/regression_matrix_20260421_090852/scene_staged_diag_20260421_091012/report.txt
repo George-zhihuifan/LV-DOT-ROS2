@@ -1,0 +1,19 @@
+Scene Staged Diagnostics Report
+
+result: FAIL
+failure_reason: dds_environment_restricted
+next_action: fix_desktop_dds_or_network_permissions
+
+stages:
+  gazebo: FAIL
+  bridge: FAIL
+  sensors: FAIL
+  uav_state: FAIL
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_090852/scene_staged_diag_20260421_091012
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_090852/scene_staged_diag_20260421_091012/summary.txt
+  launch_log: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_090852/scene_staged_diag_20260421_091012/launch.log
+  node_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_090852/scene_staged_diag_20260421_091012/node_list.txt
+  topic_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_090852/scene_staged_diag_20260421_091012/topic_list.txt
+  service_list: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_090852/scene_staged_diag_20260421_091012/service_list.txt

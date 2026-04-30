@@ -1,0 +1,42 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-21-19-09-13-359998-DESKTOP-90MQDL6-101839
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [101871]
+[INFO] [parameter_bridge-2]: process started with pid [101872]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [101873]
+[INFO] [uav_trajectory_controller-4]: process started with pid [101874]
+[INFO] [image_pointcloud_relay-5]: process started with pid [101875]
+[INFO] [lvdot_yolo_node-6]: process started with pid [101876]
+[INFO] [lvdot_detector_main-7]: process started with pid [101877]
+[lvdot_detector_main-7] [INFO] [1776769753.892739068] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.20, 12.00] stage_timers=true
+[lvdot_detector_main-7] [INFO] [1776769753.953020371] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/camera/depth/image_rect_raw color=/camera/color/image_raw lidar=/pointcloud pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[parameter_bridge-2] [INFO] [1776769755.631272589] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776769755.761922074] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776769755.764285888] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776769755.766298260] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776769755.769100842] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776769755.770924253] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776769755.817789710] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[lvdot_detector_main-7] [INFO] [1776769756.726361589] [lvdot_detector_node]: Input health: depth=0 color=0 lidar=0 pose=0 odom=0 yolo=0 depth_pose_sync=0 lidar_pose_sync=0 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-7] [INFO] [1776769756.726532053] [lvdot_detector_node]: Stage timers: detection=53 lidar_detection=0 tracking=53 classification=53 vis=54
+[lvdot_detector_main-7] [INFO] [1776769756.726566613] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=0/0 uv=0 db=0 lidar=0 fused=0 filtered=0 tracks=0 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=0->0 (0 outputs) fusion_components=0 visual_only=0 lidar_only=0 fixed_size=0 size_reject=0
+[uav_trajectory_controller-4] [WARN] [1776769756.771424566] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776769756.772377451] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.
+[uav_trajectory_controller-4] [WARN] [1776769757.451782703] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776769758.201907221] [uav_trajectory_controller]: SetEntityPose request timed out after 0.62s on /world/pedestrian_prototype/set_pose; dropping the pending request and retrying.
+[gazebo-1] [INFO] [1776769758.661157033] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[ERROR] [lvdot_detector_main-7]: process has died [pid 101877, exit code -11, cmd '/home/skbt2/lvdot_ros2_ws/install/lvdot_ros2/lib/lvdot_ros2/lvdot_detector_main --ros-args -r __node:=lvdot_detector_node --params-file /home/skbt2/lvdot_ros2_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param.yaml --params-file /tmp/launch_params_1jsy74ch'].
+[lvdot_yolo_node-6] WARNING ⚠️ user config directory '/home/skbt2/.config/Ultralytics' is not writable, using '/tmp/Ultralytics'. Set YOLO_CONFIG_DIR to override.
+[lvdot_yolo_node-6] Creating new Ultralytics Settings v0.0.6 file ✅ 
+[lvdot_yolo_node-6] View Ultralytics Settings with 'yolo settings' or at '/tmp/Ultralytics/settings.json'
+[lvdot_yolo_node-6] Update Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=path/to/dir'. For help see https://docs.ultralytics.com/quickstart/#ultralytics-settings.
+[lvdot_yolo_node-6] Traceback (most recent call last):
+[lvdot_yolo_node-6]   File "/home/skbt2/ros2_depth_eval_ws/install/lvdot_ros2_adapter/lib/lvdot_ros2_adapter/lvdot_yolo_node", line 33, in <module>
+[lvdot_yolo_node-6]     sys.exit(load_entry_point('lvdot-ros2-adapter', 'console_scripts', 'lvdot_yolo_node')())
+[lvdot_yolo_node-6]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[lvdot_yolo_node-6]   File "/home/skbt2/ros2_depth_eval_ws/build/lvdot_ros2_adapter/lvdot_ros2_adapter/lvdot_yolo_node.py", line 194, in main
+[lvdot_yolo_node-6]     node = LvDotYoloNode()
+[lvdot_yolo_node-6]            ^^^^^^^^^^^^^^^
+[lvdot_yolo_node-6]   File "/home/skbt2/ros2_depth_eval_ws/build/lvdot_ros2_adapter/lvdot_ros2_adapter/lvdot_yolo_node.py", line 71, in __init__
+[lvdot_yolo_node-6]     raise RuntimeError(
+[lvdot_yolo_node-6] RuntimeError: enable_yolo=true but no valid weight file was provided. Set the weight_path parameter or LVDOT_YOLO_WEIGHT.
+[ERROR] [lvdot_yolo_node-6]: process has died [pid 101876, exit code 1, cmd '/home/skbt2/ros2_depth_eval_ws/install/lvdot_ros2_adapter/lib/lvdot_ros2_adapter/lvdot_yolo_node --ros-args --params-file /tmp/launch_params_k99q6ei1'].

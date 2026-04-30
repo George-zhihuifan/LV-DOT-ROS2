@@ -1,0 +1,32 @@
+LV-DOT ROS2 Regression Matrix Report
+
+overall_result: FAIL
+next_action: inspect_detector_and_scene_summaries
+
+detector_only:
+  validation: PASS
+  failure_reason: none
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_190845/detector_only_regression_20260421_190846/summary.txt
+
+scene_regression:
+  validation: FAIL
+  failure_reason: ready_timeout
+  ready_wait_seconds: 180
+  enable_yolo: true
+  launch_yolo_node: true
+  summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_190845/real_scene_regression_20260421_190902/summary.txt
+
+scene_diagnostics:
+  result: SKIPPED
+  failure_reason: skipped
+  summary: 
+
+scene_staged:
+  result: SKIPPED
+  failure_reason: skipped
+  summary: 
+
+artifacts:
+  root: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_190845
+  matrix_summary: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_190845/summary.txt
+  matrix_report: /home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_190845/report.txt

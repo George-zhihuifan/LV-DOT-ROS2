@@ -1,0 +1,14 @@
+total_runs=3
+execution_status_preflight_fail=0
+execution_status_launch_fail=0
+execution_status_runtime_crash=0
+execution_status_completed=3
+runtime_crash_true=0
+sigsegv_true=0
+window_service_position_count_sum=1
+window_service_position_count_mean=0.333333
+csv_path=/home/skbt2/lvdot_ros2_ws/artifacts/t4_3runs_stability.csv
+artifact_dirs=
+/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_104220
+/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_104837
+/home/skbt2/lvdot_ros2_ws/artifacts/real_scene_regression_20260424_105447

@@ -1,0 +1,4 @@
+ready_result=ready
+ready_wait_seconds=120
+enable_yolo=true
+launch_yolo_node=true

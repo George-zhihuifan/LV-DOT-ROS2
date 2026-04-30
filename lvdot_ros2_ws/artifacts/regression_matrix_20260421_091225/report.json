@@ -1,0 +1,28 @@
+{
+  "overall_result": "ENVIRONMENT_RESTRICTED",
+  "next_action": "dds_environment_restricted",
+  "artifact_dir": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225",
+  "detector": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/detector_only_regression_20260421_091227/summary.txt",
+    "validation": "PASS",
+    "failure_reason": "none"
+  },
+  "scene": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/real_scene_regression_20260421_091309/summary.txt",
+    "validation": "FAIL",
+    "failure_reason": "dds_environment_restricted",
+    "ready_wait_seconds": "0",
+    "enable_yolo": "true",
+    "launch_yolo_node": "true"
+  },
+  "scene_diagnostics": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_environment_diag_20260421_091330/summary.txt",
+    "result": "FAIL",
+    "failure_reason": "dds_environment_restricted"
+  },
+  "scene_staged": {
+    "summary": "/home/skbt2/lvdot_ros2_ws/artifacts/regression_matrix_20260421_091225/scene_staged_diag_20260421_091345/summary.txt",
+    "result": "FAIL",
+    "failure_reason": "dds_environment_restricted"
+  }
+}

@@ -1,0 +1,19 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-04-22-15-33-07-542528-DESKTOP-90MQDL6-566913
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [566930]
+[INFO] [parameter_bridge-2]: process started with pid [566931]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [566932]
+[INFO] [uav_trajectory_controller-4]: process started with pid [566933]
+[INFO] [image_pointcloud_relay-5]: process started with pid [566934]
+[parameter_bridge-2] [INFO] [1776843187.960473452] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776843187.966226842] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776843187.971407485] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776843187.978493787] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776843187.979955636] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1776843187.981364347] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1776843187.987362252] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[gazebo-1] [INFO] [1776843189.630195905] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[uav_trajectory_controller-4] [WARN] [1776843189.913811276] [uav_trajectory_controller]: SetEntityPose service /world/pedestrian_prototype/set_pose/blocking is unavailable; UAV state publication is paused until Gazebo pose control is reachable.
+[uav_trajectory_controller-4] [WARN] [1776843191.499939794] [uav_trajectory_controller]: SetEntityPose request timed out after 0.57s on /world/pedestrian_prototype/set_pose/blocking; dropping the pending request and retrying.
+[uav_trajectory_controller-4] [WARN] [1776843191.500942671] [uav_trajectory_controller]: Falling back from /world/pedestrian_prototype/set_pose/blocking to /world/pedestrian_prototype/set_pose.
+[uav_trajectory_controller-4] [WARN] [1776843192.249861280] [uav_trajectory_controller]: SetEntityPose request timed out after 0.53s on /world/pedestrian_prototype/set_pose; dropping the pending request and retrying.

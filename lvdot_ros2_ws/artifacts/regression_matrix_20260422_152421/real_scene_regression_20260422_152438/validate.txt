@@ -1,0 +1,37 @@
+=== Regression Validation ===
+[PASS] depth input: 2
+[PASS] color input: 3
+[PASS] lidar input: 3
+[PASS] pose input: 4
+[PASS] odom input: 4
+[PASS] yolo input: 2
+[PASS] detection timer: 132
+[PASS] lidar_detection timer: 132
+[PASS] tracking timer: 132
+[PASS] classification timer: 132
+[PASS] vis timer: 132
+[PASS] visual bbox count: 0
+[PASS] lidar bbox count: 0
+[PASS] filtered bbox count: 0
+[PASS] dynamic bbox count: 0
+[PASS] u_map box count: 1
+[PASS] projected depth box count: 0
+[PASS] u_map enhanced db count: 0
+[PASS] u_map enhanced visual count: 0
+[PASS] u_map enhanced fused count: 0
+[PASS] u_map enhanced filtered count: 0
+[PASS] service call count: 0
+[FAIL] depth input delta: 0
+[FAIL] color input delta: 0
+[FAIL] lidar input delta: 0
+[FAIL] pose input delta: 0
+[FAIL] odom input delta: 0
+[FAIL] yolo input delta: 0
+[FAIL] detection timer delta: 0
+[FAIL] lidar_detection timer delta: 0
+[FAIL] tracking timer delta: 0
+[FAIL] classification timer delta: 0
+[FAIL] vis timer delta: 0
+[FAIL] service type: missing
+failure_keys=depth_input_delta_non_positive,color_input_delta_non_positive,lidar_input_delta_non_positive,pose_input_delta_non_positive,odom_input_delta_non_positive,yolo_input_delta_non_positive,detection_timer_delta_non_positive,lidar_detection_timer_delta_non_positive,tracking_timer_delta_non_positive,classification_timer_delta_non_positive,vis_timer_delta_non_positive,service_type_invalid
+=== RESULT: FAIL ===

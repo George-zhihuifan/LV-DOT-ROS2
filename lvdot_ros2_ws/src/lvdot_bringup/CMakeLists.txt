@@ -8,6 +8,8 @@ install(DIRECTORY launch config rviz
 )
 
 install(PROGRAMS
+  scripts/metric5_interface_adapter.py
+  scripts/start_metric5_interface_stack.sh
   scripts/capture_status_snapshot.py
   scripts/preflight_real_scene_environment.sh
   scripts/smoke_test_detector_only.sh

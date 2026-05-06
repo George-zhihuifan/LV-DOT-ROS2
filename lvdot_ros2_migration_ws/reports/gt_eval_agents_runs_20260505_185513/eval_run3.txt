@@ -1,0 +1,10 @@
+=== Detection vs GT (center-based, source=agents) ===
+Duration: 45.0s
+Current GT objects: 8
+Visible-only scoring: 0
+uv      recall=0.219 matched=158/720 mean_center_err=1.136m
+db      recall=0.056 matched=40/720 mean_center_err=1.122m
+lidar   recall=0.104 matched=75/720 mean_center_err=1.307m
+fused   recall=0.087 matched=63/720 mean_center_err=1.310m
+tracked recall=0.110 matched=79/720 mean_center_err=1.232m
+yolo_2d recall=0.368 matched=147/399

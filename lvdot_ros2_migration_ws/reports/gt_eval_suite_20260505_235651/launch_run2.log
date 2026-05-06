@@ -1,0 +1,128 @@
+[INFO] [launch]: All log files can be found below /home/skbt2/.ros/log/2026-05-05-23-58-13-148343-DESKTOP-90MQDL6-17418
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [17432]
+[INFO] [parameter_bridge-2]: process started with pid [17433]
+[INFO] [pedestrian_state_publisher-3]: process started with pid [17434]
+[INFO] [pose_stub-4]: process started with pid [17435]
+[INFO] [lvdot_yolo_node-5]: process started with pid [17436]
+[INFO] [lvdot_detector_main-6]: process started with pid [17437]
+[parameter_bridge-2] [INFO] [1777996693.425543747] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777996693.427895010] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/image (gz.msgs.Image) -> /rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777996693.433299018] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777996693.434621800] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/depth_image (gz.msgs.Image) -> /rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777996693.435411592] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777996693.436594076] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/uav_lidar/scan/points (gz.msgs.PointCloudPacked) -> /uav_lidar/scan/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777996693.437351756] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/imu (gz.msgs.IMU) -> /camera/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1777996693.438751098] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[parameter_bridge-2] [INFO] [1777996693.440826761] [ros_gz_bridge]: Creating ROS->GZ service bridge [/world/pedestrian_prototype/set_pose/blocking (ros_gz_interfaces/srv/SetEntityPose -> /)]
+[lvdot_detector_main-6] [INFO] [1777996693.637964158] [lvdot_detector_node]: Config loaded: localization_mode=0 dt=0.033 image=640x480 depth_range=[0.20, 12.00] fusion_mode=dual stage_timers=true vis_stage=true sync_ctx=true skew(d-l=0.80,d-y=0.80,l-y=1.00)s stale_age=2.00s executor_threads=4
+[lvdot_detector_main-6] [INFO] [1777996693.691836437] [lvdot_detector_node]: LV-DOT ROS2 skeleton started. depth=/rgbd_camera/depth_image color=/rgbd_camera/image lidar=/uav_lidar/scan/points pose=/mavros/local_position/pose odom=/mavros/local_position/odom yolo=/yolo_detector/detected_bounding_boxes
+[lvdot_detector_main-6] [INFO] [1777996693.691940509] [lvdot_detector_node]: LiDAR frame contract: topic '/uav_lidar/scan/points' must publish LiDAR-local points. If upstream switches this topic to world-frame points, disable local->world transform in detector preprocessing.
+[lvdot_detector_main-6] [INFO] [1777996693.691963712] [lvdot_detector_node]: Starting executor with executor_threads=4
+[gazebo-1] [INFO] [1777996694.694037971] [pedestrian_pose_sync_system]: Configured pedestrian pose sync plugin on topic [/pedestrian_sim/agent_states] for 8 models.
+[lvdot_detector_main-6] [INFO] [1777996695.689918137] [lvdot_detector_node]: Input health: depth=4 color=5 lidar=4 pose=32 odom=32 yolo=0 depth_pose_sync=4 lidar_pose_sync=4 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777996695.690034447] [lvdot_detector_node]: Stage timers: detection=30 lidar_detection=47 tracking=60 classification=60 vis=59
+[lvdot_detector_main-6] [INFO] [1777996695.690059216] [lvdot_detector_node]: Processing phases: detection=run_core lidar_detection=waiting_new_lidar tracking=idle classification=waiting_new_tracking_update
+[lvdot_detector_main-6] [INFO] [1777996695.690073412] [lvdot_detector_node]: Pipeline stats: depth_samples=0/0 u_map=0 depth_boxes=0 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=1148/1148 uv=0 db=0 lidar=8 fused=8 filtered=8 tracks=8 dynamic=0 dyn_points=0 raw_dyn_points=0 service=0/0 split=8->0 (8 outputs) fusion_components=8 visual_only=0 lidar_only=8 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 uv_in=0 db_in=0 uv_best=0 db_best=0 mutual=0 uv_no_db=0 uv_not_mutual=0 uv_iou_reject=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 238 line groups → 15 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=15 d_boxes=15 valid_rows=13 invalid_rows=2
+[lvdot_detector_main-6] [UV] 238 line groups → 15 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=15 d_boxes=15 valid_rows=13 invalid_rows=2
+[lvdot_detector_main-6] [WARN] [1777996698.592401512] []: Messages of type 1 arrived out of order (will print only once)
+[lvdot_detector_main-6] [WARN] [1777996698.592490115] []: Messages of type 1 arrived out of order (will print only once)
+[lvdot_detector_main-6] [UV] 218 line groups → 11 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=11 d_boxes=11 valid_rows=10 invalid_rows=1
+[lvdot_detector_main-6] [UV] 235 line groups → 12 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=12 d_boxes=12 valid_rows=11 invalid_rows=1
+[lvdot_detector_main-6] [UV] 236 line groups → 13 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=13 d_boxes=13 valid_rows=12 invalid_rows=1
+[lvdot_detector_main-6] [UV] 220 line groups → 12 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=12 d_boxes=12 valid_rows=12 invalid_rows=0
+[lvdot_detector_main-6] [UV] 163 line groups → 12 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=12 d_boxes=12 valid_rows=11 invalid_rows=1
+[lvdot_detector_main-6] [UV] 148 line groups → 9 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=9 d_boxes=9 valid_rows=8 invalid_rows=1
+[lvdot_detector_main-6] [UV] 186 line groups → 11 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=11 d_boxes=11 valid_rows=11 invalid_rows=0
+[lvdot_detector_main-6] [UV] 201 line groups → 13 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=13 d_boxes=13 valid_rows=13 invalid_rows=0
+[lvdot_detector_main-6] [UV] 234 line groups → 16 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=16 d_boxes=16 valid_rows=15 invalid_rows=1
+[lvdot_detector_main-6] [INFO] [1777996714.719382950] [lvdot_detector_node]: Input health: depth=80 color=75 lidar=72 pose=354 odom=354 yolo=27 depth_pose_sync=45 lidar_pose_sync=42 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777996714.719486070] [lvdot_detector_node]: Stage timers: detection=41 lidar_detection=83 tracking=553 classification=257 vis=551
+[lvdot_detector_main-6] [INFO] [1777996714.719499585] [lvdot_detector_node]: Processing phases: detection=run_core lidar_detection=run_lidar_detector/dbscan tracking=waiting_new_filtered_update classification=run_core
+[lvdot_detector_main-6] [INFO] [1777996714.719511630] [lvdot_detector_node]: Pipeline stats: depth_samples=225/285200 u_map=16 depth_boxes=16 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=1551/1551 uv=0 db=2 lidar=11 fused=11 filtered=11 tracks=20 dynamic=0 dyn_points=453 raw_dyn_points=0 service=0/0 split=11->0 (11 outputs) fusion_components=11 visual_only=0 lidar_only=11 yolo_in=2 yolo_match3d=2 yolo_match_det=2 yolo_human=2 uv_in=16 db_in=2 uv_best=2 db_best=2 mutual=0 uv_no_db=14 uv_not_mutual=0 uv_iou_reject=2 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 263 line groups → 14 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=14 d_boxes=14 valid_rows=12 invalid_rows=2
+[lvdot_detector_main-6] [UV] 246 line groups → 13 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=13 d_boxes=13 valid_rows=11 invalid_rows=2
+[lvdot_detector_main-6] [UV] 279 line groups → 14 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=14 d_boxes=14 valid_rows=12 invalid_rows=2
+[lvdot_detector_main-6] [UV] 310 line groups → 17 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=17 d_boxes=17 valid_rows=15 invalid_rows=2
+[lvdot_detector_main-6] [UV] 301 line groups → 17 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=17 d_boxes=17 valid_rows=15 invalid_rows=2
+[lvdot_detector_main-6] [UV] 261 line groups → 15 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=15 d_boxes=15 valid_rows=14 invalid_rows=1
+[lvdot_detector_main-6] [UV] 248 line groups → 14 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=14 d_boxes=14 valid_rows=13 invalid_rows=1
+[lvdot_detector_main-6] [UV] 234 line groups → 8 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=8 d_boxes=8 valid_rows=8 invalid_rows=0
+[lvdot_detector_main-6] [UV] 268 line groups → 11 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=11 d_boxes=11 valid_rows=9 invalid_rows=2
+[lvdot_detector_main-6] [UV] 265 line groups → 11 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=11 d_boxes=11 valid_rows=10 invalid_rows=1
+[lvdot_detector_main-6] [UV] 280 line groups → 14 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=14 d_boxes=14 valid_rows=11 invalid_rows=3
+[lvdot_detector_main-6] [UV] 296 line groups → 16 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=16 d_boxes=16 valid_rows=13 invalid_rows=3
+[lvdot_detector_main-6] [UV] 309 line groups → 16 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=16 d_boxes=16 valid_rows=14 invalid_rows=2
+[lvdot_detector_main-6] [INFO] [1777996736.726231682] [lvdot_detector_node]: Input health: depth=181 color=156 lidar=154 pose=660 odom=660 yolo=70 depth_pose_sync=97 lidar_pose_sync=84 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777996736.726867692] [lvdot_detector_node]: Stage timers: detection=55 lidar_detection=172 tracking=1174 classification=575 vis=1139
+[lvdot_detector_main-6] [INFO] [1777996736.726886585] [lvdot_detector_node]: Processing phases: detection=run_core lidar_detection=run_lidar_detector/dbscan tracking=idle classification=run_core
+[lvdot_detector_main-6] [INFO] [1777996736.726897255] [lvdot_detector_node]: Pipeline stats: depth_samples=187/285200 u_map=15 depth_boxes=15 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=1144/1144 uv=0 db=3 lidar=9 fused=9 filtered=9 tracks=11 dynamic=1 dyn_points=127 raw_dyn_points=0 service=0/0 split=9->0 (9 outputs) fusion_components=9 visual_only=0 lidar_only=9 yolo_in=6 yolo_match3d=2 yolo_match_det=2 yolo_human=2 uv_in=0 db_in=0 uv_best=0 db_best=0 mutual=0 uv_no_db=0 uv_not_mutual=0 uv_iou_reject=0 fixed_size=9 size_reject=0
+[lvdot_detector_main-6] [UV] 282 line groups → 15 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=15 d_boxes=15 valid_rows=14 invalid_rows=1
+[lvdot_detector_main-6] [UV] 276 line groups → 15 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=15 d_boxes=15 valid_rows=11 invalid_rows=4
+[lvdot_detector_main-6] [UV] 312 line groups → 18 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=18 d_boxes=18 valid_rows=15 invalid_rows=3
+[lvdot_detector_main-6] [UV] 291 line groups → 16 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=16 d_boxes=16 valid_rows=13 invalid_rows=3
+[lvdot_detector_main-6] [UV] 306 line groups → 17 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=17 d_boxes=17 valid_rows=14 invalid_rows=3
+[lvdot_detector_main-6] [UV] 301 line groups → 17 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=17 d_boxes=17 valid_rows=15 invalid_rows=2
+[lvdot_detector_main-6] [UV] 313 line groups → 18 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=18 d_boxes=18 valid_rows=15 invalid_rows=3
+[lvdot_detector_main-6] [UV] 308 line groups → 18 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=18 d_boxes=18 valid_rows=13 invalid_rows=5
+[lvdot_detector_main-6] [UV] 336 line groups → 18 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=18 d_boxes=18 valid_rows=16 invalid_rows=2
+[lvdot_detector_main-6] [UV] 335 line groups → 17 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=17 d_boxes=17 valid_rows=15 invalid_rows=2
+[lvdot_detector_main-6] [UV] 317 line groups → 16 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=16 d_boxes=16 valid_rows=13 invalid_rows=3
+[lvdot_detector_main-6] [UV] 328 line groups → 17 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=17 d_boxes=17 valid_rows=12 invalid_rows=5
+[lvdot_detector_main-6] [UV] 320 line groups → 14 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=14 d_boxes=14 valid_rows=11 invalid_rows=3
+[lvdot_detector_main-6] [UV] 320 line groups → 16 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=16 d_boxes=16 valid_rows=12 invalid_rows=4
+[lvdot_detector_main-6] [INFO] [1777996759.401688650] [lvdot_detector_node]: Input health: depth=284 color=247 lidar=236 pose=966 odom=966 yolo=115 depth_pose_sync=147 lidar_pose_sync=126 depth_odom_sync=0 lidar_odom_sync=0
+[lvdot_detector_main-6] [INFO] [1777996759.401812271] [lvdot_detector_node]: Stage timers: detection=70 lidar_detection=292 tracking=1801 classification=1145 vis=1739
+[lvdot_detector_main-6] [INFO] [1777996759.401824310] [lvdot_detector_node]: Processing phases: detection=run_core lidar_detection=run_lidar_detector/dbscan tracking=waiting_new_filtered_update classification=waiting_new_tracking_update
+[lvdot_detector_main-6] [INFO] [1777996759.401831651] [lvdot_detector_node]: Pipeline stats: depth_samples=146/285200 u_map=15 depth_boxes=15 u_map_merge=0 u_map_db=0 u_map_visual=0 u_map_fused=0 u_map_filtered=0 lidar_samples=1150/1150 uv=0 db=2 lidar=6 fused=6 filtered=6 tracks=8 dynamic=2 dyn_points=0 raw_dyn_points=13 service=0/0 split=6->0 (6 outputs) fusion_components=6 visual_only=0 lidar_only=6 yolo_in=0 yolo_match3d=0 yolo_match_det=0 yolo_human=0 uv_in=0 db_in=0 uv_best=0 db_best=0 mutual=0 uv_no_db=0 uv_not_mutual=0 uv_iou_reject=0 fixed_size=0 size_reject=0
+[lvdot_detector_main-6] [UV] 295 line groups → 14 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=14 d_boxes=14 valid_rows=12 invalid_rows=2
+[lvdot_detector_main-6] [UV] 295 line groups → 15 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=15 d_boxes=15 valid_rows=14 invalid_rows=1
+[lvdot_detector_main-6] [UV] 314 line groups → 19 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=19 d_boxes=19 valid_rows=16 invalid_rows=3
+[lvdot_detector_main-6] [UV] 347 line groups → 19 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=19 d_boxes=19 valid_rows=17 invalid_rows=2
+[lvdot_detector_main-6] [UV] 345 line groups → 20 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=20 d_boxes=20 valid_rows=17 invalid_rows=3
+[lvdot_detector_main-6] [UV] 353 line groups → 20 merged boxes (area≥9)
+[lvdot_detector_main-6] [UV-3D] u_boxes=20 d_boxes=20 valid_rows=16 invalid_rows=4

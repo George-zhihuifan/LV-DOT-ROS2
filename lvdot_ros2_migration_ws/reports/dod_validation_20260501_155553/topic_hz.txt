@@ -1,0 +1,97 @@
+=== /onboard_detector/dynamic_bboxes ===
+WARNING: topic [/onboard_detector/dynamic_bboxes] does not appear to be published yet
+average rate: 21.723
+	min: 0.000s max: 0.085s std dev: 0.02546s window: 23
+average rate: 15.985
+	min: 0.000s max: 0.211s std dev: 0.04219s window: 34
+average rate: 16.525
+	min: 0.000s max: 0.211s std dev: 0.03636s window: 52
+average rate: 17.258
+	min: 0.000s max: 0.211s std dev: 0.03281s window: 72
+average rate: 16.719
+	min: 0.000s max: 0.215s std dev: 0.03520s window: 87
+average rate: 16.709
+	min: 0.000s max: 0.215s std dev: 0.03464s window: 104
+average rate: 16.379
+	min: 0.000s max: 0.215s std dev: 0.03441s window: 120
+average rate: 15.456
+	min: 0.000s max: 0.215s std dev: 0.03694s window: 130
+average rate: 15.145
+	min: 0.000s max: 0.215s std dev: 0.03629s window: 143
+average rate: 14.838
+	min: 0.000s max: 0.243s std dev: 0.03791s window: 155
+average rate: 14.561
+	min: 0.000s max: 0.243s std dev: 0.03737s window: 167
+average rate: 14.325
+	min: 0.000s max: 0.243s std dev: 0.03758s window: 179
+average rate: 14.255
+	min: 0.000s max: 0.243s std dev: 0.03667s window: 193
+average rate: 14.023
+	min: 0.000s max: 0.243s std dev: 0.03648s window: 204
+average rate: 13.979
+	min: 0.000s max: 0.243s std dev: 0.03593s window: 218
+=== /qcgaf/fused_bboxes ===
+average rate: 11.120
+	min: 0.041s max: 0.140s std dev: 0.02747s window: 12
+average rate: 11.784
+	min: 0.028s max: 0.141s std dev: 0.02853s window: 25
+average rate: 12.627
+	min: 0.028s max: 0.141s std dev: 0.02777s window: 40
+average rate: 12.941
+	min: 0.026s max: 0.141s std dev: 0.02837s window: 54
+average rate: 13.102
+	min: 0.020s max: 0.141s std dev: 0.02905s window: 68
+average rate: 13.107
+	min: 0.020s max: 0.141s std dev: 0.02842s window: 82
+average rate: 13.389
+	min: 0.020s max: 0.141s std dev: 0.02802s window: 98
+average rate: 13.527
+	min: 0.020s max: 0.141s std dev: 0.02770s window: 114
+average rate: 13.870
+	min: 0.018s max: 0.141s std dev: 0.02727s window: 131
+average rate: 13.781
+	min: 0.018s max: 0.143s std dev: 0.02751s window: 145
+average rate: 14.137
+	min: 0.018s max: 0.143s std dev: 0.02723s window: 164
+average rate: 13.828
+	min: 0.018s max: 0.144s std dev: 0.02815s window: 175
+average rate: 13.010
+	min: 0.018s max: 1.045s std dev: 0.07665s window: 185
+average rate: 12.992
+	min: 0.018s max: 1.045s std dev: 0.07438s window: 198
+average rate: 12.864
+	min: 0.018s max: 1.045s std dev: 0.07264s window: 210
+average rate: 13.100
+	min: 0.018s max: 1.045s std dev: 0.07041s window: 227
+=== /gru_predictor/predicted_positions ===
+WARNING: topic [/gru_predictor/predicted_positions] does not appear to be published yet
+average rate: 15.468
+	min: 0.020s max: 0.137s std dev: 0.03200s window: 17
+average rate: 14.641
+	min: 0.020s max: 0.146s std dev: 0.03212s window: 32
+average rate: 14.379
+	min: 0.020s max: 0.146s std dev: 0.03089s window: 46
+average rate: 14.557
+	min: 0.014s max: 0.169s std dev: 0.03233s window: 62
+average rate: 14.546
+	min: 0.014s max: 0.169s std dev: 0.03155s window: 78
+average rate: 14.059
+	min: 0.014s max: 0.169s std dev: 0.03226s window: 90
+average rate: 14.016
+	min: 0.014s max: 0.169s std dev: 0.03142s window: 104
+average rate: 14.081
+	min: 0.014s max: 0.169s std dev: 0.03059s window: 119
+average rate: 14.369
+	min: 0.014s max: 0.169s std dev: 0.02999s window: 136
+average rate: 14.306
+	min: 0.014s max: 0.169s std dev: 0.02965s window: 150
+average rate: 14.164
+	min: 0.014s max: 0.169s std dev: 0.02932s window: 163
+average rate: 14.105
+	min: 0.014s max: 0.171s std dev: 0.02957s window: 177
+average rate: 14.159
+	min: 0.014s max: 0.171s std dev: 0.02893s window: 192
+average rate: 14.152
+	min: 0.014s max: 0.171s std dev: 0.02965s window: 207
+average rate: 14.128
+	min: 0.014s max: 0.171s std dev: 0.02964s window: 221

@@ -1,0 +1,47 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Enabled: true
+      Name: Grid
+      Plane: XY
+      Plane Cell Count: 80
+      Cell Size: 1
+      Color: 160; 160; 160
+      Alpha: 0.35
+      Reference Frame: <Fixed Frame>
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Name: U-Depth Map
+      Topic:
+        Value: /onboard_detector/detected_u_depth_map
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 1
+      Queue Size: 1
+      Median window: 5
+      Min Value: 0
+      Max Value: 1
+      Normalize Range: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: UV BBoxes
+      Topic:
+        Value: /onboard_detector/uv_bboxes
+      Queue Size: 100
+  Enabled: true
+  Global Options:
+    Fixed Frame: map
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+      Line color: 128; 128; 0
+  Value: true

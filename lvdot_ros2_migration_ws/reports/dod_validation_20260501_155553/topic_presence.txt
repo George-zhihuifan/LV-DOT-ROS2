@@ -1,0 +1,6 @@
+[OK] /onboard_detector/visual_bboxes_qcgaf (publisher_count=1)
+[OK] /onboard_detector/lidar_bboxes_qcgaf (publisher_count=1)
+[OK] /onboard_detector/dynamic_bboxes (publisher_count=1)
+[OK] /qcgaf/fused_bboxes (publisher_count=1)
+[OK] /gru_predictor/predicted_positions (publisher_count=1)
+All required topics exist with publishers

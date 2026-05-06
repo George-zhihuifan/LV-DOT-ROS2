@@ -1,0 +1,18 @@
+rounds=5
+duration_sec=60
+gt_source=agents
+runs_collected=5
+gt_objects_avg=8.00
+skew_warn_avg=1.00
+
+uv_recall_mean=0.1814 std=0.0378
+uv_err_m_mean=1.1314 std=0.0187
+db_recall_mean=0.0550 std=0.0145
+db_err_m_mean=1.1146 std=0.0820
+lidar_recall_mean=0.1228 std=0.0310
+lidar_err_m_mean=1.3210 std=0.0089
+fused_recall_mean=0.0994 std=0.0228
+fused_err_m_mean=1.3012 std=0.0144
+tracked_recall_mean=0.1358 std=0.0281
+tracked_err_m_mean=1.2776 std=0.0360
+yolo2d_recall_mean=0.3170 std=0.1342

@@ -1,0 +1,10 @@
+=== Detection vs GT (center-based, source=pose_info) ===
+Duration: 45.0s
+Current GT objects: 0
+Visible-only scoring: 0
+uv      recall=0.000 matched=0/0 mean_center_err=0.000m
+db      recall=0.000 matched=0/0 mean_center_err=0.000m
+lidar   recall=0.000 matched=0/0 mean_center_err=0.000m
+fused   recall=0.000 matched=0/0 mean_center_err=0.000m
+tracked recall=0.000 matched=0/0 mean_center_err=0.000m
+yolo_2d recall=0.000 matched=0/0

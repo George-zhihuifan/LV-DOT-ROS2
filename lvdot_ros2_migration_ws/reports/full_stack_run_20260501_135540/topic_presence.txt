@@ -1,0 +1,6 @@
+[MISS] /onboard_detector/visual_bboxes_qcgaf
+[MISS] /onboard_detector/lidar_bboxes_qcgaf
+[OK] /onboard_detector/dynamic_bboxes
+[MISS] /qcgaf/fused_bboxes
+[OK] /gru_predictor/predicted_positions
+Topic check failed

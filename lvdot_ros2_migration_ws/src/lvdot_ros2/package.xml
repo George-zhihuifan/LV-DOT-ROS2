@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>lvdot_ros2</name>
+  <version>0.0.0</version>
+  <description>ROS2 node wrapper skeleton for LV-DOT migration.</description>
+  <maintainer email="skbt2@todo.todo">skbt2</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>cv_bridge</depend>
+  <depend>geometry_msgs</depend>
+  <depend>lvdot_core</depend>
+  <depend>lvdot_interfaces</depend>
+  <depend>message_filters</depend>
+  <depend>nav_msgs</depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>vision_msgs</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

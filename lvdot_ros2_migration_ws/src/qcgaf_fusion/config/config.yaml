@@ -1,0 +1,73 @@
+# QC-GAF: Quality-aware Gated Attention Fusion Network
+
+model:
+  cam_dim: 9          # [x,y,z, w,h,l, depth_pixel_count, depth_variance, valid_pixel_ratio]
+  lidar_dim: 10       # [x,y,z, w,h,l, cluster_point_count, std_x, std_y, std_z]
+  quality_dim: 7      # [brightness, edge, depth_consistency, yolo_conf, point_density, imu_vib, depth_temporal]
+  hidden_dim: 20
+  feat_dim: 32
+  output_dim: 7       # [x,y,z, w,h,l, conf]
+  max_cam_dets: 10
+  max_lidar_dets: 10
+
+train:
+  batch_size: 128
+  learning_rate: 0.001
+  epochs: 300
+  patience: 50
+  loss_w_box: 1.0
+  loss_w_conf: 0.5
+  loss_w_match: 0.5
+
+data:
+  nuscenes_root: "/home/LV-DOT/data/nuscenes"
+  nuscenes_version: "v1.0-trainval"
+  repeats_per_frame: 5
+  train_scenes: 700
+  test_scenes: 150
+  scenario_weights:       # sampling ratio — more balanced for hard cases
+    normal: 0.25
+    glare: 0.25
+    vibration: 0.25
+    rain_fog: 0.25
+
+noise:
+  normal:
+    cam_pos_std: 0.1
+    lidar_pos_std: 0.05
+    cam_size_std: 0.05
+    lidar_size_std: 0.1
+    cam_drop_rate: 0.1
+    lidar_drop_rate: 0.1
+  glare:
+    cam_pos_std: 0.5
+    lidar_pos_std: 0.05
+    cam_size_std: 0.3
+    lidar_size_std: 0.1
+    cam_drop_rate: 0.3
+    lidar_drop_rate: 0.1
+  vibration:
+    cam_pos_std: 0.1
+    lidar_pos_std: 0.05
+    cam_size_std: 0.1
+    lidar_size_std: 0.15
+    cam_drop_rate: 0.15
+    lidar_drop_rate: 0.15
+    vib_offset_std: 0.15
+  rain_fog:
+    cam_pos_std: 0.15
+    lidar_pos_std: 0.2
+    cam_size_std: 0.1
+    lidar_size_std: 0.4
+    cam_drop_rate: 0.1
+    lidar_drop_rate: 0.3
+
+ros:
+  cam_topic: "/onboard_detector/visual_bboxes_qcgaf"
+  lidar_topic: "/onboard_detector/lidar_bboxes_qcgaf"
+  color_topic: "/camera/color/image_raw"
+  depth_topic: "/camera/depth/image_raw"
+  yolo_topic: "/yolo_detector/detected_bounding_boxes"
+  lidar_cloud_topic: "/livox/lidar"
+  output_topic: "/qcgaf/fused_bboxes"
+  sync_slop: 0.05

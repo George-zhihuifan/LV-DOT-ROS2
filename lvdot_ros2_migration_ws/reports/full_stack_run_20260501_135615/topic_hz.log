@@ -1,0 +1,4 @@
+=== /onboard_detector/dynamic_bboxes ===
+=== /qcgaf/fused_bboxes ===
+=== /gru_predictor/predicted_positions ===
+WARNING: topic [/gru_predictor/predicted_positions] does not appear to be published yet

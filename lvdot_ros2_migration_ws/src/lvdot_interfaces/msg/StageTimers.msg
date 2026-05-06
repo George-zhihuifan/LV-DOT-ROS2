@@ -1,0 +1,5 @@
+uint64 detection_tick_count
+uint64 lidar_detection_tick_count
+uint64 tracking_tick_count
+uint64 classification_tick_count
+uint64 vis_tick_count

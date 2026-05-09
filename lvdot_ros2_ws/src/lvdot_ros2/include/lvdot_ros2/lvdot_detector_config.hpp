@@ -62,6 +62,13 @@ struct LVdotDetectorConfig
   std::vector<double> local_sensor_range{5.0, 5.0, 5.0};
   int dbscan_min_points_cluster{20};
   double dbscan_search_range_epsilon{0.05};
+  double depth_bbox_quantile_xy_low{0.08};
+  double depth_bbox_quantile_xy_high{0.92};
+  double depth_bbox_quantile_z_low{0.02};
+  double depth_bbox_quantile_z_high{0.98};
+  int depth_bbox_quantile_min_points{30};
+  double depth_bbox_padding_xy{0.05};
+  double depth_bbox_padding_z{0.03};
   int lidar_dbscan_min_points{10};
   double lidar_dbscan_epsilon{0.05};
   int post_min_cluster_points{0};

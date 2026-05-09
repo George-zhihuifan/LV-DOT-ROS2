@@ -17,9 +17,9 @@ lvdot_detector_node:
     depth_max_value: 12.0
     u_map_row_downsample: 2
     u_map_col_scale: 0.5
-    u_map_threshold_point: 1
-    u_map_threshold_line: 1
-    u_map_min_length_line: 2
+    u_map_threshold_point: 2
+    u_map_threshold_line: 2
+    u_map_min_length_line: 4
     depth_filter_margin: 10
     depth_skip_pixel: 1
     image_cols: 640
@@ -39,12 +39,19 @@ lvdot_detector_node:
                     0.0, 0.0, 0.0, 1.0]
 
     time_step: 0.033
-    ground_height: 0.0
+    ground_height: 0.05
     roof_height: 3.0
-    voxel_occupied_thresh: 5.0
+    voxel_occupied_thresh: 8.0
     local_sensor_range: [10.0, 10.0, 5.0]
-    dbscan_min_points_cluster: 20
-    dbscan_search_range_epsilon: 0.05
+    dbscan_min_points_cluster: 24
+    dbscan_search_range_epsilon: 0.08
+    depth_bbox_quantile_xy_low: 0.10
+    depth_bbox_quantile_xy_high: 0.90
+    depth_bbox_quantile_z_low: 0.02
+    depth_bbox_quantile_z_high: 0.98
+    depth_bbox_quantile_min_points: 28
+    depth_bbox_padding_xy: 0.03
+    depth_bbox_padding_z: 0.02
     lidar_DBSCAN_min_points: 10
     lidar_DBSCAN_epsilon: 0.05
     post_min_cluster_points: 0

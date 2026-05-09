@@ -515,18 +515,10 @@ namespace onboardDetector{
     // }
     void UVdetector::display_U_map()
     {
-        // visualize with bounding box
+        // visualize only boxes (no heatmap colormap) to reduce clutter in RViz
         if(this->show_bounding_box_U)
         {
-            this->U_map = this->U_map * 10;
-            this->U_map_show = this->U_map;
-
-            double min, max;
-            cv::minMaxIdx(this->U_map_show, &min, &max);
-            cvtColor(this->U_map_show, this->U_map_show, cv::COLOR_GRAY2RGB);
-            cv::convertScaleAbs(this->U_map_show, this->U_map_show, 255./ max);
-            this->U_map_show.convertTo(this->U_map_show, CV_8UC1);
-            applyColorMap(this->U_map_show, this->U_map_show, cv::COLORMAP_JET);
+            this->U_map_show = cv::Mat::zeros(this->U_map.rows, this->U_map.cols, CV_8UC3);
 
             for(size_t b = 0; b < this->bounding_box_U.size(); b++)
             {

@@ -358,6 +358,13 @@ onboardDetector::DetectionInput build_detection_input(
   detection.voxelOccThresh = config.voxel_occupied_thresh;
   detection.dbMinPointsCluster = config.dbscan_min_points_cluster;
   detection.dbEpsilon = config.dbscan_search_range_epsilon;
+  detection.depthBBoxQuantileXYLow = config.depth_bbox_quantile_xy_low;
+  detection.depthBBoxQuantileXYHigh = config.depth_bbox_quantile_xy_high;
+  detection.depthBBoxQuantileZLow = config.depth_bbox_quantile_z_low;
+  detection.depthBBoxQuantileZHigh = config.depth_bbox_quantile_z_high;
+  detection.depthBBoxQuantileMinPoints = config.depth_bbox_quantile_min_points;
+  detection.depthBBoxPaddingXY = config.depth_bbox_padding_xy;
+  detection.depthBBoxPaddingZ = config.depth_bbox_padding_z;
   detection.localSensorRange = Eigen::Vector3d(
     config.local_sensor_range.size() > 0 ? config.local_sensor_range[0] : 5.0,
     config.local_sensor_range.size() > 1 ? config.local_sensor_range[1] : 5.0,

@@ -616,6 +616,13 @@ void LVdotDetectorNode::load_config_from_parameters()
   config_.local_sensor_range = resolve_parameter<std::vector<double>>(*this, "local_sensor_range", config_.local_sensor_range);
   config_.dbscan_min_points_cluster = resolve_parameter<int>(*this, "dbscan_min_points_cluster", config_.dbscan_min_points_cluster);
   config_.dbscan_search_range_epsilon = resolve_parameter<double>(*this, "dbscan_search_range_epsilon", config_.dbscan_search_range_epsilon);
+  config_.depth_bbox_quantile_xy_low = resolve_parameter<double>(*this, "depth_bbox_quantile_xy_low", config_.depth_bbox_quantile_xy_low);
+  config_.depth_bbox_quantile_xy_high = resolve_parameter<double>(*this, "depth_bbox_quantile_xy_high", config_.depth_bbox_quantile_xy_high);
+  config_.depth_bbox_quantile_z_low = resolve_parameter<double>(*this, "depth_bbox_quantile_z_low", config_.depth_bbox_quantile_z_low);
+  config_.depth_bbox_quantile_z_high = resolve_parameter<double>(*this, "depth_bbox_quantile_z_high", config_.depth_bbox_quantile_z_high);
+  config_.depth_bbox_quantile_min_points = resolve_parameter<int>(*this, "depth_bbox_quantile_min_points", config_.depth_bbox_quantile_min_points);
+  config_.depth_bbox_padding_xy = resolve_parameter<double>(*this, "depth_bbox_padding_xy", config_.depth_bbox_padding_xy);
+  config_.depth_bbox_padding_z = resolve_parameter<double>(*this, "depth_bbox_padding_z", config_.depth_bbox_padding_z);
   config_.lidar_dbscan_min_points = resolve_parameter<int>(*this, "lidar_DBSCAN_min_points", config_.lidar_dbscan_min_points);
   config_.lidar_dbscan_epsilon = resolve_parameter<double>(*this, "lidar_DBSCAN_epsilon", config_.lidar_dbscan_epsilon);
   config_.post_min_cluster_points = resolve_parameter<int>(*this, "post_min_cluster_points", config_.post_min_cluster_points);

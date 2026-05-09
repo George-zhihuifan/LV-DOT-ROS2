@@ -3,6 +3,7 @@
 #include <cmath>
 #include <limits>
 #include <map>
+#include <algorithm>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -227,20 +228,82 @@ void clusterPointsAndBBoxes(const std::vector<ClusterPoint>& points, const Detec
             continue;
         }
         box3D box;
-        double xmin = pcClustersTemp[i][0].point(0);
-        double ymin = pcClustersTemp[i][0].point(1);
-        double zmin = pcClustersTemp[i][0].point(2);
-        double xmax = pcClustersTemp[i][0].point(0);
-        double ymax = pcClustersTemp[i][0].point(1);
-        double zmax = pcClustersTemp[i][0].point(2);
+        std::vector<double> xs;
+        std::vector<double> ys;
+        std::vector<double> zs;
+        xs.reserve(pcClustersTemp[i].size());
+        ys.reserve(pcClustersTemp[i].size());
+        zs.reserve(pcClustersTemp[i].size());
+
+        double xmin_raw = pcClustersTemp[i][0].point(0);
+        double ymin_raw = pcClustersTemp[i][0].point(1);
+        double zmin_raw = pcClustersTemp[i][0].point(2);
+        double xmax_raw = pcClustersTemp[i][0].point(0);
+        double ymax_raw = pcClustersTemp[i][0].point(1);
+        double zmax_raw = pcClustersTemp[i][0].point(2);
         for (const auto& sample : pcClustersTemp[i]) {
-            xmin = std::min(xmin, sample.point(0));
-            ymin = std::min(ymin, sample.point(1));
-            zmin = std::min(zmin, sample.point(2));
-            xmax = std::max(xmax, sample.point(0));
-            ymax = std::max(ymax, sample.point(1));
-            zmax = std::max(zmax, sample.point(2));
+            const double x = sample.point(0);
+            const double y = sample.point(1);
+            const double z = sample.point(2);
+            xs.push_back(x);
+            ys.push_back(y);
+            zs.push_back(z);
+            xmin_raw = std::min(xmin_raw, x);
+            ymin_raw = std::min(ymin_raw, y);
+            zmin_raw = std::min(zmin_raw, z);
+            xmax_raw = std::max(xmax_raw, x);
+            ymax_raw = std::max(ymax_raw, y);
+            zmax_raw = std::max(zmax_raw, z);
         }
+
+        auto quantile_bound = [](std::vector<double>& values, double q) {
+            if (values.empty()) {
+                return 0.0;
+            }
+            q = std::clamp(q, 0.0, 1.0);
+            const std::size_t idx = static_cast<std::size_t>(q * static_cast<double>(values.size() - 1));
+            std::nth_element(values.begin(), values.begin() + static_cast<std::ptrdiff_t>(idx), values.end());
+            return values[idx];
+        };
+
+        double xmin = xmin_raw;
+        double ymin = ymin_raw;
+        double zmin = zmin_raw;
+        double xmax = xmax_raw;
+        double ymax = ymax_raw;
+        double zmax = zmax_raw;
+
+        if (static_cast<int>(pcClustersTemp[i].size()) >= config.depthBBoxQuantileMinPoints) {
+            const double qx_low = quantile_bound(xs, config.depthBBoxQuantileXYLow);
+            const double qx_high = quantile_bound(xs, config.depthBBoxQuantileXYHigh);
+            const double qy_low = quantile_bound(ys, config.depthBBoxQuantileXYLow);
+            const double qy_high = quantile_bound(ys, config.depthBBoxQuantileXYHigh);
+            const double qz_low = quantile_bound(zs, config.depthBBoxQuantileZLow);
+            const double qz_high = quantile_bound(zs, config.depthBBoxQuantileZHigh);
+
+            if (qx_high > qx_low) {
+                xmin = qx_low;
+                xmax = qx_high;
+            }
+            if (qy_high > qy_low) {
+                ymin = qy_low;
+                ymax = qy_high;
+            }
+            if (qz_high > qz_low) {
+                zmin = qz_low;
+                zmax = qz_high;
+            }
+        }
+
+        xmin -= std::max(0.0, config.depthBBoxPaddingXY);
+        xmax += std::max(0.0, config.depthBBoxPaddingXY);
+        ymin -= std::max(0.0, config.depthBBoxPaddingXY);
+        ymax += std::max(0.0, config.depthBBoxPaddingXY);
+        zmin -= std::max(0.0, config.depthBBoxPaddingZ);
+        zmax += std::max(0.0, config.depthBBoxPaddingZ);
+
+        zmin = std::max(zmin, config.groundHeight);
+
         box.id = static_cast<double>(i);
         box.x = (xmax + xmin) / 2.0;
         box.y = (ymax + ymin) / 2.0;

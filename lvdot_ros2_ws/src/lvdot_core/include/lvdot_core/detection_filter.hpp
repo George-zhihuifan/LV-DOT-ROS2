@@ -47,6 +47,13 @@ struct DetectionConfig
     Eigen::Matrix3d orientationDepth{Eigen::Matrix3d::Identity()};
     Eigen::Vector3d minObjectSize{0.0, 0.0, 0.0};
     Eigen::Vector3d maxObjectSize{3.0, 3.0, 2.0};
+    double depthBBoxQuantileXYLow{0.08};
+    double depthBBoxQuantileXYHigh{0.92};
+    double depthBBoxQuantileZLow{0.02};
+    double depthBBoxQuantileZHigh{0.98};
+    int depthBBoxQuantileMinPoints{30};
+    double depthBBoxPaddingXY{0.05};
+    double depthBBoxPaddingZ{0.03};
 
     int uMapRowDownsample{4};
     float uMapColScale{0.5f};

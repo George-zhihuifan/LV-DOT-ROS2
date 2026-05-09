@@ -28,3 +28,7 @@ uint64 dynamic_filtered_point_count
 uint64 raw_dynamic_point_count
 uint64 service_call_count
 uint64 service_response_count
+uint64 yolo_input_count
+uint64 yolo_candidate_3d_count
+uint64 yolo_matched_3d_count
+uint64 yolo_fused_used_count

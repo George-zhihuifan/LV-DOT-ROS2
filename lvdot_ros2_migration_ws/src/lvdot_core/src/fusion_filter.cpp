@@ -377,6 +377,7 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
     output.filteredPcClusters = output.filteredPcClustersBeforeYolo;
     output.filteredPcClusterCenters = output.filteredPcClusterCentersBeforeYolo;
     output.filteredPcClusterStds = output.filteredPcClusterStdsBeforeYolo;
+    output.stats.yolo_candidate_3d_count = output.filteredBBoxes.size();
     output.stats.split_source_boxes = output.filteredBBoxes.size();
 
     if (input.yoloDetectionResults.empty()) {
@@ -622,6 +623,7 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
         }
     }
     output.stats.split_output_boxes = output.filteredBBoxes.size();
+    output.stats.yolo_fused_used_count = output.stats.yolo_human_marked_count;
     return output;
 }
 

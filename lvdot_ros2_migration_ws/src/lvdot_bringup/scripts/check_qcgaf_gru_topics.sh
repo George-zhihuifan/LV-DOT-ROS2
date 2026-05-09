@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+WAIT_SEC="${1:-20}"
+
 required=(
   /onboard_detector/visual_bboxes_qcgaf
   /onboard_detector/lidar_bboxes_qcgaf
@@ -9,6 +11,32 @@ required=(
   /gru_predictor/predicted_positions
 )
 
+wait_for_topics() {
+  local timeout="$1"
+  local start_ts now_ts
+  start_ts="$(date +%s)"
+  while true; do
+    local topics
+    topics="$(ros2 topic list || true)"
+    local all_exist=1
+    for t in "${required[@]}"; do
+      if ! grep -qx "$t" <<< "$topics"; then
+        all_exist=0
+        break
+      fi
+    done
+    if [[ "$all_exist" -eq 1 ]]; then
+      return 0
+    fi
+    now_ts="$(date +%s)"
+    if (( now_ts - start_ts >= timeout )); then
+      return 1
+    fi
+    sleep 1
+  done
+}
+
+wait_for_topics "$WAIT_SEC" || true
 topics="$(ros2 topic list || true)"
 missing=0
 

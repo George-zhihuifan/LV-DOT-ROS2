@@ -54,13 +54,18 @@ lvdot_detector_node:
     max_match_range: 0.6
     max_size_diff_range: 0.6
     feature_weight: [3.0, 3.0, 0.1, 0.5, 0.5, 0.05, 0.0, 0.0, 0.0]
+    sim_prev_weight: 1.0
+    sim_proped_weight: 1.4
+    adaptive_similarity_weight: false
+    similarity_distance_norm: 0.6
+    min_match_similarity: -0.8
     history_size: 100
-    max_unmatched_frames: 8
+    max_unmatched_frames: 14
     fix_size_history_threshold: 10
     fix_size_dimension_threshold: 0.4
     kalman_filter_param: [0.25, 0.01, 0.05, 0.05, 0.04, 0.3, 0.6]
     kalman_filter_averaging_frames: 10
-    frame_skip: 3
+    frame_skip: 1
     dynamic_velocity_threshold: 0.2
     dynamic_voting_threshold: 0.6
     frames_force_dynamic: 10
@@ -73,6 +78,9 @@ lvdot_detector_node:
     enable_stage_timers: false
 
     enable_sync_context: true
+    enable_yolo_sync: true
+    sync_queue_size: 100
+    sync_slop_sec: 0.20
     max_depth_lidar_skew_sec: 0.8
     max_depth_yolo_skew_sec: 0.8
     max_lidar_yolo_skew_sec: 1.0

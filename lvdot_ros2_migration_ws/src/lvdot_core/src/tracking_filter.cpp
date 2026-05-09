@@ -185,7 +185,18 @@ void findBestMatch(
                 prevBBoxesFeat[j].dot(currBBoxesFeat[i]) / prevNorm : 0.0;
             const double simProped = propNorm > 1e-9 ?
                 propedBBoxesFeat[j].dot(currBBoxesFeat[i]) / propNorm : 0.0;
-            candidates.push_back(Candidate{i, static_cast<int>(j), simPrev + simProped});
+            double sim = config.simPrevWeight * simPrev + config.simPropedWeight * simProped;
+            if (config.adaptiveSimilarityWeight) {
+                const double distanceNorm = std::max(config.similarityDistanceNorm, 1e-6);
+                const double closeness = std::clamp(1.0 - planar / distanceNorm, 0.0, 1.0);
+                const double adaptivePrevWeight = config.simPrevWeight * (1.5 - closeness);
+                const double adaptivePropedWeight = config.simPropedWeight * (0.5 + closeness);
+                sim = adaptivePrevWeight * simPrev + adaptivePropedWeight * simProped;
+            }
+            if (sim < config.minMatchSimilarity) {
+                continue;
+            }
+            candidates.push_back(Candidate{i, static_cast<int>(j), sim});
         }
     }
 

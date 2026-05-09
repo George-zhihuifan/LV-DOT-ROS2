@@ -54,6 +54,11 @@ lvdot_detector_node:
     max_match_range: 0.6
     max_size_diff_range: 0.6
     feature_weight: [3.0, 3.0, 0.1, 0.5, 0.5, 0.05, 0.0, 0.0, 0.0]
+    sim_prev_weight: 1.0
+    sim_proped_weight: 1.0
+    adaptive_similarity_weight: false
+    similarity_distance_norm: 0.6
+    min_match_similarity: -2.0
     history_size: 100
     max_unmatched_frames: 8
     fix_size_history_threshold: 10
@@ -73,6 +78,9 @@ lvdot_detector_node:
     enable_stage_timers: false
 
     enable_sync_context: true
+    enable_yolo_sync: true
+    sync_queue_size: 100
+    sync_slop_sec: 0.20
     max_depth_lidar_skew_sec: 0.8
     max_depth_yolo_skew_sec: 0.8
     max_lidar_yolo_skew_sec: 1.0

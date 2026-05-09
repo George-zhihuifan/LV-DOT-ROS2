@@ -66,6 +66,12 @@ private:
   void on_lidar_odom_sync(
     const sensor_msgs::msg::PointCloud2::ConstSharedPtr & lidar_msg,
     const nav_msgs::msg::Odometry::ConstSharedPtr & odom_msg);
+  void on_depth_yolo_sync(
+    const sensor_msgs::msg::Image::ConstSharedPtr & depth_msg,
+    const vision_msgs::msg::Detection2DArray::ConstSharedPtr & yolo_msg);
+  void on_lidar_yolo_sync(
+    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & lidar_msg,
+    const vision_msgs::msg::Detection2DArray::ConstSharedPtr & yolo_msg);
   void on_detection_timer();
   void on_lidar_detection_timer();
   void on_tracking_timer();
@@ -151,6 +157,8 @@ private:
   std::size_t lidar_pose_sync_count_{0};
   std::size_t depth_odom_sync_count_{0};
   std::size_t lidar_odom_sync_count_{0};
+  std::size_t depth_yolo_sync_count_{0};
+  std::size_t lidar_yolo_sync_count_{0};
   std::size_t detection_tick_count_{0};
   std::size_t lidar_detection_tick_count_{0};
   std::size_t tracking_tick_count_{0};
@@ -181,9 +189,11 @@ private:
   std::size_t last_visual_only_component_count_{0};
   std::size_t last_lidar_only_component_count_{0};
   std::size_t last_yolo_input_count_{0};
+  std::size_t last_yolo_candidate_3d_count_{0};
   std::size_t last_yolo_matched_3d_count_{0};
   std::size_t last_yolo_matched_detection_count_{0};
   std::size_t last_yolo_human_marked_count_{0};
+  std::size_t last_yolo_fused_used_count_{0};
   std::size_t last_uv_input_count_{0};
   std::size_t last_db_input_count_{0};
   std::size_t last_uv_best_match_count_{0};

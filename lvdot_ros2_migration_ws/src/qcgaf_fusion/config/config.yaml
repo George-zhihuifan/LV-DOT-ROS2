@@ -7,8 +7,8 @@ model:
   hidden_dim: 20
   feat_dim: 32
   output_dim: 7       # [x,y,z, w,h,l, conf]
-  max_cam_dets: 10
-  max_lidar_dets: 10
+  max_cam_dets: 16
+  max_lidar_dets: 16
 
 train:
   batch_size: 128
@@ -63,11 +63,11 @@ noise:
     lidar_drop_rate: 0.3
 
 ros:
-  cam_topic: "/onboard_detector/visual_bboxes_qcgaf"
+  cam_topic: "/onboard_detector/filtered_bboxes"
   lidar_topic: "/onboard_detector/lidar_bboxes_qcgaf"
-  color_topic: "/camera/color/image_raw"
-  depth_topic: "/camera/depth/image_raw"
+  color_topic: "/rgbd_camera/image"
+  depth_topic: "/rgbd_camera/depth_image"
   yolo_topic: "/yolo_detector/detected_bounding_boxes"
-  lidar_cloud_topic: "/livox/lidar"
+  lidar_cloud_topic: "/uav_lidar/scan/points"
   output_topic: "/qcgaf/fused_bboxes"
-  sync_slop: 0.05
+  sync_slop: 0.12

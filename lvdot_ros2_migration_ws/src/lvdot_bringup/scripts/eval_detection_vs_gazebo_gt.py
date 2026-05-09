@@ -65,11 +65,21 @@ def pose_to_box(p: Pose) -> Box:
 
 
 class EvalNode(Node):
-    def __init__(self, duration: float, gt_source: str, visible_only: bool, depth_min: float, depth_max: float):
+    def __init__(
+        self,
+        duration: float,
+        gt_source: str,
+        visible_only: bool,
+        depth_min: float,
+        depth_max: float,
+        include_qcgaf: bool,
+        match_gate_m: float,
+    ):
         super().__init__("eval_detection_vs_gazebo_gt")
         self.duration = duration
         self.gt_source = gt_source
         self.visible_only = visible_only
+        self.match_gate_m = match_gate_m
         self.start = time.time()
         self.gt: Dict[str, Box] = {}
         self.det: Dict[str, List[Box]] = {
@@ -79,6 +89,10 @@ class EvalNode(Node):
             "fused": [],
             "tracked": [],
         }
+        self.metric_order = ["uv", "db", "lidar", "fused", "tracked"]
+        if include_qcgaf:
+            self.det["qcgaf_fused"] = []
+            self.metric_order.append("qcgaf_fused")
         self.acc: Dict[str, Dict[str, float]] = {
             k: {"frames": 0.0, "gt_count": 0.0, "matched": 0.0, "sum_center_err": 0.0}
             for k in self.det.keys()
@@ -105,6 +119,8 @@ class EvalNode(Node):
         self.create_subscription(MarkerArray, "/onboard_detector/lidar_bboxes", lambda m: self.on_det("lidar", m), 10)
         self.create_subscription(MarkerArray, "/onboard_detector/filtered_bboxes", lambda m: self.on_det("fused", m), 10)
         self.create_subscription(MarkerArray, "/onboard_detector/tracked_bboxes", lambda m: self.on_det("tracked", m), 10)
+        if include_qcgaf:
+            self.create_subscription(MarkerArray, "/qcgaf/fused_bboxes", lambda m: self.on_det("qcgaf_fused", m), 10)
         self.timer = self.create_timer(0.5, self.tick)
 
         self.uav_pose: Box = Box(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
@@ -272,7 +288,7 @@ class EvalNode(Node):
             if not gt_list:
                 return
         for k, det_list in self.det.items():
-            m, e = self._match_frame(gt_list, det_list)
+            m, e = self._match_frame(gt_list, det_list, gate=self.match_gate_m)
             st = self.acc[k]
             st["frames"] += 1.0
             st["gt_count"] += float(len(gt_list))
@@ -300,9 +316,10 @@ class EvalNode(Node):
     def report(self) -> None:
         print(f"=== Detection vs GT (center-based, source={self.gt_source}) ===")
         print(f"Duration: {self.duration:.1f}s")
+        print(f"Match gate(m): {self.match_gate_m:.2f}")
         print(f"Current GT objects: {len(self.gt)}")
         print(f"Visible-only scoring: {int(self.visible_only)}")
-        for k in ["uv", "db", "lidar", "fused", "tracked"]:
+        for k in self.metric_order:
             st = self.acc[k]
             matched = st["matched"]
             gt_total = max(1.0, st["gt_count"])
@@ -328,11 +345,23 @@ def main() -> None:
     ap.add_argument("--visible-only", action="store_true", default=False)
     ap.add_argument("--depth-min", type=float, default=0.2)
     ap.add_argument("--depth-max", type=float, default=12.0)
+    ap.add_argument("--include-qcgaf", action="store_true", default=False)
+    ap.add_argument("--match-gate-m", type=float, default=1.5)
     args = ap.parse_args()
     if args.depth_max <= args.depth_min:
         raise SystemExit("--depth-max must be greater than --depth-min")
+    if args.match_gate_m <= 0.0:
+        raise SystemExit("--match-gate-m must be > 0")
     rclpy.init()
-    node = EvalNode(args.duration, args.gt_source, args.visible_only, args.depth_min, args.depth_max)
+    node = EvalNode(
+        args.duration,
+        args.gt_source,
+        args.visible_only,
+        args.depth_min,
+        args.depth_max,
+        args.include_qcgaf,
+        args.match_gate_m,
+    )
     rclpy.spin(node)
 
 

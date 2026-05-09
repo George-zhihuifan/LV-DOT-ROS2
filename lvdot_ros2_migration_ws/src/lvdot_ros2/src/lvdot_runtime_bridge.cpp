@@ -286,6 +286,11 @@ onboardDetector::TrackingConfig build_tracking_config(const LVdotDetectorConfig 
   for (std::size_t i = 0; i < std::min<std::size_t>(9, config.feature_weight.size()); ++i) {
     tracking.featureWeights(static_cast<Eigen::Index>(i)) = config.feature_weight[i];
   }
+  tracking.simPrevWeight = config.sim_prev_weight;
+  tracking.simPropedWeight = config.sim_proped_weight;
+  tracking.adaptiveSimilarityWeight = config.adaptive_similarity_weight;
+  tracking.similarityDistanceNorm = config.similarity_distance_norm;
+  tracking.minMatchSimilarity = config.min_match_similarity;
   tracking.histSize = config.history_size;
   tracking.fixSizeHistThresh = config.fix_size_history_threshold;
   tracking.fixSizeDimThresh = config.fix_size_dimension_threshold;

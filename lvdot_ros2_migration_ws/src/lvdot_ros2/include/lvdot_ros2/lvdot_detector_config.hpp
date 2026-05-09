@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <cstddef>
 
 namespace lvdot_ros2
 {
@@ -71,6 +72,11 @@ struct LVdotDetectorConfig
   double max_match_range{0.5};
   double max_size_diff_range{0.5};
   std::vector<double> feature_weight{3.0, 3.0, 0.1, 0.5, 0.5, 0.05, 0.0, 0.0, 0.0};
+  double sim_prev_weight{1.0};
+  double sim_proped_weight{1.0};
+  bool adaptive_similarity_weight{false};
+  double similarity_distance_norm{0.5};
+  double min_match_similarity{-2.0};
   int history_size{100};
   int max_unmatched_frames{0};
   int fix_size_history_threshold{10};
@@ -91,6 +97,9 @@ struct LVdotDetectorConfig
   bool enable_vis_stage{true};
   int executor_threads{4};
   bool enable_sync_context{true};
+  bool enable_yolo_sync{true};
+  std::size_t sync_queue_size{60};
+  double sync_slop_sec{0.10};
   double max_depth_lidar_skew_sec{0.8};
   double max_depth_yolo_skew_sec{0.8};
   double max_lidar_yolo_skew_sec{1.0};

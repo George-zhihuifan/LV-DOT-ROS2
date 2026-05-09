@@ -551,6 +551,11 @@ LVdotDetectorNode::LVdotDetectorNode(const rclcpp::NodeOptions & options)
         std::bind(&LVdotDetectorNode::on_depth_odom_sync, this, std::placeholders::_1, std::placeholders::_2),
         std::bind(&LVdotDetectorNode::on_lidar_odom_sync, this, std::placeholders::_1, std::placeholders::_2));
     }
+    if (config_.enable_yolo_sync) {
+      sync_context_->register_yolo_callbacks(
+        std::bind(&LVdotDetectorNode::on_depth_yolo_sync, this, std::placeholders::_1, std::placeholders::_2),
+        std::bind(&LVdotDetectorNode::on_lidar_yolo_sync, this, std::placeholders::_1, std::placeholders::_2));
+    }
   }
 
   RCLCPP_INFO(
@@ -628,6 +633,14 @@ void LVdotDetectorNode::load_config_from_parameters()
   config_.max_match_range = resolve_parameter<double>(*this, "max_match_range", config_.max_match_range);
   config_.max_size_diff_range = resolve_parameter<double>(*this, "max_size_diff_range", config_.max_size_diff_range);
   config_.feature_weight = resolve_parameter<std::vector<double>>(*this, "feature_weight", config_.feature_weight);
+  config_.sim_prev_weight = resolve_parameter<double>(*this, "sim_prev_weight", config_.sim_prev_weight);
+  config_.sim_proped_weight = resolve_parameter<double>(*this, "sim_proped_weight", config_.sim_proped_weight);
+  config_.adaptive_similarity_weight = resolve_parameter<bool>(
+    *this, "adaptive_similarity_weight", config_.adaptive_similarity_weight);
+  config_.similarity_distance_norm = resolve_parameter<double>(
+    *this, "similarity_distance_norm", config_.similarity_distance_norm);
+  config_.min_match_similarity = resolve_parameter<double>(
+    *this, "min_match_similarity", config_.min_match_similarity);
   config_.history_size = resolve_parameter<int>(*this, "history_size", config_.history_size);
   config_.max_unmatched_frames = resolve_parameter<int>(*this, "max_unmatched_frames", config_.max_unmatched_frames);
   config_.fix_size_history_threshold = resolve_parameter<int>(*this, "fix_size_history_threshold", config_.fix_size_history_threshold);
@@ -653,6 +666,10 @@ void LVdotDetectorNode::load_config_from_parameters()
   config_.enable_stage_timers = resolve_parameter<bool>(*this, "enable_stage_timers", config_.enable_stage_timers);
   config_.enable_vis_stage = resolve_parameter<bool>(*this, "enable_vis_stage", config_.enable_vis_stage);
   config_.enable_sync_context = resolve_parameter<bool>(*this, "enable_sync_context", config_.enable_sync_context);
+  config_.enable_yolo_sync = resolve_parameter<bool>(*this, "enable_yolo_sync", config_.enable_yolo_sync);
+  config_.sync_queue_size = static_cast<std::size_t>(resolve_parameter<int>(
+      *this, "sync_queue_size", static_cast<int>(config_.sync_queue_size)));
+  config_.sync_slop_sec = resolve_parameter<double>(*this, "sync_slop_sec", config_.sync_slop_sec);
   config_.max_depth_lidar_skew_sec = resolve_parameter<double>(
     *this, "max_depth_lidar_skew_sec", config_.max_depth_lidar_skew_sec);
   config_.max_depth_yolo_skew_sec = resolve_parameter<double>(
@@ -702,10 +719,16 @@ void LVdotDetectorNode::load_config_from_parameters()
   if (config_.future_stamp_tolerance_sec < 0.0) {
     config_.future_stamp_tolerance_sec = 0.2;
   }
+  if (config_.sync_queue_size == 0) {
+    config_.sync_queue_size = 60;
+  }
+  if (config_.sync_slop_sec <= 0.0) {
+    config_.sync_slop_sec = 0.10;
+  }
 
   RCLCPP_INFO(
     get_logger(),
-    "Config loaded: localization_mode=%d dt=%.3f image=%dx%d depth_range=[%.2f, %.2f] fusion_mode=%s stage_timers=%s vis_stage=%s sync_ctx=%s skew(d-l=%.2f,d-y=%.2f,l-y=%.2f)s stale_age=%.2fs executor_threads=%d",
+    "Config loaded: localization_mode=%d dt=%.3f image=%dx%d depth_range=[%.2f, %.2f] fusion_mode=%s stage_timers=%s vis_stage=%s sync_ctx=%s yolo_sync=%s sync(queue=%zu,slop=%.3fs) skew(d-l=%.2f,d-y=%.2f,l-y=%.2f)s stale_age=%.2fs executor_threads=%d",
     config_.localization_mode,
     config_.time_step,
     config_.image_cols,
@@ -716,6 +739,9 @@ void LVdotDetectorNode::load_config_from_parameters()
     config_.enable_stage_timers ? "true" : "false",
     config_.enable_vis_stage ? "true" : "false",
     config_.enable_sync_context ? "true" : "false",
+    config_.enable_yolo_sync ? "true" : "false",
+    config_.sync_queue_size,
+    config_.sync_slop_sec,
     config_.max_depth_lidar_skew_sec,
     config_.max_depth_yolo_skew_sec,
     config_.max_lidar_yolo_skew_sec,
@@ -743,9 +769,11 @@ void LVdotDetectorNode::create_subscribers()
   odom_sub_ = create_subscription<nav_msgs::msg::Odometry>(
     config_.odom_topic, state_qos,
     std::bind(&LVdotDetectorNode::on_odom, this, std::placeholders::_1));
-  yolo_detection_sub_ = create_subscription<vision_msgs::msg::Detection2DArray>(
-    config_.yolo_detection_topic, sensor_qos,
-    std::bind(&LVdotDetectorNode::on_yolo_detections, this, std::placeholders::_1));
+  if (!(config_.enable_sync_context && config_.enable_yolo_sync)) {
+    yolo_detection_sub_ = create_subscription<vision_msgs::msg::Detection2DArray>(
+      config_.yolo_detection_topic, sensor_qos,
+      std::bind(&LVdotDetectorNode::on_yolo_detections, this, std::placeholders::_1));
+  }
 }
 
 void LVdotDetectorNode::create_publishers()
@@ -864,7 +892,9 @@ void LVdotDetectorNode::log_input_health()
     << " depth_pose_sync=" << depth_pose_sync_count_
     << " lidar_pose_sync=" << lidar_pose_sync_count_
     << " depth_odom_sync=" << depth_odom_sync_count_
-    << " lidar_odom_sync=" << lidar_odom_sync_count_;
+    << " lidar_odom_sync=" << lidar_odom_sync_count_
+    << " depth_yolo_sync=" << depth_yolo_sync_count_
+    << " lidar_yolo_sync=" << lidar_yolo_sync_count_;
   input_health_msg.data = input_health.str();
   input_health_pub_->publish(input_health_msg);
   lvdot_interfaces::msg::InputHealth input_health_struct;
@@ -883,7 +913,7 @@ void LVdotDetectorNode::log_input_health()
     get_logger(),
     *get_clock(),
     5000,
-    "Input health: depth=%zu color=%zu lidar=%zu pose=%zu odom=%zu yolo=%zu depth_pose_sync=%zu lidar_pose_sync=%zu depth_odom_sync=%zu lidar_odom_sync=%zu",
+    "Input health: depth=%zu color=%zu lidar=%zu pose=%zu odom=%zu yolo=%zu depth_pose_sync=%zu lidar_pose_sync=%zu depth_odom_sync=%zu lidar_odom_sync=%zu depth_yolo_sync=%zu lidar_yolo_sync=%zu",
     depth_count_,
     color_count_,
     lidar_count_,
@@ -893,7 +923,9 @@ void LVdotDetectorNode::log_input_health()
     depth_pose_sync_count_,
     lidar_pose_sync_count_,
     depth_odom_sync_count_,
-    lidar_odom_sync_count_);
+    lidar_odom_sync_count_,
+    depth_yolo_sync_count_,
+    lidar_yolo_sync_count_);
 
   std_msgs::msg::String stage_timers_msg;
   std::ostringstream stage_timers;
@@ -939,7 +971,7 @@ void LVdotDetectorNode::log_input_health()
     get_logger(),
     *get_clock(),
     5000,
-    "Pipeline stats: depth_samples=%zu/%zu u_map=%zu depth_boxes=%zu u_map_merge=%zu u_map_db=%zu u_map_visual=%zu u_map_fused=%zu u_map_filtered=%zu lidar_samples=%zu/%zu uv=%zu db=%zu lidar=%zu fused=%zu filtered=%zu tracks=%zu dynamic=%zu dyn_points=%zu raw_dyn_points=%zu service=%zu/%zu split=%zu->%zu (%zu outputs) fusion_components=%zu visual_only=%zu lidar_only=%zu yolo_in=%zu yolo_match3d=%zu yolo_match_det=%zu yolo_human=%zu uv_in=%zu db_in=%zu uv_best=%zu db_best=%zu mutual=%zu uv_no_db=%zu uv_not_mutual=%zu uv_iou_reject=%zu fixed_size=%zu size_reject=%zu",
+    "Pipeline stats: depth_samples=%zu/%zu u_map=%zu depth_boxes=%zu u_map_merge=%zu u_map_db=%zu u_map_visual=%zu u_map_fused=%zu u_map_filtered=%zu lidar_samples=%zu/%zu uv=%zu db=%zu lidar=%zu fused=%zu filtered=%zu tracks=%zu dynamic=%zu dyn_points=%zu raw_dyn_points=%zu service=%zu/%zu split=%zu->%zu (%zu outputs) fusion_components=%zu visual_only=%zu lidar_only=%zu yolo_in=%zu yolo_candidate3d=%zu yolo_match3d=%zu yolo_match_det=%zu yolo_fused_used=%zu yolo_human=%zu uv_in=%zu db_in=%zu uv_best=%zu db_best=%zu mutual=%zu uv_no_db=%zu uv_not_mutual=%zu uv_iou_reject=%zu fixed_size=%zu size_reject=%zu",
     last_filtered_depth_sample_count_,
     last_projected_depth_sample_count_,
     last_u_map_box_count_,
@@ -969,8 +1001,10 @@ void LVdotDetectorNode::log_input_health()
     last_visual_only_component_count_,
     last_lidar_only_component_count_,
     last_yolo_input_count_,
+    last_yolo_candidate_3d_count_,
     last_yolo_matched_3d_count_,
     last_yolo_matched_detection_count_,
+    last_yolo_fused_used_count_,
     last_yolo_human_marked_count_,
     last_uv_input_count_,
     last_db_input_count_,
@@ -1011,8 +1045,10 @@ void LVdotDetectorNode::log_input_health()
     << " visual_only=" << last_visual_only_component_count_
     << " lidar_only=" << last_lidar_only_component_count_
     << " yolo_in=" << last_yolo_input_count_
+    << " yolo_candidate3d=" << last_yolo_candidate_3d_count_
     << " yolo_match3d=" << last_yolo_matched_3d_count_
     << " yolo_match_det=" << last_yolo_matched_detection_count_
+    << " yolo_fused_used=" << last_yolo_fused_used_count_
     << " yolo_human=" << last_yolo_human_marked_count_
     << " uv_in=" << last_uv_input_count_
     << " db_in=" << last_db_input_count_
@@ -1057,6 +1093,10 @@ void LVdotDetectorNode::log_input_health()
   stats_struct.raw_dynamic_point_count = last_raw_dynamic_point_count_;
   stats_struct.service_call_count = service_call_count_;
   stats_struct.service_response_count = last_service_response_count_;
+  stats_struct.yolo_input_count = last_yolo_input_count_;
+  stats_struct.yolo_candidate_3d_count = last_yolo_candidate_3d_count_;
+  stats_struct.yolo_matched_3d_count = last_yolo_matched_3d_count_;
+  stats_struct.yolo_fused_used_count = last_yolo_fused_used_count_;
   pipeline_stats_struct_pub_->publish(stats_struct);
 }
 
@@ -1259,6 +1299,36 @@ void LVdotDetectorNode::on_lidar_odom_sync(
   runtime_state_.has_sensor_pose = true;
 }
 
+void LVdotDetectorNode::on_depth_yolo_sync(
+  const sensor_msgs::msg::Image::ConstSharedPtr & depth_msg,
+  const vision_msgs::msg::Detection2DArray::ConstSharedPtr & yolo_msg)
+{
+  std::lock_guard<std::mutex> lock(state_mutex_);
+  ++depth_yolo_sync_count_;
+  if (rclcpp::Time(yolo_msg->header.stamp).nanoseconds() != last_yolo_stamp_.nanoseconds()) {
+    ++yolo_count_;
+  }
+  last_depth_stamp_ = depth_msg->header.stamp;
+  last_yolo_stamp_ = yolo_msg->header.stamp;
+  runtime_state_.latest_depth_image = depth_msg;
+  runtime_state_.latest_yolo_detections = yolo_msg;
+}
+
+void LVdotDetectorNode::on_lidar_yolo_sync(
+  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & lidar_msg,
+  const vision_msgs::msg::Detection2DArray::ConstSharedPtr & yolo_msg)
+{
+  std::lock_guard<std::mutex> lock(state_mutex_);
+  ++lidar_yolo_sync_count_;
+  if (rclcpp::Time(yolo_msg->header.stamp).nanoseconds() != last_yolo_stamp_.nanoseconds()) {
+    ++yolo_count_;
+  }
+  last_lidar_stamp_ = lidar_msg->header.stamp;
+  last_yolo_stamp_ = yolo_msg->header.stamp;
+  runtime_state_.latest_lidar_pointcloud = lidar_msg;
+  runtime_state_.latest_yolo_detections = yolo_msg;
+}
+
 void LVdotDetectorNode::refresh_filtered_cluster_centers(
   const onboardDetector::FilterLVBBoxesOutput & filter_output)
 {
@@ -1289,9 +1359,11 @@ void LVdotDetectorNode::update_common_filter_stats(
   last_visual_only_component_count_ = filter_output.stats.visual_only_component_count;
   last_lidar_only_component_count_ = filter_output.stats.lidar_only_component_count;
   last_yolo_input_count_ = filter_output.stats.yolo_input_count;
+  last_yolo_candidate_3d_count_ = filter_output.stats.yolo_candidate_3d_count;
   last_yolo_matched_3d_count_ = filter_output.stats.yolo_matched_3d_count;
   last_yolo_matched_detection_count_ = filter_output.stats.yolo_matched_detection_count;
   last_yolo_human_marked_count_ = filter_output.stats.yolo_human_marked_count;
+  last_yolo_fused_used_count_ = filter_output.stats.yolo_fused_used_count;
   last_uv_input_count_ = filter_output.stats.uv_input_count;
   last_db_input_count_ = filter_output.stats.db_input_count;
   last_uv_best_match_count_ = filter_output.stats.uv_best_match_count;

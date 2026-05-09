@@ -14,6 +14,7 @@ install(PROGRAMS
   scripts/smoke_test_detector_only.sh
   scripts/smoke_test_full_stack_qcgaf_gru.sh
   scripts/run_detector_only_regression_suite.sh
+  scripts/run_gt_eval_funnel_suite.sh
   scripts/run_regression_matrix.sh
   scripts/run_scene_environment_diagnostics.sh
   scripts/run_scene_staged_diagnostics.sh

@@ -170,19 +170,46 @@ def markers_to_array(markers, max_dets, is_camera, extra_features=None):
     dim = 9 if is_camera else 10
     dets = np.zeros((max_dets, dim), dtype=np.float32)
     mask = np.zeros(max_dets, dtype=bool)
-    n = min(len(markers), max_dets)
-    for i in range(n):
-        m = markers[i]
-        x = m.pose.position.x
-        y = m.pose.position.y
-        z = m.pose.position.z
-        w = m.scale.x
-        h = m.scale.z
-        l = m.scale.y
-        dets[i, :6] = [x, y, z, w, h, l]
-        dets[i, 6:] = (CAMERA_DEFAULT_FEATURES if is_camera else LIDAR_DEFAULT_FEATURES) if extra_features is None else extra_features
-        mask[i] = True
-    return dets, mask, n
+    write_idx = 0
+    for m in markers:
+        # Ignore non-active markers (e.g. DELETEALL).
+        if m.action != Marker.ADD:
+            continue
+        if write_idx >= max_dets:
+            break
+
+        x = y = z = 0.0
+        w = h = l = 0.0
+        if m.type == Marker.CUBE:
+            x = float(m.pose.position.x)
+            y = float(m.pose.position.y)
+            z = float(m.pose.position.z)
+            w = float(m.scale.x)
+            h = float(m.scale.z)
+            l = float(m.scale.y)
+        elif m.type == Marker.LINE_LIST and len(m.points) >= 8:
+            xs = [p.x for p in m.points]
+            ys = [p.y for p in m.points]
+            zs = [p.z for p in m.points]
+            xmin, xmax = min(xs), max(xs)
+            ymin, ymax = min(ys), max(ys)
+            zmin, zmax = min(zs), max(zs)
+            x = float((xmin + xmax) * 0.5)
+            y = float((ymin + ymax) * 0.5)
+            z = float((zmin + zmax) * 0.5)
+            w = float(max(0.1, xmax - xmin))
+            l = float(max(0.1, ymax - ymin))
+            h = float(max(0.1, zmax - zmin))
+        else:
+            continue
+
+        dets[write_idx, :6] = [x, y, z, w, h, l]
+        dets[write_idx, 6:] = (
+            CAMERA_DEFAULT_FEATURES if is_camera else LIDAR_DEFAULT_FEATURES
+        ) if extra_features is None else extra_features
+        mask[write_idx] = True
+        write_idx += 1
+    return dets, mask, write_idx
 
 
 def array_to_markers(boxes, cam_mask, frame_id, stamp):
@@ -223,12 +250,20 @@ class QCGAFNode(Node):
         self.declare_parameter('verbose', False)
         self.declare_parameter('debug_metrics', False)
         self.declare_parameter('enable_lidar_fallback', True)
+        self.declare_parameter('post_center_blend_alpha', 0.30)
+        self.declare_parameter('post_size_blend_alpha', 0.20)
+        self.declare_parameter('min_box_size', 0.15)
+        self.declare_parameter('max_box_size', 4.0)
 
         config_path = self.get_parameter('config').get_parameter_value().string_value
         ckpt_path = self.get_parameter('checkpoint').get_parameter_value().string_value
         verbose = bool(self.get_parameter('verbose').value)
         self.debug_metrics = bool(self.get_parameter('debug_metrics').value)
         self.enable_lidar_fallback = bool(self.get_parameter('enable_lidar_fallback').value)
+        self.post_center_blend_alpha = float(self.get_parameter('post_center_blend_alpha').value)
+        self.post_size_blend_alpha = float(self.get_parameter('post_size_blend_alpha').value)
+        self.min_box_size = float(self.get_parameter('min_box_size').value)
+        self.max_box_size = float(self.get_parameter('max_box_size').value)
 
         if not config_path:
             raise RuntimeError('Parameter "config" must be provided.')
@@ -305,6 +340,11 @@ class QCGAFNode(Node):
         self._sync_warn_count = 0
         self._frames_total = 0
         self._frames_skipped_no_cam = 0
+        self._frames_lidar_fallback = 0
+        self._frames_published = 0
+        self._sum_cam_in = 0
+        self._sum_lidar_in = 0
+        self._sum_out = 0
         self._last_debug_log_s = time.time()
 
     def color_callback(self, msg: Image):
@@ -371,6 +411,7 @@ class QCGAFNode(Node):
                     cam_dets[:copy_n, 6:] = CAMERA_DEFAULT_FEATURES
                     cam_mask[:copy_n] = True
                     n_cam = copy_n
+                    self._frames_lidar_fallback += 1
                 else:
                     self._frames_skipped_no_cam += 1
                     now_s = time.time()
@@ -391,6 +432,20 @@ class QCGAFNode(Node):
 
             boxes_np = pred_boxes[0].cpu().numpy()
             boxes_np[cam_mask, :3] += frame_center
+            # Conservative geometry correction:
+            # keep learned output, but blend toward measured camera-side 3D boxes to
+            # reduce systematic center/size bias and improve GT-center matching.
+            alpha_c = float(np.clip(self.post_center_blend_alpha, 0.0, 1.0))
+            alpha_s = float(np.clip(self.post_size_blend_alpha, 0.0, 1.0))
+            if alpha_c > 0.0:
+                boxes_np[cam_mask, :3] = (1.0 - alpha_c) * boxes_np[cam_mask, :3] + alpha_c * cam_dets[cam_mask, :3]
+            if alpha_s > 0.0:
+                boxes_np[cam_mask, 3:6] = (1.0 - alpha_s) * boxes_np[cam_mask, 3:6] + alpha_s * cam_dets[cam_mask, 3:6]
+            boxes_np[cam_mask, 3:6] = np.clip(
+                boxes_np[cam_mask, 3:6],
+                self.min_box_size,
+                self.max_box_size,
+            )
             dt_ms = (time.time() - t0) * 1000.0
 
             frame_id = 'map'
@@ -403,6 +458,10 @@ class QCGAFNode(Node):
             out_msg = array_to_markers(boxes_np, cam_mask, frame_id, stamp)
             self.pub.publish(out_msg)
             self._frames_total += 1
+            self._frames_published += 1
+            self._sum_cam_in += int(n_cam)
+            self._sum_lidar_in += int(n_lidar)
+            self._sum_out += len(out_msg.markers)
 
             if self.verbose:
                 self.get_logger().info(
@@ -411,10 +470,15 @@ class QCGAFNode(Node):
             if self.debug_metrics:
                 now_s = time.time()
                 if now_s - self._last_debug_log_s > 5.0:
+                    denom = max(1, self._frames_published)
                     self.get_logger().info(
                         f'QCGAF metrics: frames={self._frames_total} '
                         f'skipped_no_cam={self._frames_skipped_no_cam} '
-                        f'sync_warns={self._sync_warn_count}'
+                        f'lidar_fallback={self._frames_lidar_fallback} '
+                        f'sync_warns={self._sync_warn_count} '
+                        f'avg_cam_in={self._sum_cam_in / denom:.2f} '
+                        f'avg_lidar_in={self._sum_lidar_in / denom:.2f} '
+                        f'avg_out={self._sum_out / denom:.2f}'
                     )
                     self._last_debug_log_s = now_s
         except Exception as exc:

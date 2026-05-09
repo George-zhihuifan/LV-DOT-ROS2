@@ -43,6 +43,11 @@ struct TrackingConfig
     double eRAcc{0.6};
     int kfAvgFrames{10};
     int maxUnmatchedFrames{0};
+    double simPrevWeight{1.0};
+    double simPropedWeight{1.0};
+    bool adaptiveSimilarityWeight{false};
+    double similarityDistanceNorm{0.5};
+    double minMatchSimilarity{-2.0};
 };
 
 struct TrackState

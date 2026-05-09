@@ -52,9 +52,11 @@ struct FilterLVBBoxesStats
     std::size_t split_success_boxes{0};
     std::size_t split_output_boxes{0};
     std::size_t yolo_input_count{0};
+    std::size_t yolo_candidate_3d_count{0};
     std::size_t yolo_matched_3d_count{0};
     std::size_t yolo_matched_detection_count{0};
     std::size_t yolo_human_marked_count{0};
+    std::size_t yolo_fused_used_count{0};
 };
 
 struct FilterLVBBoxesInput

@@ -244,7 +244,21 @@ onboardDetector::TrackState to_core_track_state(const LVdotRuntimeState::TrackSt
   }
   core.matchedInFrame = track.matched_in_frame;
   core.age = track.age;
+  core.consecutiveHits = track.consecutive_hits;
   core.missedFrames = track.missed_frames;
+  core.confirmed = track.confirmed;
+  core.hasLastObservation = track.has_last_observation;
+  core.lastObservedBox = to_core_box3d(track.last_observed_box);
+  core.lastObservedCenter = Eigen::Vector3d(
+    track.last_observed_center.x, track.last_observed_center.y, track.last_observed_center.z);
+  core.lastObservedStd = Eigen::Vector3d(
+    track.last_observed_std.x, track.last_observed_std.y, track.last_observed_std.z);
+  core.hasExternalPrediction = track.has_external_prediction;
+  core.externalPrediction = Eigen::Vector3d(
+    track.external_prediction.x,
+    track.external_prediction.y,
+    track.external_prediction.z);
+  core.externalPredictionAgeSec = track.external_prediction_age_sec;
   return core;
 }
 
@@ -272,7 +286,16 @@ LVdotRuntimeState::TrackState from_core_track_state(const onboardDetector::Track
   }
   ros.matched_in_frame = track.matchedInFrame;
   ros.age = track.age;
+  ros.consecutive_hits = track.consecutiveHits;
   ros.missed_frames = track.missedFrames;
+  ros.confirmed = track.confirmed;
+  ros.has_last_observation = track.hasLastObservation;
+  ros.last_observed_box = from_core_box3d(track.lastObservedBox);
+  ros.last_observed_center = eigen_to_point(track.lastObservedCenter);
+  ros.last_observed_std = eigen_to_vector3(track.lastObservedStd);
+  ros.has_external_prediction = track.hasExternalPrediction;
+  ros.external_prediction = eigen_to_point(track.externalPrediction);
+  ros.external_prediction_age_sec = track.externalPredictionAgeSec;
   return ros;
 }
 
@@ -291,6 +314,14 @@ onboardDetector::TrackingConfig build_tracking_config(const LVdotDetectorConfig 
   tracking.adaptiveSimilarityWeight = config.adaptive_similarity_weight;
   tracking.similarityDistanceNorm = config.similarity_distance_norm;
   tracking.minMatchSimilarity = config.min_match_similarity;
+  tracking.trackHighScoreThreshold = config.tracker_high_score_threshold;
+  tracking.trackLowScoreThreshold = config.tracker_low_score_threshold;
+  tracking.newTrackScoreThreshold = config.tracker_new_track_score_threshold;
+  tracking.tentativeMinHits = config.tracker_tentative_min_hits;
+  tracking.tentativeMaxUnmatchedFrames = config.tracker_tentative_max_unmatched_frames;
+  tracking.enableGruAssociationCost = config.enable_gru_association_cost;
+  tracking.gruAssociationWeight = config.gru_association_weight;
+  tracking.gruPredictionGate = config.gru_prediction_gate_m;
   tracking.histSize = config.history_size;
   tracking.fixSizeHistThresh = config.fix_size_history_threshold;
   tracking.fixSizeDimThresh = config.fix_size_dimension_threshold;
@@ -304,6 +335,11 @@ onboardDetector::TrackingConfig build_tracking_config(const LVdotDetectorConfig 
   tracking.eRAcc = k.size() > 6 ? k[6] : tracking.eRAcc;
   tracking.kfAvgFrames = config.kalman_filter_averaging_frames;
   tracking.maxUnmatchedFrames = config.max_unmatched_frames;
+  // §3.3 adaptive noise knobs.  Actual Hc/Hl values are filled per-frame in
+  // build_tracking_input from the latest quality-vector subscriber state.
+  tracking.noiseAdaptationEnabled = config.qcgaf_noise_adaptation_enabled;
+  tracking.alphaQ = config.qcgaf_alpha_q;
+  tracking.alphaR = config.qcgaf_alpha_r;
   return tracking;
 }
 
@@ -389,6 +425,7 @@ onboardDetector::DetectionInput build_detection_input(
   detection.uMapThresholdPoint = static_cast<float>(std::max(1, config.u_map_threshold_point));
   detection.uMapThresholdLine = static_cast<float>(std::max(1, config.u_map_threshold_line));
   detection.uMapMinLengthLine = std::max(1, config.u_map_min_length_line);
+  detection.uMapMinBBoxArea = std::max(1, config.u_map_min_bbox_area);
   return input;
 }
 
@@ -599,6 +636,123 @@ onboardDetector::TrackingInput build_tracking_input(
     state.current_position.y,
     state.current_position.z);
   input.config = build_tracking_config(config);
+  input.config.Hc = state.qcgaf_Hc;
+  input.config.Hl = state.qcgaf_Hl;
+  return input;
+}
+
+void apply_qcgaf_geometry_refinement(
+  LVdotRuntimeState & state,
+  double max_match_distance)
+{
+  // Path Z: replace rule-fusion box geometry with the nearest QC-GAF box
+  // (within max_match_distance).  Clusters and Box3D flags/velocity are
+  // preserved so downstream tracker still has the cluster history it expects.
+  if (state.filtered_bboxes.empty() || state.qcgaf_filtered_bboxes.empty()) {
+    return;
+  }
+  const double max_sq = max_match_distance * max_match_distance;
+  for (auto & rule_box : state.filtered_bboxes) {
+    double best_sq = std::numeric_limits<double>::infinity();
+    const Box3D * best = nullptr;
+    for (const auto & qc_box : state.qcgaf_filtered_bboxes) {
+      const double dx = qc_box.x - rule_box.x;
+      const double dy = qc_box.y - rule_box.y;
+      const double dz = qc_box.z - rule_box.z;
+      const double dsq = dx * dx + dy * dy + dz * dz;
+      if (dsq < best_sq) {
+        best_sq = dsq;
+        best = &qc_box;
+      }
+    }
+    if (best != nullptr && best_sq <= max_sq) {
+      rule_box.x = best->x;
+      rule_box.y = best->y;
+      rule_box.z = best->z;
+      rule_box.x_width = best->x_width;
+      rule_box.y_width = best->y_width;
+      rule_box.z_width = best->z_width;
+    }
+  }
+}
+
+void apply_depth_auxiliary_correction(
+  LVdotRuntimeState & state,
+  double max_match_distance)
+{
+  if (state.filtered_bboxes.empty()) {
+    return;
+  }
+
+  std::vector<const Box3D *> depth_boxes;
+  depth_boxes.reserve(state.db_bboxes.size() + state.uv_bboxes.size());
+  for (const auto & box : state.db_bboxes) {
+    depth_boxes.push_back(&box);
+  }
+  for (const auto & box : state.uv_bboxes) {
+    depth_boxes.push_back(&box);
+  }
+  if (depth_boxes.empty()) {
+    return;
+  }
+
+  const double max_sq = max_match_distance * max_match_distance;
+  constexpr double kCenterBlend = 0.35;
+  constexpr double kSizeBlend = 0.20;
+  for (auto & fused_box : state.filtered_bboxes) {
+    double best_sq = std::numeric_limits<double>::infinity();
+    const Box3D * best = nullptr;
+    for (const auto * depth_box : depth_boxes) {
+      const double dx = depth_box->x - fused_box.x;
+      const double dy = depth_box->y - fused_box.y;
+      const double dz = depth_box->z - fused_box.z;
+      const double dsq = dx * dx + dy * dy + dz * dz;
+      if (dsq < best_sq) {
+        best_sq = dsq;
+        best = depth_box;
+      }
+    }
+    if (best == nullptr || best_sq > max_sq) {
+      continue;
+    }
+
+    fused_box.x = (1.0 - kCenterBlend) * fused_box.x + kCenterBlend * best->x;
+    fused_box.y = (1.0 - kCenterBlend) * fused_box.y + kCenterBlend * best->y;
+    fused_box.z = (1.0 - kCenterBlend) * fused_box.z + kCenterBlend * best->z;
+    fused_box.x_width = (1.0 - kSizeBlend) * fused_box.x_width + kSizeBlend * best->x_width;
+    fused_box.y_width = (1.0 - kSizeBlend) * fused_box.y_width + kSizeBlend * best->y_width;
+    fused_box.z_width = (1.0 - kSizeBlend) * fused_box.z_width + kSizeBlend * best->z_width;
+    fused_box.is_u_map_enhanced = fused_box.is_u_map_enhanced || best->is_u_map_enhanced;
+    fused_box.score = std::max(fused_box.score, best->score);
+  }
+}
+
+onboardDetector::TrackingInput build_tracking_input_qcgaf_replacement(
+  const LVdotRuntimeState & state,
+  const LVdotDetectorConfig & config)
+{
+  // Path X: use QC-GAF boxes as the tracker's observation list.  Clusters are
+  // emitted as empty arrays; the tracker's cluster-aware features degrade
+  // gracefully (tracking_filter.cpp falls back to box center when
+  // filteredPcClusterCenters[i] is out of range).
+  onboardDetector::TrackingInput input;
+  input.filteredBBoxes.reserve(state.qcgaf_filtered_bboxes.size());
+  for (const auto & box : state.qcgaf_filtered_bboxes) {
+    input.filteredBBoxes.push_back(to_core_box3d(box));
+  }
+  // filteredPcClusters / filteredPcClusterCenters / filteredPcClusterStds are
+  // left empty intentionally.  See doc §五.2 mode=replacement.
+  input.tracks.reserve(state.track_states.size());
+  for (const auto & track : state.track_states) {
+    input.tracks.push_back(to_core_track_state(track));
+  }
+  input.position = Eigen::Vector3d(
+    state.current_position.x,
+    state.current_position.y,
+    state.current_position.z);
+  input.config = build_tracking_config(config);
+  input.config.Hc = state.qcgaf_Hc;
+  input.config.Hl = state.qcgaf_Hl;
   return input;
 }
 
@@ -614,10 +768,12 @@ void apply_tracking_output(
 
   state.tracked_bboxes.clear();
   state.box_history.clear();
-  state.tracked_bboxes.reserve(state.track_states.size());
+  state.tracked_bboxes.reserve(output.trackedBBoxes.size());
   state.box_history.reserve(state.track_states.size());
+  for (const auto & box : output.trackedBBoxes) {
+    state.tracked_bboxes.push_back(from_core_box3d(box));
+  }
   for (const auto & track : state.track_states) {
-    state.tracked_bboxes.push_back(track.current_box);
     state.box_history.push_back(track.box_history);
   }
 }

@@ -57,9 +57,29 @@ Visualization Manager:
       Marker Topic: /onboard_detector/tracked_bboxes
       Queue Size: 100
     - Class: rviz_default_plugins/MarkerArray
-      Enabled: false
+      Enabled: true
       Name: Dynamic BBoxes
       Marker Topic: /onboard_detector/dynamic_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: QCGAF Fused BBoxes
+      Marker Topic: /qcgaf/fused_bboxes
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: GRU Predictions
+      Marker Topic: /gru_predictor/predicted_positions
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: Visual BBoxes (QCGAF in)
+      Marker Topic: /onboard_detector/visual_bboxes_qcgaf
+      Queue Size: 100
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: LiDAR BBoxes (QCGAF in)
+      Marker Topic: /onboard_detector/lidar_bboxes_qcgaf
       Queue Size: 100
     - Class: rviz_default_plugins/MarkerArray
       Enabled: false

@@ -14,7 +14,7 @@ def generate_launch_description() -> LaunchDescription:
     model_path = os.path.join(pkg_bringup, 'models')
 
     gz_sim = ExecuteProcess(
-        cmd=['gz', 'sim', '-s', '-r', world_path],
+        cmd=['ign', 'gazebo', '-s', '-r', world_path],
         name='gazebo',
         output='screen',
         shell=False,
@@ -22,7 +22,7 @@ def generate_launch_description() -> LaunchDescription:
     )
 
     gz_gui = ExecuteProcess(
-        cmd=['gz', 'sim', '-g'],
+        cmd=['ign', 'gazebo', '-g'],
         name='gazebo_gui',
         output='screen',
         shell=False,

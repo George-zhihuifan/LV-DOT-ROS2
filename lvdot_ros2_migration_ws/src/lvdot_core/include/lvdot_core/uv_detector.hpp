@@ -101,6 +101,7 @@ public:
     float px;
     float py;
     double depthScale_;
+    int min_bbox_area{25};
     cv::Mat bird_view;
     UVtracker tracker;
 

@@ -332,6 +332,7 @@ DetectionOutput runDetection(const DetectionInput& input)
     uv.threshold_point = input.config.uMapThresholdPoint;
     uv.threshold_line = input.config.uMapThresholdLine;
     uv.min_length_line = input.config.uMapMinLengthLine;
+    uv.min_bbox_area = input.config.uMapMinBBoxArea;
     uv.depth = input.depthImageMm;
     uv.detect();
     uv.extract_3Dbox();

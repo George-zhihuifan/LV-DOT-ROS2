@@ -10,7 +10,12 @@ class ImagePointCloudRelay(Node):
 
         self.rgb_sub = self.create_subscription(Image, '/rgbd_camera/image', self.on_rgb, qos_profile_sensor_data)
         self.depth_sub = self.create_subscription(Image, '/rgbd_camera/depth_image', self.on_depth, qos_profile_sensor_data)
-        self.info_sub = self.create_subscription(CameraInfo, '/rgbd_camera/camera_info', self.on_info, qos_profile_sensor_data)
+        self.info_sub = self.create_subscription(
+            CameraInfo, '/rgbd_camera/camera_info', self.on_info, qos_profile_sensor_data)
+        self.color_info_sub = self.create_subscription(
+            CameraInfo, '/rgbd_camera_color/camera_info', self.on_info, qos_profile_sensor_data)
+        self.depth_info_sub = self.create_subscription(
+            CameraInfo, '/rgbd_camera_depth/camera_info', self.on_info, qos_profile_sensor_data)
         self.livox_sim_sub = self.create_subscription(
             PointCloud2, '/uav_lidar/scan/points', self.on_livox_points, qos_profile_sensor_data)
         self.livox_sim_sub_alt = self.create_subscription(

@@ -27,12 +27,25 @@ void kalman_filter::setup(const Eigen::MatrixXd& states,
     this->P = P;
     this->Q = Q;
     this->R = R;
+    this->Q_base = Q;
+    this->R_base = R;
     this->is_initialized = true;
 }
 
 void kalman_filter::setA(const Eigen::MatrixXd& A)
 {
     this->A = A;
+}
+
+void kalman_filter::setNoiseScales(double q_scale, double r_scale)
+{
+    if (this->Q_base.size() == 0 || this->R_base.size() == 0) {
+        return;
+    }
+    if (q_scale < 0.0) q_scale = 0.0;
+    if (r_scale < 0.0) r_scale = 0.0;
+    this->Q = this->Q_base * q_scale;
+    this->R = this->R_base * r_scale;
 }
 
 void kalman_filter::estimate(const Eigen::MatrixXd& z, const Eigen::MatrixXd& u)

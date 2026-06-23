@@ -2,8 +2,8 @@
 
 Implements equations (32)-(35) from the proposal report:
     p_hybrid = gamma_t * p_KF + (1 - gamma_t) * p_GRU
-    gamma_t  = sigmoid(-beta_s * (e_GRU - e_KF))
-    gamma_t  = gamma_t * max(0, 1 - c_occ / C_max)
+    gamma_t  = sigmoid(beta_s * (e_GRU - e_KF))
+    gamma_t  = min(1, gamma_t + c_occ / C_max)
 
 All three methods (KF, GRU, Hybrid) predict position[i+1] after observing
 position[i], so they are fairly comparable.
@@ -79,12 +79,15 @@ class HybridPredictor:
         e_kf = np.mean(self.kf_errors[-W:])
         e_gru = np.mean(self.gru_errors[-W:])
 
-        # eq. 34: gamma high when GRU error > KF error (prefer KF)
-        gamma = 1.0 / (1.0 + np.exp(self.beta_s * (e_gru - e_kf)))
+        # gamma weights KF in p_hybrid = gamma * KF + (1-gamma) * GRU.
+        # If GRU has larger retrospective error than KF, gamma must increase.
+        delta = np.clip(self.beta_s * (e_gru - e_kf), -50.0, 50.0)
+        gamma = 1.0 / (1.0 + np.exp(-delta))
 
-        # eq. 35: occlusion decay
-        occ_factor = max(0.0, 1.0 - c_occ / self.c_max)
-        gamma *= occ_factor
+        # During occlusion / missing observations, prefer the conservative
+        # kinematic prior over a domain-mismatched GRU rollout.
+        occ_boost = min(1.0, max(0.0, c_occ / max(self.c_max, 1e-6)))
+        gamma = min(1.0, gamma + occ_boost * (1.0 - gamma))
 
         return gamma
 

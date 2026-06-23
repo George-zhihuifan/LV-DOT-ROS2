@@ -21,6 +21,10 @@ private:
     Eigen::MatrixXd P;
     Eigen::MatrixXd Q;
     Eigen::MatrixXd R;
+    // §3.3 adaptive noise: cache the original Q, R from setup() so that
+    // setNoiseScales() can reapply scaling each frame without compounding.
+    Eigen::MatrixXd Q_base;
+    Eigen::MatrixXd R_base;
 
 public:
     kalman_filter();
@@ -34,6 +38,10 @@ public:
                const Eigen::MatrixXd& R);
 
     void setA(const Eigen::MatrixXd& A);
+    // Scale Q and R relative to the base values captured at setup().  Used by
+    // tracking_filter when QC-GAF quality vector triggers §3.3 noise adaptation.
+    // q_scale, r_scale ≥ 0; 1.0 means no scaling.
+    void setNoiseScales(double q_scale, double r_scale);
     void estimate(const Eigen::MatrixXd& z, const Eigen::MatrixXd& u);
     double output(int state_index);
 };

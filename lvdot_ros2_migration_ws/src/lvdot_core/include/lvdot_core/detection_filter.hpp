@@ -53,6 +53,7 @@ struct DetectionConfig
     float uMapThresholdPoint{3.0f};
     float uMapThresholdLine{2.0f};
     int uMapMinLengthLine{6};
+    int uMapMinBBoxArea{25};
 };
 
 struct DetectionInput

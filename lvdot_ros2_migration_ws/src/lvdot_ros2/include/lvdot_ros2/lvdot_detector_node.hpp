@@ -3,6 +3,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <deque>
 #include <vector>
 
 #include <geometry_msgs/msg/pose_stamped.hpp>
@@ -15,6 +16,7 @@
 #include <sensor_msgs/msg/image.hpp>
 #include <sensor_msgs/msg/point_cloud2.hpp>
 #include <std_msgs/msg/string.hpp>
+#include <std_msgs/msg/float32_multi_array.hpp>
 #include <visualization_msgs/msg/marker_array.hpp>
 #include <vision_msgs/msg/detection2_d_array.hpp>
 
@@ -50,6 +52,9 @@ private:
   void on_pose(const geometry_msgs::msg::PoseStamped::ConstSharedPtr msg);
   void on_odom(const nav_msgs::msg::Odometry::ConstSharedPtr msg);
   void on_yolo_detections(const vision_msgs::msg::Detection2DArray::ConstSharedPtr msg);
+  void on_qcgaf_fused_bboxes(const visualization_msgs::msg::MarkerArray::ConstSharedPtr msg);
+  void on_qcgaf_quality_vector(const std_msgs::msg::Float32MultiArray::ConstSharedPtr msg);
+  void on_gru_predictions(const visualization_msgs::msg::MarkerArray::ConstSharedPtr msg);
 
   void on_get_dynamic_obstacles(
     const std::shared_ptr<lvdot_interfaces::srv::GetDynamicObstacles::Request> request,
@@ -72,6 +77,7 @@ private:
   void on_lidar_yolo_sync(
     const sensor_msgs::msg::PointCloud2::ConstSharedPtr & lidar_msg,
     const vision_msgs::msg::Detection2DArray::ConstSharedPtr & yolo_msg);
+  void on_depth_branch_worker_timer();
   void on_detection_timer();
   void on_lidar_detection_timer();
   void on_tracking_timer();
@@ -81,6 +87,11 @@ private:
     const onboardDetector::FilterLVBBoxesOutput & filter_output);
   void update_common_filter_stats(
     const onboardDetector::FilterLVBBoxesOutput & filter_output);
+  void record_depth_locked(const sensor_msgs::msg::Image::ConstSharedPtr & msg);
+  void record_lidar_locked(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & msg);
+  void record_pose_locked(const geometry_msgs::msg::PoseStamped::ConstSharedPtr & msg);
+  void record_odom_locked(const nav_msgs::msg::Odometry::ConstSharedPtr & msg);
+  void record_yolo_locked(const vision_msgs::msg::Detection2DArray::ConstSharedPtr & msg);
 
   LVdotDetectorConfig config_;
 
@@ -90,6 +101,9 @@ private:
   rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr pose_sub_;
   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
   rclcpp::Subscription<vision_msgs::msg::Detection2DArray>::SharedPtr yolo_detection_sub_;
+  rclcpp::Subscription<visualization_msgs::msg::MarkerArray>::SharedPtr qcgaf_fused_bboxes_sub_;
+  rclcpp::Subscription<std_msgs::msg::Float32MultiArray>::SharedPtr qcgaf_quality_vector_sub_;
+  rclcpp::Subscription<visualization_msgs::msg::MarkerArray>::SharedPtr gru_predictions_sub_;
 
   rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr uv_depth_map_pub_;
   rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr u_depth_map_pub_;
@@ -126,12 +140,14 @@ private:
 
   rclcpp::Service<lvdot_interfaces::srv::GetDynamicObstacles>::SharedPtr get_dynamic_obstacles_srv_;
   rclcpp::CallbackGroup::SharedPtr status_callback_group_;
+  rclcpp::CallbackGroup::SharedPtr depth_branch_callback_group_;
   rclcpp::CallbackGroup::SharedPtr detection_callback_group_;
   rclcpp::CallbackGroup::SharedPtr lidar_detection_callback_group_;
   rclcpp::CallbackGroup::SharedPtr tracking_callback_group_;
   rclcpp::CallbackGroup::SharedPtr classification_callback_group_;
   rclcpp::CallbackGroup::SharedPtr vis_callback_group_;
   rclcpp::TimerBase::SharedPtr health_timer_;
+  rclcpp::TimerBase::SharedPtr depth_branch_timer_;
   rclcpp::TimerBase::SharedPtr detection_timer_;
   rclcpp::TimerBase::SharedPtr lidar_detection_timer_;
   rclcpp::TimerBase::SharedPtr tracking_timer_;
@@ -145,6 +161,8 @@ private:
   rclcpp::Time last_pose_stamp_{0, 0, RCL_ROS_TIME};
   rclcpp::Time last_odom_stamp_{0, 0, RCL_ROS_TIME};
   rclcpp::Time last_yolo_stamp_{0, 0, RCL_ROS_TIME};
+  rclcpp::Time last_depth_branch_stamp_{0, 0, RCL_ROS_TIME};
+  rclcpp::Time last_lidar_branch_stamp_{0, 0, RCL_ROS_TIME};
   rclcpp::Time node_start_time_{0, 0, RCL_ROS_TIME};
 
   std::size_t depth_count_{0};
@@ -153,6 +171,12 @@ private:
   std::size_t pose_count_{0};
   std::size_t odom_count_{0};
   std::size_t yolo_count_{0};
+  std::size_t qcgaf_msg_count_{0};
+  std::size_t last_qcgaf_bbox_count_{0};
+  rclcpp::Time last_qcgaf_stamp_{0, 0, RCL_ROS_TIME};
+  std::size_t qcgaf_quality_msg_count_{0};
+  std::size_t gru_prediction_msg_count_{0};
+  std::size_t last_gru_prediction_count_{0};
   std::size_t depth_pose_sync_count_{0};
   std::size_t lidar_pose_sync_count_{0};
   std::size_t depth_odom_sync_count_{0};
@@ -208,17 +232,52 @@ private:
   std::size_t last_raw_dynamic_point_count_{0};
   std::size_t service_call_count_{0};
   std::size_t last_service_response_count_{0};
+  std::size_t last_depth_processed_count_{0};
   std::size_t last_lidar_processed_count_{0};
+  std::size_t det_depth_lidar_stale_drop_count_{0};
+  std::size_t det_depth_lidar_skew_drop_count_{0};
+  std::size_t det_depth_yolo_stale_drop_count_{0};
+  std::size_t det_depth_yolo_skew_drop_count_{0};
+  std::size_t lidar_depth_stale_drop_count_{0};
+  std::size_t lidar_depth_skew_drop_count_{0};
+  std::size_t lidar_yolo_stale_drop_count_{0};
+  std::size_t lidar_yolo_skew_drop_count_{0};
+  std::size_t det_waiting_depth_count_{0};
+  std::size_t det_waiting_pose_count_{0};
+  std::size_t lidar_waiting_new_lidar_count_{0};
+  std::size_t fused_zero_with_lidar_count_{0};
+  std::size_t depth_branch_match_count_{0};
+  std::size_t depth_branch_miss_count_{0};
+  std::size_t depth_branch_reject_future_count_{0};
+  std::size_t depth_branch_reject_age_count_{0};
+  std::size_t depth_branch_reject_ready_lag_count_{0};
+  double depth_branch_match_abs_sum_sec_{0.0};
+  double depth_branch_match_abs_max_sec_{0.0};
+  double depth_branch_match_signed_sum_sec_{0.0};
+  double depth_branch_target_abs_sum_sec_{0.0};
+  double depth_branch_target_abs_max_sec_{0.0};
+  double depth_branch_target_signed_sum_sec_{0.0};
+  double depth_branch_ready_lag_sum_sec_{0.0};
+  double depth_branch_ready_lag_max_sec_{0.0};
   std::size_t filter_update_seq_{0};
   std::size_t last_tracking_filter_update_seq_{0};
   std::size_t tracking_update_seq_{0};
   std::size_t last_classification_tracking_update_seq_{0};
+  std::size_t latest_depth_seq_{0};
+  std::size_t last_depth_branch_processed_seq_{0};
   std::string last_detection_phase_{"idle"};
+  std::string last_depth_branch_phase_{"idle"};
   std::string last_lidar_detection_phase_{"idle"};
   std::string last_tracking_phase_{"idle"};
   std::string last_classification_phase_{"idle"};
 
   LVdotRuntimeState runtime_state_;
+  std::deque<sensor_msgs::msg::Image::ConstSharedPtr> depth_history_;
+  std::deque<sensor_msgs::msg::PointCloud2::ConstSharedPtr> lidar_history_;
+  std::deque<geometry_msgs::msg::PoseStamped::ConstSharedPtr> pose_history_;
+  std::deque<nav_msgs::msg::Odometry::ConstSharedPtr> odom_history_;
+  std::deque<vision_msgs::msg::Detection2DArray::ConstSharedPtr> yolo_history_;
+  std::deque<LVdotRuntimeState::BranchCache> depth_branch_history_;
   mutable std::mutex state_mutex_;
 
   static constexpr const char * kServiceName = "onboard_detector/get_dynamic_obstacles";

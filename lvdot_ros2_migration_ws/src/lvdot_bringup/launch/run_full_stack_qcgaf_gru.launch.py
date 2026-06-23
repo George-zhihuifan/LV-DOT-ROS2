@@ -64,7 +64,7 @@ def generate_launch_description() -> LaunchDescription:
         DeclareLaunchArgument('gru_config', default_value=gru_default_config),
         DeclareLaunchArgument('gru_model', default_value=''),
         DeclareLaunchArgument('gru_horizon', default_value='5'),
-        DeclareLaunchArgument('gru_device', default_value='cpu'),
+        DeclareLaunchArgument('gru_device', default_value='cuda'),
         DeclareLaunchArgument('gru_max_idle', default_value='3.0'),
         detector_node,
         qcgaf_node,

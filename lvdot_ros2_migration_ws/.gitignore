@@ -1,0 +1,21 @@
+# ROS2 build products
+build/
+install/
+log/
+
+# Local experiment outputs
+logs/
+reports/*/
+
+# Local datasets
+datasets/
+
+# Temporary sweep scripts generated during experiments
+tmp_*.sh
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Local manual backups
+*.bak*

@@ -325,9 +325,9 @@ namespace onboardDetector{
 
                     }
                 }
-                // check box's size - lowered from 25 to 9 for sim/distant targets
+                // check box's size
                 int area = UVboxes[b].bb.area();
-                if(area >= 9)
+                if(area >= this->min_bbox_area)
                 {
                     this->bounding_box_U.push_back(UVboxes[b].bb);
                     passed_area_check++;
@@ -336,7 +336,7 @@ namespace onboardDetector{
             }
         }
         if (total_uvboxes > 0) {
-            printf("[UV] %d line groups → %d merged boxes (area≥9)\n", total_uvboxes, passed_area_check);
+            printf("[UV] %d line groups → %d merged boxes (area≥%d)\n", total_uvboxes, passed_area_check, this->min_bbox_area);
         }
     }
 

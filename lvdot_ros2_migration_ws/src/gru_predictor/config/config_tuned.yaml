@@ -1,5 +1,5 @@
 data:
-  min_track_length: 12
+  min_track_length: 6
   nuscenes_root: /home/LV-DOT/data/nuscenes
   nuscenes_version: v1.0-mini
 gru:

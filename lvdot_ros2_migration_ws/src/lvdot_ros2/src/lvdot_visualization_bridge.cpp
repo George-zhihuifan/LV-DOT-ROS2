@@ -10,7 +10,7 @@
 #include <sstream>
 #include <vector>
 
-#include <cv_bridge/cv_bridge.hpp>
+#include <cv_bridge/cv_bridge.h>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <sensor_msgs/point_cloud2_iterator.hpp>
@@ -20,6 +20,14 @@ namespace lvdot_ros2
 
 namespace
 {
+
+int marker_id_from_box_id(double box_id)
+{
+  constexpr double kMinId = static_cast<double>(std::numeric_limits<int32_t>::min());
+  constexpr double kMaxId = static_cast<double>(std::numeric_limits<int32_t>::max());
+  const double clamped = std::clamp(std::round(box_id), kMinId, kMaxId);
+  return static_cast<int>(clamped);
+}
 
 bool point_in_box(const geometry_msgs::msg::Point & point, const Box3D & box)
 {
@@ -516,8 +524,8 @@ visualization_msgs::msg::MarkerArray make_box_markers(
   marker_array.markers.push_back(clear);
   marker_array.markers.reserve(boxes.size() * 2);
 
-  int marker_id = 1;
   for (const auto & box : boxes) {
+    const int box_marker_id = marker_id_from_box_id(box.id);
     const double sx = std::max(0.1, box.x_width) * 0.5;
     const double sy = std::max(0.1, box.y_width) * 0.5;
     const double sz = std::max(0.1, box.z_width) * 0.5;
@@ -544,7 +552,7 @@ visualization_msgs::msg::MarkerArray make_box_markers(
     wire.header.frame_id = frame_id;
     wire.header.stamp = stamp;
     wire.ns = ns;
-    wire.id = marker_id++;
+    wire.id = box_marker_id;
     wire.type = visualization_msgs::msg::Marker::LINE_LIST;
     wire.action = visualization_msgs::msg::Marker::ADD;
     wire.pose.orientation.w = 1.0;
@@ -562,7 +570,7 @@ visualization_msgs::msg::MarkerArray make_box_markers(
     visualization_msgs::msg::Marker text;
     text.header = wire.header;
     text.ns = ns + "_label";
-    text.id = marker_id++;
+    text.id = box_marker_id;
     text.type = visualization_msgs::msg::Marker::TEXT_VIEW_FACING;
     text.action = visualization_msgs::msg::Marker::ADD;
     text.pose.position.x = box.x;

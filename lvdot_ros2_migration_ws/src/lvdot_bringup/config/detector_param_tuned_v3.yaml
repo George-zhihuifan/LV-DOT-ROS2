@@ -1,0 +1,92 @@
+lvdot_detector_node:
+  ros__parameters:
+    localization_mode: 0
+
+    depth_image_topic: /rgbd_camera/depth_image
+    color_image_topic: /rgbd_camera/image
+    lidar_pointcloud_topic: /livox/lidar/pointcloud
+    pose_topic: /mavros/local_position/pose
+    odom_topic: /mavros/local_position/odom
+    yolo_detection_topic: /yolo_detector/detected_bounding_boxes
+    fusion_mode: dual
+
+    depth_intrinsics: [337.35705085528514, 337.35705085528514, 320.0, 240.0]
+    color_intrinsics: [464.0, 464.0, 320.0, 240.0]
+    depth_scale_factor: 1000.0
+    depth_min_value: 0.2
+    depth_max_value: 12.0
+    u_map_row_downsample: 2
+    u_map_col_scale: 0.5
+    # Tuned 2026-05-12 via scripts/u_map_sweep.py against /pedestrian_sim/agent_states
+    # GT with 2.5m match gate. (2,5,2) won at F1=0.202 rec=0.137 prec=0.384 mean_err=1.51m
+    # over a 16-cell grid; default (1,1,1) gave TP=0 in the same scoring window.
+    u_map_threshold_point: 2
+    u_map_threshold_line: 5
+    u_map_min_length_line: 2
+    depth_filter_margin: 10
+    depth_skip_pixel: 1
+    image_cols: 640
+    image_rows: 480
+
+    body_to_camera_depth: [0.0, 0.0, 1.0, 0.30,
+                           -1.0, 0.0, 0.0, 0.0,
+                           0.0, -1.0, 0.0, 0.05,
+                           0.0, 0.0, 0.0, 1.0]
+    body_to_camera_color: [0.0, 0.0, 1.0, 0.30,
+                           -1.0, 0.0, 0.0, 0.0,
+                           0.0, -1.0, 0.0, 0.05,
+                           0.0, 0.0, 0.0, 1.0]
+    body_to_lidar: [1.0, 0.0, 0.0, 0.18,
+                    0.0, 1.0, 0.0, 0.0,
+                    0.0, 0.0, 1.0, 0.06,
+                    0.0, 0.0, 0.0, 1.0]
+
+    time_step: 0.033
+    ground_height: 0.0
+    roof_height: 3.0
+    voxel_occupied_thresh: 5.0
+    local_sensor_range: [10.0, 10.0, 5.0]
+    dbscan_min_points_cluster: 20
+    dbscan_search_range_epsilon: 0.05
+    lidar_DBSCAN_min_points: 10
+    lidar_DBSCAN_epsilon: 0.07
+    post_min_cluster_points: 0
+    downsample_threshold: 3500
+    gaussian_downsample_rate: 6
+    filtering_BBox_IOU_threshold: 0.4
+    max_match_range: 0.6
+    max_size_diff_range: 0.6
+    feature_weight: [3.0, 3.0, 0.1, 0.5, 0.5, 0.05, 0.0, 0.0, 0.0]
+    sim_prev_weight: 1.0
+    sim_proped_weight: 1.4
+    adaptive_similarity_weight: false
+    similarity_distance_norm: 0.6
+    min_match_similarity: -0.8
+    history_size: 100
+    max_unmatched_frames: 14
+    fix_size_history_threshold: 10
+    fix_size_dimension_threshold: 0.4
+    kalman_filter_param: [0.25, 0.01, 0.05, 0.05, 0.04, 0.3, 0.6]
+    kalman_filter_averaging_frames: 10
+    frame_skip: 1
+    dynamic_velocity_threshold: 0.2
+    dynamic_voting_threshold: 0.6
+    frames_force_dynamic: 10
+    frames_force_dynamic_check_range: 30
+    dynamic_consistency_threshold: 8
+    target_constrain_size: true
+    target_object_size: [0.5, 0.5, 1.5]
+    min_object_size: [0.10, 0.10, 0.15]
+    max_object_size: [3.0, 3.0, 2.0]
+    enable_stage_timers: true
+
+    enable_sync_context: true
+    enable_yolo_sync: false
+    sync_queue_size: 200
+    sync_slop_sec: 0.15
+    max_depth_lidar_skew_sec: 0.18
+    max_depth_yolo_skew_sec: 0.20
+    max_lidar_yolo_skew_sec: 1.5
+    stale_message_age_sec: 2.0
+    skew_startup_grace_sec: 8.0
+    future_stamp_tolerance_sec: 0.2

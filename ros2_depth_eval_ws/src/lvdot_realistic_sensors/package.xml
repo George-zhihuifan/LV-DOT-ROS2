@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>lvdot_realistic_sensors</name>
+  <version>0.1.0</version>
+  <description>
+    Realistic sensor emulators for LV-DOT: Intel RealSense D435i and Livox Mid-360.
+    Consumes raw Gazebo sensor output and transforms to match real-hardware behavior
+    (D435i depth noise, dropout, IR projector pattern; Mid-360 Risley non-repetitive scan).
+  </description>
+  <maintainer email="skbt2@todo.todo">skbt2</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

@@ -63,11 +63,11 @@ noise:
     lidar_drop_rate: 0.3
 
 ros:
-  cam_topic: "/onboard_detector/filtered_bboxes"
+  cam_topic: "/onboard_detector/visual_bboxes_qcgaf"
   lidar_topic: "/onboard_detector/lidar_bboxes_qcgaf"
   color_topic: "/rgbd_camera/image"
   depth_topic: "/rgbd_camera/depth_image"
   yolo_topic: "/yolo_detector/detected_bounding_boxes"
   lidar_cloud_topic: "/uav_lidar/scan/points"
   output_topic: "/qcgaf/fused_bboxes"
-  sync_slop: 0.12
+  sync_slop: 0.15

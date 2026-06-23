@@ -53,8 +53,15 @@ class UavTrajectoryController(Node):
         self.segment_index = 0
         self.segment_progress = 0.0
         self.sim_time = 0.0
+        self._last_tick_ns = None
         self.pose_pub = self.create_publisher(PoseStamped, '/mavros/local_position/pose', 10)
         self.odom_pub = self.create_publisher(Odometry, '/mavros/local_position/odom', 10)
+        # Direct in-physics-thread pose sync via uav_pose_sync_system Gazebo plugin
+        # (bypasses slow SetEntityPose service). Always publish so the C++ plugin
+        # can pick up new poses at the controller update rate.
+        self.motion_pose_pub = self.create_publisher(PoseStamped, '/uav_motion/pose_cmd', 10)
+        self.declare_parameter('use_pose_sync_plugin', True)
+        self.use_pose_sync_plugin = bool(self.get_parameter('use_pose_sync_plugin').value)
         self.pose_cli = self.create_client(SetEntityPose, self.pose_service_name)
         self.pose_fallback_cli = self.create_client(SetEntityPose, self.pose_fallback_service_name)
         self.use_ros_service = False
@@ -188,9 +195,14 @@ class UavTrajectoryController(Node):
 
         self.pose_pub.publish(pose_msg)
         self.odom_pub.publish(odom)
+        # Drive the Gazebo UAV entity via the C++ pose sync plugin (no service IPC).
+        if self.use_pose_sync_plugin:
+            self.motion_pose_pub.publish(pose_msg)
 
     def on_timer(self) -> None:
-        if self.pose_future is not None and not self.pose_future.done():
+        if self.use_pose_sync_plugin:
+            pass  # Fast path: skip the SetEntityPose pending-future bookkeeping.
+        elif self.pose_future is not None and not self.pose_future.done():
             if self.pose_request_sent_ns is not None:
                 elapsed_sec = (self.get_clock().now().nanoseconds - self.pose_request_sent_ns) / 1e9
                 if elapsed_sec > self.pose_request_timeout_sec:
@@ -211,7 +223,12 @@ class UavTrajectoryController(Node):
                             f'Falling back from {self.pose_service_name} to {self.pose_fallback_service_name}.'
                         )
             return
-        dt = 1.0 / max(self.update_hz, 1.0)
+        now_ns = self.get_clock().now().nanoseconds
+        if self._last_tick_ns is None:
+            dt = 1.0 / max(self.update_hz, 1.0)
+        else:
+            dt = max(1e-6, min(0.2, (now_ns - self._last_tick_ns) / 1e9))
+        self._last_tick_ns = now_ns
         self.sim_time += dt
         x, y, z, yaw = self.step_path(dt)
         pose = Pose()
@@ -230,6 +247,10 @@ class UavTrajectoryController(Node):
         )
         self.prev_position = (x, y, z)
         self.position = (x, y, z)
+
+        if self.use_pose_sync_plugin:
+            self.publish_pose_topics(pose, velocity)
+            return
 
         if not self.try_ros_pose(pose, velocity):
             if not self.warned_service_unavailable:

@@ -121,7 +121,13 @@ ClassificationOutput runClassification(const ClassificationInput& input)
                         }
                     }
                 }
-                if (dynaConsistCount == input.config.dynamicConsistencyThreshold) {
+                // ROS2 parity tuning: avoid requiring 100% consecutive dynamic flags.
+                // In practice, sensor jitter makes strict equality too brittle and
+                // suppresses most dynamic outputs. Use a ratio-based pass criterion.
+                const int consistencyThreshold = input.config.dynamicConsistencyThreshold;
+                const int minConsistentFrames = std::max(
+                    1, static_cast<int>(std::ceil(0.6 * static_cast<double>(consistencyThreshold))));
+                if (dynaConsistCount >= minConsistentFrames) {
                     box.is_dynamic = true;
                     output.dynamicBBoxes.push_back(box);
                 }

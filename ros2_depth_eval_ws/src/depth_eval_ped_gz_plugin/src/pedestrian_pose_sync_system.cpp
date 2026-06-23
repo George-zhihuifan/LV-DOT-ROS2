@@ -190,7 +190,3 @@ GZ_ADD_PLUGIN(
   gz::sim::System,
   gz::sim::ISystemConfigure,
   gz::sim::ISystemPreUpdate)
-
-GZ_ADD_PLUGIN_ALIAS(
-  depth_eval::PedestrianPoseSyncSystem,
-  "depth_eval::PedestrianPoseSyncSystem")

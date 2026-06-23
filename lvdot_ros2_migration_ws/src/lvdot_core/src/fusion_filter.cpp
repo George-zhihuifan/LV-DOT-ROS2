@@ -10,6 +10,8 @@ namespace onboardDetector {
 
 namespace {
 constexpr double kMinYolo3DMatchIou = 0.15;
+constexpr double kPedestrianThicknessPriorM = 0.25;
+constexpr double kPedestrianCenterZOffsetM = 0.85;
 
 Eigen::Vector3d point_vector(const ClusterPoint& point)
 {
@@ -31,19 +33,11 @@ box3D conservativeFuseBox(const box3D& lhs, const box3D& rhs)
     bbox.x_width = xmax - xmin;
     bbox.y_width = ymax - ymin;
     bbox.z_width = zmax - zmin;
+    bbox.score = std::max(lhs.score, rhs.score);
     bbox.Vx = 0.0;
     bbox.Vy = 0.0;
     bbox.is_u_map_enhanced = lhs.is_u_map_enhanced || rhs.is_u_map_enhanced;
     return bbox;
-}
-
-bool sampleInsideDetection(const ClusterPoint& sample, const ImageBBox2D& detection)
-{
-    return
-        sample.u >= detection.x &&
-        sample.u <= detection.x + detection.width &&
-        sample.v >= detection.y &&
-        sample.v <= detection.y + detection.height;
 }
 
 void assignSequentialIds(std::vector<box3D>& boxes)
@@ -51,6 +45,77 @@ void assignSequentialIds(std::vector<box3D>& boxes)
     for (std::size_t i = 0; i < boxes.size(); ++i) {
         boxes[i].id = static_cast<double>(i);
     }
+}
+
+Eigen::Vector3d computeGeometryCompensatedCenter(
+    const std::vector<ClusterPoint>& points,
+    const Eigen::Vector3d& sensorPosition)
+{
+    const Eigen::Vector3d geometricCenter = computeCenter(points);
+    if (points.empty()) {
+        return geometricCenter;
+    }
+
+    double zMin = std::numeric_limits<double>::max();
+    double zMax = std::numeric_limits<double>::lowest();
+    double projMin = std::numeric_limits<double>::max();
+    double projMax = std::numeric_limits<double>::lowest();
+    bool hasPlanarDirection = false;
+
+    Eigen::Vector3d compensatedCenter = geometricCenter;
+    const Eigen::Vector2d planarObservation =
+        (geometricCenter - sensorPosition).head<2>();
+    Eigen::Vector2d planarDirection = planarObservation;
+    const double planarNorm = planarDirection.norm();
+    if (planarNorm > 1e-6) {
+        planarDirection /= planarNorm;
+        hasPlanarDirection = true;
+    }
+
+    for (const auto& sample : points) {
+        const Eigen::Vector3d point = point_vector(sample);
+        zMin = std::min(zMin, point.z());
+        zMax = std::max(zMax, point.z());
+        if (hasPlanarDirection) {
+            const double projection = planarDirection.dot(point.head<2>());
+            projMin = std::min(projMin, projection);
+            projMax = std::max(projMax, projection);
+        }
+    }
+
+    if (hasPlanarDirection && projMax >= projMin) {
+        const double observedThickness = projMax - projMin;
+        const double missingThickness =
+            std::max(0.0, kPedestrianThicknessPriorM - observedThickness);
+        compensatedCenter.x() += planarDirection.x() * (missingThickness * 0.5);
+        compensatedCenter.y() += planarDirection.y() * (missingThickness * 0.5);
+    }
+
+    // UAV partial-view data in our diagnostics is dominated by top-visible-body observations.
+    // A head-drop center estimate (z_max - half human height) is substantially less biased
+    // than the previous foot-lift estimate (z_min + half human height).
+    if (std::isfinite(zMax)) {
+        compensatedCenter.z() = zMax - kPedestrianCenterZOffsetM;
+    } else if (std::isfinite(zMin)) {
+        compensatedCenter.z() = zMin + kPedestrianCenterZOffsetM;
+    }
+
+    return compensatedCenter;
+}
+
+void applyGeometryCompensationToBox(
+    box3D& bbox,
+    Eigen::Vector3d& center,
+    const std::vector<ClusterPoint>& cluster,
+    const Eigen::Vector3d& sensorPosition)
+{
+    if (cluster.empty()) {
+        return;
+    }
+    center = computeGeometryCompensatedCenter(cluster, sensorPosition);
+    bbox.x = center.x();
+    bbox.y = center.y();
+    bbox.z = center.z();
 }
 
 }  // namespace
@@ -303,6 +368,7 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
             double zmax = visualBBox.z + visualBBox.z_width / 2.0;
             double zmin = visualBBox.z - visualBBox.z_width / 2.0;
             bool is_u_map_enhanced = visualBBox.is_u_map_enhanced;
+            double fusedScore = visualBBox.score;
 
             for (const int lidarIdx : overlappingLidarBBoxes) {
                 const box3D& lidarBox = input.lidarBBoxes[static_cast<std::size_t>(lidarIdx)];
@@ -318,6 +384,7 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
                     input.lidarPcClusters[static_cast<std::size_t>(lidarIdx)].end());
                 processedLidarBBoxes[static_cast<std::size_t>(lidarIdx)] = true;
                 is_u_map_enhanced = is_u_map_enhanced || lidarBox.is_u_map_enhanced;
+                fusedScore = std::max(fusedScore, lidarBox.score);
             }
 
             for (const int visualIdx : overlappingVisualBBoxes) {
@@ -347,6 +414,7 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
             fusedBBox.x_width = xmax - xmin;
             fusedBBox.y_width = ymax - ymin;
             fusedBBox.z_width = zmax - zmin;
+            fusedBBox.score = fusedScore;
             fusedBBox.Vx = 0.0;
             fusedBBox.Vy = 0.0;
             fusedBBox.is_u_map_enhanced = is_u_map_enhanced;
@@ -370,6 +438,14 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
         output.filteredPcClusterCentersBeforeYolo.push_back(input.lidarPcClusterCenters[i]);
         output.filteredPcClusterStdsBeforeYolo.push_back(input.lidarPcClusterStds[i]);
         processedLidarBBoxes[i] = true;
+    }
+
+    for (std::size_t i = 0; i < output.filteredBBoxesBeforeYolo.size(); ++i) {
+        applyGeometryCompensationToBox(
+            output.filteredBBoxesBeforeYolo[i],
+            output.filteredPcClusterCentersBeforeYolo[i],
+            output.filteredPcClustersBeforeYolo[i],
+            input.positionColor);
     }
 
     assignSequentialIds(output.filteredBBoxesBeforeYolo);
@@ -501,6 +577,9 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
             box3D marked = output.filteredBBoxes[static_cast<std::size_t>(idx3D)];
             marked.is_dynamic = true;
             marked.is_human = true;
+            marked.score = std::max(
+                marked.score,
+                input.yoloDetectionResults[static_cast<std::size_t>(yoloIndices.front())].score);
             newFilteredBBoxes.push_back(marked);
             newFilteredPcClusters.push_back(output.filteredPcClusters[static_cast<std::size_t>(idx3D)]);
             newFilteredPcClusterCenters.push_back(output.filteredPcClusterCenters[static_cast<std::size_t>(idx3D)]);
@@ -561,7 +640,7 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
             }
 
             if (!subCloud.empty()) {
-                const Eigen::Vector3d center = computeCenter(subCloud);
+                const Eigen::Vector3d geometricCenter = computeCenter(subCloud);
                 double xMin = std::numeric_limits<double>::max();
                 double xMax = std::numeric_limits<double>::lowest();
                 double yMin = std::numeric_limits<double>::max();
@@ -579,13 +658,19 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
                     zMax = std::max(zMax, point.z());
                 }
 
+                const Eigen::Vector3d center =
+                    computeGeometryCompensatedCenter(subCloud, input.positionColor);
+
                 box3D newBox;
-                newBox.x = (xMin + xMax) / 2.0;
-                newBox.y = (yMin + yMax) / 2.0;
-                newBox.z = (zMin + zMax) / 2.0;
+                newBox.x = center.x();
+                newBox.y = center.y();
+                newBox.z = center.z();
                 newBox.x_width = xMax - xMin;
                 newBox.y_width = yMax - yMin;
                 newBox.z_width = zMax - zMin;
+                newBox.score = std::max(
+                    output.filteredBBoxes[static_cast<std::size_t>(idx3D)].score,
+                    input.yoloDetectionResults[static_cast<std::size_t>(yidx)].score);
                 newBox.is_dynamic = true;
                 newBox.is_human = true;
                 newBox.is_u_map_enhanced = output.filteredBBoxes[static_cast<std::size_t>(idx3D)].is_u_map_enhanced;
@@ -594,7 +679,7 @@ FilterLVBBoxesOutput filterLVBBoxes(const FilterLVBBoxesInput& input)
                     continue;
                 }
 
-                const Eigen::Vector3d stddev = computeStd(subCloud, center);
+                const Eigen::Vector3d stddev = computeStd(subCloud, geometricCenter);
                 newFilteredBBoxes.push_back(newBox);
                 newFilteredPcClusters.push_back(subCloud);
                 newFilteredPcClusterCenters.push_back(center);

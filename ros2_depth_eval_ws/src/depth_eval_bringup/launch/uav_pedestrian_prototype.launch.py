@@ -13,15 +13,15 @@ def generate_launch_description() -> LaunchDescription:
     plugin_prefix = get_package_prefix('depth_eval_ped_gz_plugin')
     world_path = os.path.join(pkg_bringup, 'worlds', 'pedestrian_prototype.sdf')
     model_path = os.path.join(pkg_bringup, 'models')
-    config_path = os.path.join(pkg_bringup, 'config', 'pedestrian_prototype.yaml')
+    default_config_path = os.path.join(pkg_bringup, 'config', 'pedestrian_prototype.yaml')
+    config_path = LaunchConfiguration('scenario_config')
     rviz_config = os.path.join(pkg_bringup, 'rviz', 'uav_pedestrian_scene.rviz')
 
     gz_sim = ExecuteProcess(
         cmd=[
-            'gz', 'sim',
+            'ign', 'gazebo',
             '-s',
             '-r',
-            '--headless-rendering',
             '--physics-engine', LaunchConfiguration('physics_engine_plugin'),
             world_path
         ],
@@ -32,7 +32,7 @@ def generate_launch_description() -> LaunchDescription:
     )
 
     gz_gui = ExecuteProcess(
-        cmd=['gz', 'sim', '-g'],
+        cmd=['ign', 'gazebo', '-g'],
         name='gazebo_gui',
         output='log',
         shell=False,
@@ -43,15 +43,23 @@ def generate_launch_description() -> LaunchDescription:
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
-            '/rgbd_camera/image@sensor_msgs/msg/Image[gz.msgs.Image',
-            '/rgbd_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
-            '/rgbd_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image',
-            '/rgbd_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked',
-            '/uav_lidar/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked',
-            '/camera/imu@sensor_msgs/msg/Imu[gz.msgs.IMU',
+            '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
+            '/rgbd_camera_color@sensor_msgs/msg/Image[ignition.msgs.Image',
+            '/rgbd_camera_color/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo',
+            '/rgbd_camera_depth@sensor_msgs/msg/Image[ignition.msgs.Image',
+            '/rgbd_camera_depth/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo',
+            '/rgbd_camera_depth/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked',
+            '/uav_lidar/scan/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked',
+            '/camera/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU',
             '/world/pedestrian_prototype/set_pose@ros_gz_interfaces/srv/SetEntityPose',
             '/world/pedestrian_prototype/set_pose/blocking@ros_gz_interfaces/srv/SetEntityPose',
+        ],
+        remappings=[
+            ('/rgbd_camera_color', '/rgbd_camera/image'),
+            ('/rgbd_camera_color/camera_info', '/rgbd_camera/camera_info'),
+            ('/rgbd_camera_depth', '/rgbd_camera/depth_image'),
+            ('/rgbd_camera_depth/camera_info', '/rgbd_camera/depth_camera_info'),
+            ('/rgbd_camera_depth/points', '/rgbd_camera/points'),
         ],
         output='log',
     )
@@ -99,26 +107,43 @@ def generate_launch_description() -> LaunchDescription:
         DeclareLaunchArgument('gazebo_gui', default_value='false', description='Open Gazebo GUI and connect to the running server.'),
         DeclareLaunchArgument(
             'physics_engine_plugin',
-            default_value='gz-physics-dartsim-plugin',
-            description='Physics engine plugin name, e.g. gz-physics-dartsim-plugin / gz-physics-bullet-plugin.'
+            default_value='ignition-physics5-dartsim-plugin',
+            description='Physics engine plugin name, e.g. ignition-physics5-dartsim-plugin / ignition-physics5-bullet-plugin.'
         ),
         DeclareLaunchArgument('publish_states', default_value='true', description='Spawn and publish runtime pedestrian states.'),
         DeclareLaunchArgument('relay_lvdot_topics', default_value='true', description='Relay RGBD topics into LV-DOT-compatible names.'),
         DeclareLaunchArgument('enable_uav_controller', default_value='false', description='Run UAV trajectory controller.'),
+        DeclareLaunchArgument('scenario_config', default_value=default_config_path, description='Pedestrian scenario YAML config.'),
         SetEnvironmentVariable(
             name='GZ_SIM_RESOURCE_PATH',
             value=[model_path, ':', pkg_bringup, ':', EnvironmentVariable('GZ_SIM_RESOURCE_PATH', default_value='')]
+        ),
+        SetEnvironmentVariable(
+            name='IGN_GAZEBO_RESOURCE_PATH',
+            value=[model_path, ':', pkg_bringup, ':', EnvironmentVariable('IGN_GAZEBO_RESOURCE_PATH', default_value='')]
         ),
         SetEnvironmentVariable(
             name='GZ_SIM_SYSTEM_PLUGIN_PATH',
             value=[os.path.join(plugin_prefix, 'lib'), ':', EnvironmentVariable('GZ_SIM_SYSTEM_PLUGIN_PATH', default_value='')]
         ),
         SetEnvironmentVariable(
+            name='IGN_GAZEBO_SYSTEM_PLUGIN_PATH',
+            value=[os.path.join(plugin_prefix, 'lib'), ':', EnvironmentVariable('IGN_GAZEBO_SYSTEM_PLUGIN_PATH', default_value='')]
+        ),
+        SetEnvironmentVariable(
             name='GZ_SIM_PHYSICS_ENGINE_PATH',
             value=[
-                '/opt/ros/jazzy/opt/gz_physics_vendor/lib/gz-physics-7/engine-plugins',
+                '/usr/lib/x86_64-linux-gnu/ign-physics-5/engine-plugins',
                 ':',
                 EnvironmentVariable('GZ_SIM_PHYSICS_ENGINE_PATH', default_value=''),
+            ]
+        ),
+        SetEnvironmentVariable(
+            name='IGN_GAZEBO_PHYSICS_ENGINE_PATH',
+            value=[
+                '/usr/lib/x86_64-linux-gnu/ign-physics-5/engine-plugins',
+                ':',
+                EnvironmentVariable('IGN_GAZEBO_PHYSICS_ENGINE_PATH', default_value=''),
             ]
         ),
         gz_sim,

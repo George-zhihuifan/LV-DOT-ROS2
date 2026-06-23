@@ -1,0 +1,179 @@
+world:
+  name: pedestrian_clean_2agents
+  ground_size:
+  - 90.0
+  - 90.0
+  actor_model_uri: model://pedsim_person
+  actor_z: 0.02
+  actor_scale: 1.0
+  actor_speed_mps: 0.9
+  actor_radius: 0.34
+  trajectory_duration: 18.0
+  sim_dt: 0.05
+  waypoint_tolerance: 0.35
+  desired_force_gain: 2.0
+  obstacle_force_gain: 0.0
+  obstacle_influence_radius: 0.0
+  social_force_gain: 0.0
+  social_force_radius: 0.8
+  along_wall_force_gain: 0.0
+  along_wall_distance_threshold: 0.65
+  along_wall_speed_threshold: 0.18
+  random_force_gain: 0.0
+  random_force_time: 1.0
+  velocity_damping: 1.0
+  max_turn_rate_rad_s: 2.5
+obstacles: []
+waypoints:
+- id: c01
+  x: 4.0
+  y: -0.4
+  r: 0.35
+- id: c01b
+  x: 4.0
+  y: 0.45
+  r: 0.35
+- id: c02
+  x: 6.0
+  y: -0.2
+  r: 0.35
+- id: c02b
+  x: 6.0
+  y: 0.65
+  r: 0.35
+- id: c03
+  x: 8.0
+  y: 0.1
+  r: 0.35
+- id: c03b
+  x: 8.0
+  y: 0.95
+  r: 0.35
+- id: c04
+  x: 10.0
+  y: 0.2
+  r: 0.35
+- id: c04b
+  x: 10.0
+  y: 1.05
+  r: 0.35
+- id: c05
+  x: 12.0
+  y: 0.0
+  r: 0.35
+- id: c05b
+  x: 12.0
+  y: 0.85
+  r: 0.35
+- id: c06
+  x: 10.0
+  y: -0.2
+  r: 0.35
+- id: c06b
+  x: 10.0
+  y: 0.65
+  r: 0.35
+- id: c07
+  x: 8.0
+  y: -0.3
+  r: 0.35
+- id: c07b
+  x: 8.0
+  y: 0.55
+  r: 0.35
+- id: c08
+  x: 6.0
+  y: -0.5
+  r: 0.35
+- id: c08b
+  x: 6.0
+  y: 0.35
+  r: 0.35
+agent_groups:
+- name_prefix: commuter
+  count: 1
+  start_index: 1
+  type: 1
+  group_id: 1
+  profile: commuter
+  behavior: walk
+  delay_start: 0.0
+  delay_step: 0.0
+  speed_mps: 0.9
+  speed_step: 0.0
+  desired_force_scale: 1.0
+  obstacle_force_scale: 0.0
+  social_force_scale: 0.0
+  preferred_distance: 0.85
+  loop: true
+  waypoint_sets:
+  - - c01
+    - c02
+    - c03
+    - c04
+    - c05
+    - c06
+    - c07
+    - c08
+    - c01
+- name_prefix: commuter
+  count: 1
+  start_index: 2
+  type: 1
+  group_id: 1
+  profile: commuter
+  behavior: walk
+  delay_start: 0.0
+  delay_step: 0.0
+  speed_mps: 0.9
+  speed_step: 0.0
+  desired_force_scale: 1.0
+  obstacle_force_scale: 0.0
+  social_force_scale: 0.0
+  preferred_distance: 0.85
+  loop: true
+  waypoint_sets:
+  - - c01b
+    - c02b
+    - c03b
+    - c04b
+    - c05b
+    - c06b
+    - c07b
+    - c08b
+    - c01b
+uav:
+  enabled: true
+  model_name: uav_main
+  pose:
+  - 1.5
+  - -1.2
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.18
+  speed_mps: 0.45
+  loop: true
+  update_hz: 30.0
+  weave_amplitude: 0.0
+  weave_frequency: 0.0
+  vibration_amplitude: 0.0
+  waypoints:
+  - - 1.5
+    - -1.2
+    - 1.0
+  - - 4.0
+    - -0.9
+    - 1.0
+  - - 6.5
+    - -0.4
+    - 1.0
+  - - 9.0
+    - 0.1
+    - 1.0
+  - - 11.5
+    - 0.3
+    - 1.0
+  - - 13.0
+    - -0.2
+    - 1.0

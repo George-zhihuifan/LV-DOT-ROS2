@@ -15,7 +15,7 @@
 #include <utility>
 #include <vector>
 
-#include <cv_bridge/cv_bridge.hpp>
+#include <cv_bridge/cv_bridge.h>
 #include <geometry_msgs/msg/vector3.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
@@ -50,6 +50,121 @@ T resolve_parameter(rclcpp::Node & node, const char * name, const T & default_va
 }
 
 geometry_msgs::msg::Point camera_translation(const std::vector<double> & transform);
+
+template<typename MsgPtrT>
+MsgPtrT nearest_msg_by_stamp(
+  const std::deque<MsgPtrT> & history,
+  const rclcpp::Time & target_stamp)
+{
+  if (history.empty()) {
+    return MsgPtrT{};
+  }
+
+  MsgPtrT best = history.front();
+  double best_delta = std::abs((target_stamp - rclcpp::Time(best->header.stamp)).seconds());
+  for (const auto & msg : history) {
+    if (!msg) {
+      continue;
+    }
+    const double delta = std::abs((target_stamp - rclcpp::Time(msg->header.stamp)).seconds());
+    if (delta < best_delta) {
+      best = msg;
+      best_delta = delta;
+    }
+  }
+  return best;
+}
+
+template<typename MsgPtrT>
+void record_bounded_history(
+  std::deque<MsgPtrT> & history,
+  const MsgPtrT & msg,
+  std::size_t limit)
+{
+  if (!msg) {
+    return;
+  }
+  const auto stamp_ns = rclcpp::Time(msg->header.stamp).nanoseconds();
+  if (!history.empty() && history.back() &&
+      rclcpp::Time(history.back()->header.stamp).nanoseconds() == stamp_ns)
+  {
+    history.back() = msg;
+    return;
+  }
+  history.push_back(msg);
+  while (history.size() > limit) {
+    history.pop_front();
+  }
+}
+
+void apply_pose_to_snapshot(
+  LVdotRuntimeState & state,
+  const geometry_msgs::msg::PoseStamped::ConstSharedPtr & pose_msg)
+{
+  if (!pose_msg) {
+    return;
+  }
+  state.latest_pose = pose_msg;
+  state.latest_odom.reset();
+  state.current_position = pose_msg->pose.position;
+  state.current_velocity.x = 0.0;
+  state.current_velocity.y = 0.0;
+  state.current_velocity.z = 0.0;
+  const auto & q = pose_msg->pose.orientation;
+  const double siny_cosp = 2.0 * (q.w * q.z + q.x * q.y);
+  const double cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z);
+  state.current_yaw = std::atan2(siny_cosp, cosy_cosp);
+  state.has_sensor_pose = true;
+}
+
+void apply_odom_to_snapshot(
+  LVdotRuntimeState & state,
+  const nav_msgs::msg::Odometry::ConstSharedPtr & odom_msg)
+{
+  if (!odom_msg) {
+    return;
+  }
+  state.latest_odom = odom_msg;
+  state.latest_pose.reset();
+  state.current_position = odom_msg->pose.pose.position;
+  state.current_velocity = odom_msg->twist.twist.linear;
+  const auto & q = odom_msg->pose.pose.orientation;
+  const double siny_cosp = 2.0 * (q.w * q.z + q.x * q.y);
+  const double cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z);
+  state.current_yaw = std::atan2(siny_cosp, cosy_cosp);
+  state.has_sensor_pose = true;
+}
+
+void align_snapshot_pose_for_stamp(
+  LVdotRuntimeState & state,
+  const LVdotDetectorConfig & config,
+  const std::deque<geometry_msgs::msg::PoseStamped::ConstSharedPtr> & pose_history,
+  const std::deque<nav_msgs::msg::Odometry::ConstSharedPtr> & odom_history,
+  const rclcpp::Time & target_stamp)
+{
+  if (config.localization_mode == 0) {
+    const auto pose_msg = nearest_msg_by_stamp(pose_history, target_stamp);
+    if (pose_msg) {
+      apply_pose_to_snapshot(state, pose_msg);
+    } else if (state.latest_pose) {
+      apply_pose_to_snapshot(state, state.latest_pose);
+    } else {
+      state.latest_odom.reset();
+      state.has_sensor_pose = false;
+    }
+    return;
+  }
+
+  const auto odom_msg = nearest_msg_by_stamp(odom_history, target_stamp);
+  if (odom_msg) {
+    apply_odom_to_snapshot(state, odom_msg);
+  } else if (state.latest_odom) {
+    apply_odom_to_snapshot(state, state.latest_odom);
+  } else {
+    state.latest_pose.reset();
+    state.has_sensor_pose = false;
+  }
+}
 
 double planar_distance(double x0, double y0, const Box3D & box)
 {
@@ -150,6 +265,53 @@ geometry_msgs::msg::Point box_center_point(const Box3D & box)
   point.y = box.y;
   point.z = box.z;
   return point;
+}
+
+std::vector<Box3D> qcgaf_camera_input_boxes(const LVdotRuntimeState & state)
+{
+  if (!state.visual_bboxes.empty()) {
+    return state.visual_bboxes;
+  }
+
+  std::vector<Box3D> boxes;
+  boxes.reserve(state.filtered_bboxes.size());
+  for (const auto & box : state.filtered_bboxes) {
+    if (box.is_human || box.is_dynamic_candidate || box.is_dynamic) {
+      boxes.push_back(box);
+    }
+  }
+  return boxes;
+}
+
+void attach_gru_predictions_to_tracks(
+  LVdotRuntimeState & state,
+  const LVdotDetectorConfig & config,
+  const rclcpp::Time & now)
+{
+  if (!config.enable_gru_association_cost || state.gru_external_predictions.empty()) {
+    return;
+  }
+
+  const double max_age = std::max(config.gru_prediction_max_age_sec, 0.0);
+  for (auto & track : state.track_states) {
+    track.has_external_prediction = false;
+    const int track_id = static_cast<int>(std::lround(track.current_box.id));
+    const auto pred_it = state.gru_external_predictions.find(track_id);
+    if (pred_it == state.gru_external_predictions.end()) {
+      continue;
+    }
+    const auto & pred = pred_it->second;
+    double age_sec = 0.0;
+    if (pred.stamp.nanoseconds() != 0 && now.nanoseconds() != 0) {
+      age_sec = (now - pred.stamp).seconds();
+    }
+    if (!std::isfinite(age_sec) || age_sec < -0.05 || age_sec > max_age) {
+      continue;
+    }
+    track.has_external_prediction = true;
+    track.external_prediction = pred.position;
+    track.external_prediction_age_sec = age_sec;
+  }
 }
 
 geometry_msgs::msg::Point camera_translation(const std::vector<double> & transform)
@@ -530,6 +692,7 @@ LVdotDetectorNode::LVdotDetectorNode(const rclcpp::NodeOptions & options)
   node_start_time_ = now();
   load_config_from_parameters();
   status_callback_group_ = create_callback_group(rclcpp::CallbackGroupType::Reentrant);
+  depth_branch_callback_group_ = create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
   detection_callback_group_ = create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
   lidar_detection_callback_group_ = create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
   tracking_callback_group_ = create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
@@ -600,6 +763,52 @@ void LVdotDetectorNode::load_config_from_parameters()
     config_.fusion_mode = "dual";
   }
 
+  config_.qcgaf_integration_mode = resolve_parameter<std::string>(
+    *this, "qcgaf_integration_mode", config_.qcgaf_integration_mode);
+  if (config_.qcgaf_integration_mode != "disabled" &&
+      config_.qcgaf_integration_mode != "refinement" &&
+      config_.qcgaf_integration_mode != "replacement")
+  {
+    RCLCPP_WARN(
+      get_logger(),
+      "Invalid qcgaf_integration_mode='%s', fallback to 'disabled'.",
+      config_.qcgaf_integration_mode.c_str());
+    config_.qcgaf_integration_mode = "disabled";
+  }
+  config_.qcgaf_match_distance_threshold = resolve_parameter<double>(
+    *this, "qcgaf_match_distance_threshold", config_.qcgaf_match_distance_threshold);
+  if (config_.qcgaf_match_distance_threshold <= 0.0) {
+    RCLCPP_WARN(
+      get_logger(),
+      "Invalid qcgaf_match_distance_threshold=%.3f, fallback to 1.0.",
+      config_.qcgaf_match_distance_threshold);
+    config_.qcgaf_match_distance_threshold = 1.0;
+  }
+
+  config_.qcgaf_noise_adaptation_enabled = resolve_parameter<bool>(
+    *this, "qcgaf_noise_adaptation_enabled", config_.qcgaf_noise_adaptation_enabled);
+  config_.qcgaf_alpha_q = resolve_parameter<double>(
+    *this, "qcgaf_alpha_q", config_.qcgaf_alpha_q);
+  config_.qcgaf_alpha_r = resolve_parameter<double>(
+    *this, "qcgaf_alpha_r", config_.qcgaf_alpha_r);
+  if (config_.qcgaf_alpha_q < 0.0) config_.qcgaf_alpha_q = 0.0;
+  if (config_.qcgaf_alpha_r < 0.0) config_.qcgaf_alpha_r = 0.0;
+  config_.qcgaf_quality_topic = resolve_parameter<std::string>(
+    *this, "qcgaf_quality_topic", config_.qcgaf_quality_topic);
+  config_.gru_prediction_topic = resolve_parameter<std::string>(
+    *this, "gru_prediction_topic", config_.gru_prediction_topic);
+  config_.enable_gru_association_cost = resolve_parameter<bool>(
+    *this, "enable_gru_association_cost", config_.enable_gru_association_cost);
+  config_.gru_association_weight = resolve_parameter<double>(
+    *this, "gru_association_weight", config_.gru_association_weight);
+  config_.gru_prediction_max_age_sec = resolve_parameter<double>(
+    *this, "gru_prediction_max_age_sec", config_.gru_prediction_max_age_sec);
+  config_.gru_prediction_gate_m = resolve_parameter<double>(
+    *this, "gru_prediction_gate_m", config_.gru_prediction_gate_m);
+  if (config_.gru_association_weight < 0.0) config_.gru_association_weight = 0.0;
+  if (config_.gru_prediction_max_age_sec < 0.0) config_.gru_prediction_max_age_sec = 0.0;
+  if (config_.gru_prediction_gate_m <= 0.0) config_.gru_prediction_gate_m = 1.5;
+
   config_.depth_intrinsics = resolve_parameter<std::vector<double>>(*this, "depth_intrinsics", config_.depth_intrinsics);
   config_.color_intrinsics = resolve_parameter<std::vector<double>>(*this, "color_intrinsics", config_.color_intrinsics);
   config_.depth_scale_factor = resolve_parameter<double>(*this, "depth_scale_factor", config_.depth_scale_factor);
@@ -610,6 +819,7 @@ void LVdotDetectorNode::load_config_from_parameters()
   config_.u_map_threshold_point = resolve_parameter<int>(*this, "u_map_threshold_point", config_.u_map_threshold_point);
   config_.u_map_threshold_line = resolve_parameter<int>(*this, "u_map_threshold_line", config_.u_map_threshold_line);
   config_.u_map_min_length_line = resolve_parameter<int>(*this, "u_map_min_length_line", config_.u_map_min_length_line);
+  config_.u_map_min_bbox_area = resolve_parameter<int>(*this, "u_map_min_bbox_area", config_.u_map_min_bbox_area);
   config_.depth_filter_margin = resolve_parameter<int>(*this, "depth_filter_margin", config_.depth_filter_margin);
   config_.depth_skip_pixel = resolve_parameter<int>(*this, "depth_skip_pixel", config_.depth_skip_pixel);
   config_.image_cols = resolve_parameter<int>(*this, "image_cols", config_.image_cols);
@@ -641,8 +851,26 @@ void LVdotDetectorNode::load_config_from_parameters()
     *this, "similarity_distance_norm", config_.similarity_distance_norm);
   config_.min_match_similarity = resolve_parameter<double>(
     *this, "min_match_similarity", config_.min_match_similarity);
+  config_.tracker_high_score_threshold = resolve_parameter<double>(
+    *this, "tracker_high_score_threshold", config_.tracker_high_score_threshold);
+  config_.tracker_low_score_threshold = resolve_parameter<double>(
+    *this, "tracker_low_score_threshold", config_.tracker_low_score_threshold);
+  config_.tracker_new_track_score_threshold = resolve_parameter<double>(
+    *this, "tracker_new_track_score_threshold", config_.tracker_new_track_score_threshold);
   config_.history_size = resolve_parameter<int>(*this, "history_size", config_.history_size);
+  config_.tracker_tentative_min_hits = resolve_parameter<int>(
+    *this, "tracker_tentative_min_hits", config_.tracker_tentative_min_hits);
+  config_.tracker_tentative_max_unmatched_frames = resolve_parameter<int>(
+    *this, "tracker_tentative_max_unmatched_frames", config_.tracker_tentative_max_unmatched_frames);
   config_.max_unmatched_frames = resolve_parameter<int>(*this, "max_unmatched_frames", config_.max_unmatched_frames);
+  if (config_.tracker_tentative_min_hits < 1) config_.tracker_tentative_min_hits = 1;
+  if (config_.tracker_tentative_max_unmatched_frames < 0) config_.tracker_tentative_max_unmatched_frames = 0;
+  config_.tracker_low_score_threshold = std::clamp(config_.tracker_low_score_threshold, 0.0, 1.0);
+  config_.tracker_high_score_threshold = std::clamp(config_.tracker_high_score_threshold, 0.0, 1.0);
+  config_.tracker_new_track_score_threshold = std::clamp(config_.tracker_new_track_score_threshold, 0.0, 1.0);
+  if (config_.tracker_low_score_threshold > config_.tracker_high_score_threshold) {
+    config_.tracker_low_score_threshold = config_.tracker_high_score_threshold;
+  }
   config_.fix_size_history_threshold = resolve_parameter<int>(*this, "fix_size_history_threshold", config_.fix_size_history_threshold);
   config_.fix_size_dimension_threshold = resolve_parameter<double>(*this, "fix_size_dimension_threshold", config_.fix_size_dimension_threshold);
   config_.kalman_filter_param = resolve_parameter<std::vector<double>>(*this, "kalman_filter_param", config_.kalman_filter_param);
@@ -676,6 +904,20 @@ void LVdotDetectorNode::load_config_from_parameters()
     *this, "max_depth_yolo_skew_sec", config_.max_depth_yolo_skew_sec);
   config_.max_lidar_yolo_skew_sec = resolve_parameter<double>(
     *this, "max_lidar_yolo_skew_sec", config_.max_lidar_yolo_skew_sec);
+  config_.depth_branch_history_size = static_cast<std::size_t>(resolve_parameter<int>(
+      *this, "depth_branch_history_size", static_cast<int>(config_.depth_branch_history_size)));
+  config_.depth_branch_offset_sec = resolve_parameter<double>(
+    *this, "depth_branch_offset_sec", config_.depth_branch_offset_sec);
+  config_.depth_branch_match_latest_causal = resolve_parameter<bool>(
+    *this, "depth_branch_match_latest_causal", config_.depth_branch_match_latest_causal);
+  config_.max_depth_branch_age_sec = resolve_parameter<double>(
+    *this, "max_depth_branch_age_sec", config_.max_depth_branch_age_sec);
+  config_.max_depth_branch_ready_lag_sec = resolve_parameter<double>(
+    *this, "max_depth_branch_ready_lag_sec", config_.max_depth_branch_ready_lag_sec);
+  config_.depth_branch_future_tolerance_sec = resolve_parameter<double>(
+    *this, "depth_branch_future_tolerance_sec", config_.depth_branch_future_tolerance_sec);
+  config_.enable_depth_branch_in_lidar_fusion = resolve_parameter<bool>(
+    *this, "enable_depth_branch_in_lidar_fusion", config_.enable_depth_branch_in_lidar_fusion);
   config_.stale_message_age_sec = resolve_parameter<double>(
     *this, "stale_message_age_sec", config_.stale_message_age_sec);
   config_.skew_startup_grace_sec = resolve_parameter<double>(
@@ -710,6 +952,21 @@ void LVdotDetectorNode::load_config_from_parameters()
   if (config_.max_lidar_yolo_skew_sec <= 0.0) {
     config_.max_lidar_yolo_skew_sec = 1.0;
   }
+  if (config_.depth_branch_history_size == 0) {
+    config_.depth_branch_history_size = 32;
+  }
+  if (config_.depth_branch_offset_sec < 0.0) {
+    config_.depth_branch_offset_sec = 0.0;
+  }
+  if (config_.max_depth_branch_age_sec <= 0.0) {
+    config_.max_depth_branch_age_sec = 0.65;
+  }
+  if (config_.max_depth_branch_ready_lag_sec <= 0.0) {
+    config_.max_depth_branch_ready_lag_sec = 0.80;
+  }
+  if (config_.depth_branch_future_tolerance_sec < 0.0) {
+    config_.depth_branch_future_tolerance_sec = 0.03;
+  }
   if (config_.stale_message_age_sec <= 0.0) {
     config_.stale_message_age_sec = 2.0;
   }
@@ -728,7 +985,7 @@ void LVdotDetectorNode::load_config_from_parameters()
 
   RCLCPP_INFO(
     get_logger(),
-    "Config loaded: localization_mode=%d dt=%.3f image=%dx%d depth_range=[%.2f, %.2f] fusion_mode=%s stage_timers=%s vis_stage=%s sync_ctx=%s yolo_sync=%s sync(queue=%zu,slop=%.3fs) skew(d-l=%.2f,d-y=%.2f,l-y=%.2f)s stale_age=%.2fs executor_threads=%d",
+    "Config loaded: localization_mode=%d dt=%.3f image=%dx%d depth_range=[%.2f, %.2f] fusion_mode=%s stage_timers=%s vis_stage=%s sync_ctx=%s yolo_sync=%s sync(queue=%zu,slop=%.3fs) skew(d-l=%.2f,d-y=%.2f,l-y=%.2f)s branch_match=%s branch_age<=%.2fs ready_lag<=%.2fs future_tol=%.2fs legacy_offset=%.2fs stale_age=%.2fs executor_threads=%d",
     config_.localization_mode,
     config_.time_step,
     config_.image_cols,
@@ -745,8 +1002,21 @@ void LVdotDetectorNode::load_config_from_parameters()
     config_.max_depth_lidar_skew_sec,
     config_.max_depth_yolo_skew_sec,
     config_.max_lidar_yolo_skew_sec,
+    config_.depth_branch_match_latest_causal ? "causal_latest" : "offset_nearest",
+    config_.max_depth_branch_age_sec,
+    config_.max_depth_branch_ready_lag_sec,
+    config_.depth_branch_future_tolerance_sec,
+    config_.depth_branch_offset_sec,
     config_.stale_message_age_sec,
     config_.executor_threads);
+  RCLCPP_INFO(
+    get_logger(),
+    "GRU association: enabled=%s topic=%s weight=%.3f max_age=%.3fs gate=%.2fm",
+    config_.enable_gru_association_cost ? "true" : "false",
+    config_.gru_prediction_topic.c_str(),
+    config_.gru_association_weight,
+    config_.gru_prediction_max_age_sec,
+    config_.gru_prediction_gate_m);
 }
 
 void LVdotDetectorNode::create_subscribers()
@@ -774,6 +1044,24 @@ void LVdotDetectorNode::create_subscribers()
       config_.yolo_detection_topic, sensor_qos,
       std::bind(&LVdotDetectorNode::on_yolo_detections, this, std::placeholders::_1));
   }
+
+  // QC-GAF fusion output subscriber.  Always created so the detector mirrors
+  // QC-GAF results into state.qcgaf_filtered_bboxes regardless of integration
+  // mode; on_tracking_timer is the consumer that decides whether to use them.
+  qcgaf_fused_bboxes_sub_ = create_subscription<visualization_msgs::msg::MarkerArray>(
+    "/qcgaf/fused_bboxes", state_qos,
+    std::bind(&LVdotDetectorNode::on_qcgaf_fused_bboxes, this, std::placeholders::_1));
+
+  // QC-GAF quality vector subscriber for §3.3 adaptive noise.  Always
+  // subscribed; consumption is gated by config_.qcgaf_noise_adaptation_enabled
+  // inside build_tracking_config.
+  qcgaf_quality_vector_sub_ = create_subscription<std_msgs::msg::Float32MultiArray>(
+    config_.qcgaf_quality_topic, state_qos,
+    std::bind(&LVdotDetectorNode::on_qcgaf_quality_vector, this, std::placeholders::_1));
+
+  gru_predictions_sub_ = create_subscription<visualization_msgs::msg::MarkerArray>(
+    config_.gru_prediction_topic, state_qos,
+    std::bind(&LVdotDetectorNode::on_gru_predictions, this, std::placeholders::_1));
 }
 
 void LVdotDetectorNode::create_publishers()
@@ -848,6 +1136,10 @@ void LVdotDetectorNode::create_timers()
   const auto period = std::chrono::duration_cast<std::chrono::nanoseconds>(
     std::chrono::duration<double>(config_.time_step));
 
+  depth_branch_timer_ = create_wall_timer(
+    period,
+    std::bind(&LVdotDetectorNode::on_depth_branch_worker_timer, this),
+    depth_branch_callback_group_);
   detection_timer_ = create_wall_timer(
     period,
     std::bind(&LVdotDetectorNode::on_detection_timer, this),
@@ -894,7 +1186,8 @@ void LVdotDetectorNode::log_input_health()
     << " depth_odom_sync=" << depth_odom_sync_count_
     << " lidar_odom_sync=" << lidar_odom_sync_count_
     << " depth_yolo_sync=" << depth_yolo_sync_count_
-    << " lidar_yolo_sync=" << lidar_yolo_sync_count_;
+    << " lidar_yolo_sync=" << lidar_yolo_sync_count_
+    << " yolo_sync_mode=" << (config_.enable_yolo_sync ? "approx" : "direct");
   input_health_msg.data = input_health.str();
   input_health_pub_->publish(input_health_msg);
   lvdot_interfaces::msg::InputHealth input_health_struct;
@@ -913,7 +1206,7 @@ void LVdotDetectorNode::log_input_health()
     get_logger(),
     *get_clock(),
     5000,
-    "Input health: depth=%zu color=%zu lidar=%zu pose=%zu odom=%zu yolo=%zu depth_pose_sync=%zu lidar_pose_sync=%zu depth_odom_sync=%zu lidar_odom_sync=%zu depth_yolo_sync=%zu lidar_yolo_sync=%zu",
+    "Input health: depth=%zu color=%zu lidar=%zu pose=%zu odom=%zu yolo=%zu depth_pose_sync=%zu lidar_pose_sync=%zu depth_odom_sync=%zu lidar_odom_sync=%zu depth_yolo_sync=%zu lidar_yolo_sync=%zu yolo_sync_mode=%s",
     depth_count_,
     color_count_,
     lidar_count_,
@@ -925,7 +1218,8 @@ void LVdotDetectorNode::log_input_health()
     depth_odom_sync_count_,
     lidar_odom_sync_count_,
     depth_yolo_sync_count_,
-    lidar_yolo_sync_count_);
+    lidar_yolo_sync_count_,
+    config_.enable_yolo_sync ? "approx" : "direct");
 
   std_msgs::msg::String stage_timers_msg;
   std::ostringstream stage_timers;
@@ -971,7 +1265,7 @@ void LVdotDetectorNode::log_input_health()
     get_logger(),
     *get_clock(),
     5000,
-    "Pipeline stats: depth_samples=%zu/%zu u_map=%zu depth_boxes=%zu u_map_merge=%zu u_map_db=%zu u_map_visual=%zu u_map_fused=%zu u_map_filtered=%zu lidar_samples=%zu/%zu uv=%zu db=%zu lidar=%zu fused=%zu filtered=%zu tracks=%zu dynamic=%zu dyn_points=%zu raw_dyn_points=%zu service=%zu/%zu split=%zu->%zu (%zu outputs) fusion_components=%zu visual_only=%zu lidar_only=%zu yolo_in=%zu yolo_candidate3d=%zu yolo_match3d=%zu yolo_match_det=%zu yolo_fused_used=%zu yolo_human=%zu uv_in=%zu db_in=%zu uv_best=%zu db_best=%zu mutual=%zu uv_no_db=%zu uv_not_mutual=%zu uv_iou_reject=%zu fixed_size=%zu size_reject=%zu",
+    "Pipeline stats: depth_samples=%zu/%zu u_map=%zu depth_boxes=%zu u_map_merge=%zu u_map_db=%zu u_map_visual=%zu u_map_fused=%zu u_map_filtered=%zu lidar_samples=%zu/%zu uv=%zu db=%zu lidar=%zu fused=%zu filtered=%zu tracks=%zu dynamic=%zu dyn_points=%zu raw_dyn_points=%zu service=%zu/%zu split=%zu->%zu (%zu outputs) fusion_components=%zu visual_only=%zu lidar_only=%zu yolo_in=%zu yolo_candidate3d=%zu yolo_match3d=%zu yolo_match_det=%zu yolo_fused_used=%zu yolo_human=%zu uv_in=%zu db_in=%zu uv_best=%zu db_best=%zu mutual=%zu uv_no_db=%zu uv_not_mutual=%zu uv_iou_reject=%zu fixed_size=%zu size_reject=%zu det_drop(dl_stale=%zu,dl_skew=%zu,dy_stale=%zu,dy_skew=%zu) lidar_drop(ld_stale=%zu,ld_skew=%zu,ly_stale=%zu,ly_skew=%zu) waits(det_pose=%zu,det_depth=%zu,lidar_new=%zu) fused_zero_with_lidar=%zu branch_match=%zu branch_miss=%zu branch_reject(future=%zu,age=%zu,ready=%zu) branch_err_mean=%.3f branch_err_max=%.3f branch_target_mean=%.3f branch_target_max=%.3f branch_err_bias=%.3f branch_target_bias=%.3f branch_ready_mean=%.3f branch_ready_max=%.3f",
     last_filtered_depth_sample_count_,
     last_projected_depth_sample_count_,
     last_u_map_box_count_,
@@ -1015,7 +1309,37 @@ void LVdotDetectorNode::log_input_health()
     last_uv_not_mutual_count_,
     last_uv_mutual_iou_reject_count_,
     last_fixed_size_count_,
-    last_dynamic_rejected_by_size_);
+    last_dynamic_rejected_by_size_,
+    det_depth_lidar_stale_drop_count_,
+    det_depth_lidar_skew_drop_count_,
+    det_depth_yolo_stale_drop_count_,
+    det_depth_yolo_skew_drop_count_,
+    lidar_depth_stale_drop_count_,
+    lidar_depth_skew_drop_count_,
+    lidar_yolo_stale_drop_count_,
+    lidar_yolo_skew_drop_count_,
+    det_waiting_pose_count_,
+    det_waiting_depth_count_,
+    lidar_waiting_new_lidar_count_,
+    fused_zero_with_lidar_count_,
+    depth_branch_match_count_,
+    depth_branch_miss_count_,
+    depth_branch_reject_future_count_,
+    depth_branch_reject_age_count_,
+    depth_branch_reject_ready_lag_count_,
+    depth_branch_match_count_ > 0 ?
+      depth_branch_match_abs_sum_sec_ / static_cast<double>(depth_branch_match_count_) : 0.0,
+    depth_branch_match_abs_max_sec_,
+    depth_branch_match_count_ > 0 ?
+      depth_branch_target_abs_sum_sec_ / static_cast<double>(depth_branch_match_count_) : 0.0,
+    depth_branch_target_abs_max_sec_,
+    depth_branch_match_count_ > 0 ?
+      depth_branch_match_signed_sum_sec_ / static_cast<double>(depth_branch_match_count_) : 0.0,
+    depth_branch_match_count_ > 0 ?
+      depth_branch_target_signed_sum_sec_ / static_cast<double>(depth_branch_match_count_) : 0.0,
+    depth_branch_match_count_ > 0 ?
+      depth_branch_ready_lag_sum_sec_ / static_cast<double>(depth_branch_match_count_) : 0.0,
+    depth_branch_ready_lag_max_sec_);
 
   std_msgs::msg::String stats_msg;
   std::ostringstream stats;
@@ -1059,7 +1383,41 @@ void LVdotDetectorNode::log_input_health()
     << " uv_not_mutual=" << last_uv_not_mutual_count_
     << " uv_iou_reject=" << last_uv_mutual_iou_reject_count_
     << " fixed_size=" << last_fixed_size_count_
-    << " size_reject=" << last_dynamic_rejected_by_size_;
+    << " size_reject=" << last_dynamic_rejected_by_size_
+    << " det_drop(dl_stale=" << det_depth_lidar_stale_drop_count_
+    << ",dl_skew=" << det_depth_lidar_skew_drop_count_
+    << ",dy_stale=" << det_depth_yolo_stale_drop_count_
+    << ",dy_skew=" << det_depth_yolo_skew_drop_count_
+    << ") lidar_drop(ld_stale=" << lidar_depth_stale_drop_count_
+    << ",ld_skew=" << lidar_depth_skew_drop_count_
+    << ",ly_stale=" << lidar_yolo_stale_drop_count_
+    << ",ly_skew=" << lidar_yolo_skew_drop_count_
+    << ") waits(det_pose=" << det_waiting_pose_count_
+    << ",det_depth=" << det_waiting_depth_count_
+    << ",lidar_new=" << lidar_waiting_new_lidar_count_
+    << ") fused_zero_with_lidar=" << fused_zero_with_lidar_count_
+    << " branch_match=" << depth_branch_match_count_
+    << " branch_miss=" << depth_branch_miss_count_
+    << " branch_reject(future=" << depth_branch_reject_future_count_
+    << ",age=" << depth_branch_reject_age_count_
+    << ",ready=" << depth_branch_reject_ready_lag_count_
+    << ")";
+  if (depth_branch_match_count_ > 0) {
+    stats
+      << " branch_err_mean="
+      << (depth_branch_match_abs_sum_sec_ / static_cast<double>(depth_branch_match_count_))
+      << " branch_err_max=" << depth_branch_match_abs_max_sec_
+      << " branch_target_mean="
+      << (depth_branch_target_abs_sum_sec_ / static_cast<double>(depth_branch_match_count_))
+      << " branch_target_max=" << depth_branch_target_abs_max_sec_
+      << " branch_err_bias="
+      << (depth_branch_match_signed_sum_sec_ / static_cast<double>(depth_branch_match_count_))
+      << " branch_target_bias="
+      << (depth_branch_target_signed_sum_sec_ / static_cast<double>(depth_branch_match_count_))
+      << " branch_ready_mean="
+      << (depth_branch_ready_lag_sum_sec_ / static_cast<double>(depth_branch_match_count_))
+      << " branch_ready_max=" << depth_branch_ready_lag_max_sec_;
+  }
   stats_msg.data = stats.str();
   pipeline_stats_pub_->publish(stats_msg);
   lvdot_interfaces::msg::PipelineStats stats_struct;
@@ -1104,7 +1462,9 @@ void LVdotDetectorNode::on_depth_image(const sensor_msgs::msg::Image::ConstShare
 {
   std::lock_guard<std::mutex> lock(state_mutex_);
   ++depth_count_;
+  ++latest_depth_seq_;
   last_depth_stamp_ = msg->header.stamp;
+  record_depth_locked(msg);
   runtime_state_.latest_depth_image = msg;
 }
 
@@ -1121,6 +1481,7 @@ void LVdotDetectorNode::on_lidar_pointcloud(const sensor_msgs::msg::PointCloud2:
   std::lock_guard<std::mutex> lock(state_mutex_);
   ++lidar_count_;
   last_lidar_stamp_ = msg->header.stamp;
+  record_lidar_locked(msg);
   runtime_state_.latest_lidar_pointcloud = msg;
 }
 
@@ -1129,6 +1490,7 @@ void LVdotDetectorNode::on_pose(const geometry_msgs::msg::PoseStamped::ConstShar
   std::lock_guard<std::mutex> lock(state_mutex_);
   ++pose_count_;
   last_pose_stamp_ = msg->header.stamp;
+  record_pose_locked(msg);
   runtime_state_.latest_pose = msg;
   runtime_state_.current_position = msg->pose.position;
   runtime_state_.current_velocity.x = 0.0;
@@ -1143,6 +1505,7 @@ void LVdotDetectorNode::on_odom(const nav_msgs::msg::Odometry::ConstSharedPtr ms
   std::lock_guard<std::mutex> lock(state_mutex_);
   ++odom_count_;
   last_odom_stamp_ = msg->header.stamp;
+  record_odom_locked(msg);
   runtime_state_.latest_odom = msg;
   runtime_state_.current_position = msg->pose.pose.position;
   runtime_state_.current_velocity = msg->twist.twist.linear;
@@ -1155,8 +1518,307 @@ void LVdotDetectorNode::on_yolo_detections(const vision_msgs::msg::Detection2DAr
   std::lock_guard<std::mutex> lock(state_mutex_);
   ++yolo_count_;
   last_yolo_stamp_ = msg->header.stamp;
+  record_yolo_locked(msg);
   runtime_state_.latest_yolo_detections = msg;
 }
+
+void LVdotDetectorNode::on_qcgaf_fused_bboxes(
+  const visualization_msgs::msg::MarkerArray::ConstSharedPtr msg)
+{
+  // Convert MarkerArray published by qcgaf_fusion_node into Box3D records.
+  // Marker geometry mapping (matches qcgaf_fusion/fusion_node.py:array_to_markers):
+  //   pose.position → (x, y, z)
+  //   scale         → (x_width, y_width, z_width)
+  // Velocity, acceleration, and semantic flags are left at default (0/false) —
+  // QC-GAF only emits geometry; downstream tracker and classifier fill them in.
+  std::vector<Box3D> qcgaf_boxes;
+  qcgaf_boxes.reserve(msg->markers.size());
+  rclcpp::Time stamp(0, 0, RCL_ROS_TIME);
+  for (const auto & marker : msg->markers) {
+    if (marker.action == visualization_msgs::msg::Marker::DELETE ||
+        marker.action == visualization_msgs::msg::Marker::DELETEALL)
+    {
+      continue;
+    }
+    Box3D box;
+    box.x = marker.pose.position.x;
+    box.y = marker.pose.position.y;
+    box.z = marker.pose.position.z;
+    box.x_width = marker.scale.x;
+    box.y_width = marker.scale.y;
+    box.z_width = marker.scale.z;
+    box.id = static_cast<double>(marker.id);
+    qcgaf_boxes.push_back(box);
+    if (stamp.nanoseconds() == 0 && marker.header.stamp.sec != 0) {
+      stamp = rclcpp::Time(marker.header.stamp, RCL_ROS_TIME);
+    }
+  }
+
+  std::lock_guard<std::mutex> lock(state_mutex_);
+  ++qcgaf_msg_count_;
+  last_qcgaf_bbox_count_ = qcgaf_boxes.size();
+  if (stamp.nanoseconds() != 0) {
+    last_qcgaf_stamp_ = stamp;
+  }
+  runtime_state_.qcgaf_filtered_bboxes = std::move(qcgaf_boxes);
+  ++runtime_state_.qcgaf_update_seq;
+}
+
+void LVdotDetectorNode::on_qcgaf_quality_vector(
+  const std_msgs::msg::Float32MultiArray::ConstSharedPtr msg)
+{
+  // Expected layout published by qcgaf_fusion_node: at least 7 float values
+  // corresponding to [H_bri, H_edge, H_dep, H_yolo, H_den, H_vib, H_dtmp].
+  // Defensive: gracefully handle shorter / longer arrays.
+  if (msg->data.size() < 7) {
+    return;
+  }
+  std::array<double, 7> q{};
+  for (std::size_t i = 0; i < 7; ++i) {
+    double v = static_cast<double>(msg->data[i]);
+    if (!std::isfinite(v)) v = 0.0;
+    if (v < 0.0) v = 0.0;
+    if (v > 1.0) v = 1.0;
+    q[i] = v;
+  }
+  // Thesis equation 8a/8b: Hc = mean of camera channels (indices 0..3),
+  // Hl = lidar density (index 4).  Apply EMA smoothing to suppress
+  // frame-to-frame quality jitter before feeding adaptive noise logic.
+  const double Hc_raw = 0.25 * (q[0] + q[1] + q[2] + q[3]);
+  const double Hl_raw = q[4];
+  constexpr double kQualityEmaBeta = 0.9;
+
+  std::lock_guard<std::mutex> lock(state_mutex_);
+  ++qcgaf_quality_msg_count_;
+  runtime_state_.qcgaf_quality_vector = q;
+  runtime_state_.qcgaf_Hc =
+    kQualityEmaBeta * runtime_state_.qcgaf_Hc + (1.0 - kQualityEmaBeta) * Hc_raw;
+  runtime_state_.qcgaf_Hl =
+    kQualityEmaBeta * runtime_state_.qcgaf_Hl + (1.0 - kQualityEmaBeta) * Hl_raw;
+  ++runtime_state_.qcgaf_quality_update_seq;
+}
+
+void LVdotDetectorNode::on_gru_predictions(
+  const visualization_msgs::msg::MarkerArray::ConstSharedPtr msg)
+{
+  std::map<int, LVdotRuntimeState::ExternalPrediction> predictions;
+  for (const auto & marker : msg->markers) {
+    if (marker.action == visualization_msgs::msg::Marker::DELETE ||
+        marker.action == visualization_msgs::msg::Marker::DELETEALL)
+    {
+      continue;
+    }
+    geometry_msgs::msg::Point point;
+    bool valid = false;
+    if (marker.type == visualization_msgs::msg::Marker::LINE_STRIP &&
+        marker.points.size() >= 2)
+    {
+      // Association runs one tracker tick after the current observation.  Use
+      // the first predicted point, not the horizon endpoint sphere used for RViz.
+      point = marker.points[1];
+      valid = true;
+    }
+    if (!valid || !std::isfinite(point.x) || !std::isfinite(point.y) || !std::isfinite(point.z)) {
+      continue;
+    }
+
+    LVdotRuntimeState::ExternalPrediction pred;
+    pred.position = point;
+    pred.stamp = marker.header.stamp.sec == 0 && marker.header.stamp.nanosec == 0 ?
+      this->now() : rclcpp::Time(marker.header.stamp, RCL_ROS_TIME);
+    predictions[marker.id] = pred;
+  }
+
+  std::lock_guard<std::mutex> lock(state_mutex_);
+  ++gru_prediction_msg_count_;
+  last_gru_prediction_count_ = predictions.size();
+  runtime_state_.gru_external_predictions = std::move(predictions);
+  ++runtime_state_.gru_prediction_update_seq;
+}
+
+void LVdotDetectorNode::record_pose_locked(
+  const geometry_msgs::msg::PoseStamped::ConstSharedPtr & msg)
+{
+  const std::size_t limit = std::max<std::size_t>(50, config_.sync_queue_size * 2);
+  record_bounded_history(pose_history_, msg, limit);
+}
+
+void LVdotDetectorNode::record_odom_locked(
+  const nav_msgs::msg::Odometry::ConstSharedPtr & msg)
+{
+  const std::size_t limit = std::max<std::size_t>(50, config_.sync_queue_size * 2);
+  record_bounded_history(odom_history_, msg, limit);
+}
+
+void LVdotDetectorNode::record_depth_locked(
+  const sensor_msgs::msg::Image::ConstSharedPtr & msg)
+{
+  const std::size_t limit = std::max<std::size_t>(50, config_.sync_queue_size * 2);
+  record_bounded_history(depth_history_, msg, limit);
+}
+
+void LVdotDetectorNode::record_lidar_locked(
+  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & msg)
+{
+  const std::size_t limit = std::max<std::size_t>(50, config_.sync_queue_size * 2);
+  record_bounded_history(lidar_history_, msg, limit);
+}
+
+void LVdotDetectorNode::record_yolo_locked(
+  const vision_msgs::msg::Detection2DArray::ConstSharedPtr & msg)
+{
+  const std::size_t limit = std::max<std::size_t>(50, config_.sync_queue_size * 2);
+  record_bounded_history(yolo_history_, msg, limit);
+}
+
+namespace
+{
+
+void cache_depth_branch_output(
+  const onboardDetector::DetectionOutput & detection_output,
+  const rclcpp::Time & source_stamp,
+  const rclcpp::Time & ready_stamp,
+  LVdotRuntimeState & state)
+{
+  LVdotRuntimeState shadow = state;
+  apply_detection_output(detection_output, shadow);
+  state.latest_depth_branch.source_stamp = source_stamp;
+  state.latest_depth_branch.ready_stamp = ready_stamp;
+  state.latest_depth_branch.uv_bboxes = shadow.uv_bboxes;
+  state.latest_depth_branch.db_bboxes = shadow.db_bboxes;
+  state.latest_depth_branch.db_clusters = shadow.db_clusters;
+  state.latest_depth_branch.db_cluster_centers = shadow.db_cluster_centers;
+  state.latest_depth_branch.db_cluster_stds = shadow.db_cluster_stds;
+  state.latest_depth_branch.projected_depth_samples = shadow.projected_depth_samples;
+  state.latest_depth_branch.filtered_depth_samples = shadow.filtered_depth_samples;
+}
+
+double branch_ready_latency_sec(const LVdotRuntimeState::BranchCache & branch)
+{
+  if (branch.source_stamp.nanoseconds() == 0 || branch.ready_stamp.nanoseconds() == 0) {
+    return 0.0;
+  }
+  return (branch.ready_stamp - branch.source_stamp).seconds();
+}
+
+const LVdotRuntimeState::BranchCache * nearest_depth_branch_by_stamp(
+  const std::deque<LVdotRuntimeState::BranchCache> & history,
+  const rclcpp::Time & target_stamp,
+  const rclcpp::Time & ready_cutoff)
+{
+  if (history.empty()) {
+    return nullptr;
+  }
+  const LVdotRuntimeState::BranchCache * best = nullptr;
+  double best_delta = std::numeric_limits<double>::infinity();
+  for (const auto & branch : history) {
+    if (branch.source_stamp.nanoseconds() == 0 || branch.ready_stamp.nanoseconds() == 0) {
+      continue;
+    }
+    if (branch.ready_stamp > ready_cutoff) {
+      continue;
+    }
+    const double delta = std::abs((target_stamp - branch.source_stamp).seconds());
+    if (best == nullptr || delta < best_delta) {
+      best = &branch;
+      best_delta = delta;
+    }
+  }
+  return best;
+}
+
+struct DepthBranchMatchResult
+{
+  const LVdotRuntimeState::BranchCache * branch{nullptr};
+  double source_age_sec{0.0};
+  double target_delta_sec{0.0};
+  double ready_lag_sec{0.0};
+  std::size_t reject_future_count{0};
+  std::size_t reject_age_count{0};
+  std::size_t reject_ready_lag_count{0};
+};
+
+DepthBranchMatchResult select_depth_branch_for_lidar(
+  const std::deque<LVdotRuntimeState::BranchCache> & history,
+  const rclcpp::Time & lidar_stamp,
+  const rclcpp::Time & ready_cutoff,
+  const LVdotDetectorConfig & config)
+{
+  DepthBranchMatchResult result;
+  if (history.empty()) {
+    return result;
+  }
+
+  if (!config.depth_branch_match_latest_causal) {
+    const rclcpp::Time target_stamp =
+      lidar_stamp - rclcpp::Duration::from_seconds(config.depth_branch_offset_sec);
+    result.branch = nearest_depth_branch_by_stamp(history, target_stamp, ready_cutoff);
+    if (result.branch != nullptr) {
+      result.source_age_sec = (lidar_stamp - result.branch->source_stamp).seconds();
+      result.target_delta_sec = (target_stamp - result.branch->source_stamp).seconds();
+      result.ready_lag_sec = branch_ready_latency_sec(*result.branch);
+    }
+    return result;
+  }
+
+  double best_age_sec = std::numeric_limits<double>::infinity();
+  for (const auto & branch : history) {
+    if (branch.source_stamp.nanoseconds() == 0 || branch.ready_stamp.nanoseconds() == 0) {
+      continue;
+    }
+    if (branch.ready_stamp > ready_cutoff) {
+      continue;
+    }
+
+    const double source_age_sec = (lidar_stamp - branch.source_stamp).seconds();
+    const double ready_lag_sec = branch_ready_latency_sec(branch);
+    if (source_age_sec < -config.depth_branch_future_tolerance_sec) {
+      ++result.reject_future_count;
+      continue;
+    }
+    if (source_age_sec > config.max_depth_branch_age_sec) {
+      ++result.reject_age_count;
+      continue;
+    }
+    if (ready_lag_sec > config.max_depth_branch_ready_lag_sec) {
+      ++result.reject_ready_lag_count;
+      continue;
+    }
+    if (result.branch == nullptr || source_age_sec < best_age_sec) {
+      result.branch = &branch;
+      result.source_age_sec = source_age_sec;
+      result.target_delta_sec = source_age_sec;
+      result.ready_lag_sec = ready_lag_sec;
+      best_age_sec = source_age_sec;
+    }
+  }
+  return result;
+}
+
+void load_depth_branch_cache_into_snapshot(
+  const LVdotRuntimeState::BranchCache & branch,
+  LVdotRuntimeState & snapshot)
+{
+  snapshot.uv_bboxes = branch.uv_bboxes;
+  snapshot.db_bboxes = branch.db_bboxes;
+  snapshot.db_clusters = branch.db_clusters;
+  snapshot.db_cluster_centers = branch.db_cluster_centers;
+  snapshot.db_cluster_stds = branch.db_cluster_stds;
+  snapshot.projected_depth_samples = branch.projected_depth_samples;
+  snapshot.filtered_depth_samples = branch.filtered_depth_samples;
+}
+
+std::string format_optional_seconds(double value_sec, bool valid)
+{
+  if (!valid) {
+    return "n/a";
+  }
+  std::ostringstream oss;
+  oss << std::fixed << std::setprecision(3) << value_sec;
+  return oss.str();
+}
+
+}  // namespace
 
 void LVdotDetectorNode::on_get_dynamic_obstacles(
   const std::shared_ptr<lvdot_interfaces::srv::GetDynamicObstacles::Request> request,
@@ -1239,6 +1901,8 @@ void LVdotDetectorNode::on_depth_pose_sync(
   ++depth_pose_sync_count_;
   last_depth_stamp_ = depth_msg->header.stamp;
   last_pose_stamp_ = pose_msg->header.stamp;
+  record_depth_locked(depth_msg);
+  record_pose_locked(pose_msg);
   runtime_state_.latest_depth_image = depth_msg;
   runtime_state_.latest_pose = pose_msg;
   runtime_state_.current_position = pose_msg->pose.position;
@@ -1257,6 +1921,8 @@ void LVdotDetectorNode::on_lidar_pose_sync(
   ++lidar_pose_sync_count_;
   last_lidar_stamp_ = lidar_msg->header.stamp;
   last_pose_stamp_ = pose_msg->header.stamp;
+  record_lidar_locked(lidar_msg);
+  record_pose_locked(pose_msg);
   runtime_state_.latest_lidar_pointcloud = lidar_msg;
   runtime_state_.latest_pose = pose_msg;
   runtime_state_.current_position = pose_msg->pose.position;
@@ -1275,6 +1941,8 @@ void LVdotDetectorNode::on_depth_odom_sync(
   ++depth_odom_sync_count_;
   last_depth_stamp_ = depth_msg->header.stamp;
   last_odom_stamp_ = odom_msg->header.stamp;
+  record_depth_locked(depth_msg);
+  record_odom_locked(odom_msg);
   runtime_state_.latest_depth_image = depth_msg;
   runtime_state_.latest_odom = odom_msg;
   runtime_state_.current_position = odom_msg->pose.pose.position;
@@ -1291,6 +1959,8 @@ void LVdotDetectorNode::on_lidar_odom_sync(
   ++lidar_odom_sync_count_;
   last_lidar_stamp_ = lidar_msg->header.stamp;
   last_odom_stamp_ = odom_msg->header.stamp;
+  record_lidar_locked(lidar_msg);
+  record_odom_locked(odom_msg);
   runtime_state_.latest_lidar_pointcloud = lidar_msg;
   runtime_state_.latest_odom = odom_msg;
   runtime_state_.current_position = odom_msg->pose.pose.position;
@@ -1310,6 +1980,8 @@ void LVdotDetectorNode::on_depth_yolo_sync(
   }
   last_depth_stamp_ = depth_msg->header.stamp;
   last_yolo_stamp_ = yolo_msg->header.stamp;
+  record_depth_locked(depth_msg);
+  record_yolo_locked(yolo_msg);
   runtime_state_.latest_depth_image = depth_msg;
   runtime_state_.latest_yolo_detections = yolo_msg;
 }
@@ -1325,6 +1997,8 @@ void LVdotDetectorNode::on_lidar_yolo_sync(
   }
   last_lidar_stamp_ = lidar_msg->header.stamp;
   last_yolo_stamp_ = yolo_msg->header.stamp;
+  record_lidar_locked(lidar_msg);
+  record_yolo_locked(yolo_msg);
   runtime_state_.latest_lidar_pointcloud = lidar_msg;
   runtime_state_.latest_yolo_detections = yolo_msg;
 }
@@ -1393,7 +2067,20 @@ void LVdotDetectorNode::on_detection_timer()
     return;
   }
 
+  if (config_.fusion_mode == "dual") {
+    std::lock_guard<std::mutex> lock(state_mutex_);
+    ++detection_tick_count_;
+    last_detection_phase_ = "dual_mode_depth_worker";
+    return;
+  }
+
   LVdotRuntimeState snapshot;
+  std::deque<sensor_msgs::msg::Image::ConstSharedPtr> depth_history;
+  std::deque<geometry_msgs::msg::PoseStamped::ConstSharedPtr> pose_history;
+  std::deque<nav_msgs::msg::Odometry::ConstSharedPtr> odom_history;
+  std::deque<vision_msgs::msg::Detection2DArray::ConstSharedPtr> yolo_history;
+  std::size_t current_depth_count = 0;
+  rclcpp::Time lidar_branch_stamp(0, 0, RCL_ROS_TIME);
   const double kMaxDepthYoloSkewSec = config_.max_depth_yolo_skew_sec;
   const double kMaxDepthLidarSkewSec = config_.max_depth_lidar_skew_sec;
   {
@@ -1401,19 +2088,42 @@ void LVdotDetectorNode::on_detection_timer()
     ++detection_tick_count_;
     last_detection_phase_ = "snapshot";
     snapshot = runtime_state_;
+    depth_history = depth_history_;
+    pose_history = pose_history_;
+    odom_history = odom_history_;
+    yolo_history = yolo_history_;
+    current_depth_count = depth_count_;
+    lidar_branch_stamp = last_lidar_branch_stamp_;
+    if (!depth_history.empty()) {
+      snapshot.latest_depth_image = depth_history.back();
+    }
   }
 
   if (!snapshot.has_sensor_pose) {
     std::lock_guard<std::mutex> lock(state_mutex_);
+    ++det_waiting_pose_count_;
     last_detection_phase_ = "waiting_sensor_pose";
     return;
   }
 
-  if (!snapshot.latest_depth_image) {
+  if (!snapshot.latest_depth_image || current_depth_count <= last_depth_processed_count_) {
     std::lock_guard<std::mutex> lock(state_mutex_);
-    last_detection_phase_ = "waiting_depth";
+    ++det_waiting_depth_count_;
+    last_detection_phase_ = "waiting_new_depth";
     return;
   }
+
+  const rclcpp::Time depth_branch_stamp(snapshot.latest_depth_image->header.stamp);
+  if (const auto matched_yolo = nearest_msg_by_stamp(yolo_history, depth_branch_stamp)) {
+    snapshot.latest_yolo_detections = matched_yolo;
+  }
+
+  align_snapshot_pose_for_stamp(
+    snapshot,
+    config_,
+    pose_history,
+    odom_history,
+    depth_branch_stamp);
 
   {
     std::lock_guard<std::mutex> lock(state_mutex_);
@@ -1422,9 +2132,41 @@ void LVdotDetectorNode::on_detection_timer()
   const auto detection_input = build_detection_input(snapshot, config_);
   {
     std::lock_guard<std::mutex> lock(state_mutex_);
-    last_detection_phase_ = "run_core";
+      last_detection_phase_ = "run_core";
   }
   const auto detection_output = onboardDetector::runDetection(detection_input);
+  const rclcpp::Time depth_branch_ready_stamp = now();
+
+  if (config_.fusion_mode == "dual") {
+    std::lock_guard<std::mutex> lock(state_mutex_);
+    last_detection_phase_ = "cache_depth_branch";
+    cache_depth_branch_output(
+      detection_output,
+      depth_branch_stamp,
+      depth_branch_ready_stamp,
+      runtime_state_);
+    depth_branch_history_.push_back(runtime_state_.latest_depth_branch);
+    while (depth_branch_history_.size() > config_.depth_branch_history_size) {
+      depth_branch_history_.pop_front();
+    }
+    runtime_state_.projected_depth_samples = runtime_state_.latest_depth_branch.projected_depth_samples;
+    runtime_state_.filtered_depth_samples = runtime_state_.latest_depth_branch.filtered_depth_samples;
+    runtime_state_.uv_bboxes = runtime_state_.latest_depth_branch.uv_bboxes;
+    runtime_state_.db_bboxes = runtime_state_.latest_depth_branch.db_bboxes;
+    runtime_state_.db_clusters = runtime_state_.latest_depth_branch.db_clusters;
+    runtime_state_.db_cluster_centers = runtime_state_.latest_depth_branch.db_cluster_centers;
+    runtime_state_.db_cluster_stds = runtime_state_.latest_depth_branch.db_cluster_stds;
+    last_projected_depth_sample_count_ = runtime_state_.latest_depth_branch.projected_depth_samples.size();
+    last_filtered_depth_sample_count_ = runtime_state_.latest_depth_branch.filtered_depth_samples.size();
+    last_u_map_box_count_ = runtime_state_.latest_depth_branch.uv_bboxes.size();
+    last_projected_depth_box_count_ = runtime_state_.latest_depth_branch.uv_bboxes.size();
+    last_db_bbox_count_ = runtime_state_.latest_depth_branch.db_bboxes.size();
+    last_u_map_enhanced_db_count_ = count_u_map_enhanced(runtime_state_.latest_depth_branch.db_bboxes);
+    last_depth_processed_count_ = current_depth_count;
+    last_depth_branch_stamp_ = depth_branch_stamp;
+    last_detection_phase_ = "idle";
+    return;
+  }
 
   LVdotRuntimeState detection_snapshot = snapshot;
   apply_detection_output(detection_output, detection_snapshot);
@@ -1442,50 +2184,51 @@ void LVdotDetectorNode::on_detection_timer()
 
   // If LiDAR is too old/new relative to this depth tick, avoid mixing stale
   // lidar branch into current depth-driven fusion.
-  if (detection_snapshot.latest_depth_image && detection_snapshot.latest_lidar_pointcloud) {
-    const rclcpp::Time depth_stamp(detection_snapshot.latest_depth_image->header.stamp);
-    const rclcpp::Time lidar_stamp(detection_snapshot.latest_lidar_pointcloud->header.stamp);
-    if (message_is_stale_or_future(depth_stamp) || message_is_stale_or_future(lidar_stamp)) {
+  if (!detection_snapshot.lidar_bboxes.empty() && lidar_branch_stamp.nanoseconds() != 0) {
+    if (message_is_stale_or_future(depth_branch_stamp) || message_is_stale_or_future(lidar_branch_stamp)) {
+      ++det_depth_lidar_stale_drop_count_;
       detection_snapshot.lidar_bboxes.clear();
       detection_snapshot.lidar_clusters.clear();
       detection_snapshot.lidar_cluster_centers.clear();
       detection_snapshot.lidar_cluster_stds.clear();
     } else {
-    const double skew_sec = std::abs((depth_stamp - lidar_stamp).seconds());
-    if (!in_startup_grace && skew_sec > kMaxDepthLidarSkewSec) {
-      detection_snapshot.lidar_bboxes.clear();
-      detection_snapshot.lidar_clusters.clear();
-      detection_snapshot.lidar_cluster_centers.clear();
-      detection_snapshot.lidar_cluster_stds.clear();
-      RCLCPP_WARN_THROTTLE(
-        get_logger(),
-        *get_clock(),
-        3000,
-        "Depth/LiDAR skew %.3fs > %.3fs. Ignore stale LiDAR branch for this depth fusion tick.",
-        skew_sec,
-        kMaxDepthLidarSkewSec);
-    }
+      const double skew_sec = std::abs((depth_branch_stamp - lidar_branch_stamp).seconds());
+      if (!in_startup_grace && skew_sec > kMaxDepthLidarSkewSec) {
+        ++det_depth_lidar_skew_drop_count_;
+        detection_snapshot.lidar_bboxes.clear();
+        detection_snapshot.lidar_clusters.clear();
+        detection_snapshot.lidar_cluster_centers.clear();
+        detection_snapshot.lidar_cluster_stds.clear();
+        RCLCPP_WARN_THROTTLE(
+          get_logger(),
+          *get_clock(),
+          3000,
+          "Depth/LiDAR branch skew %.3fs > %.3fs. Ignore stale LiDAR branch for this depth fusion tick.",
+          skew_sec,
+          kMaxDepthLidarSkewSec);
+      }
     }
   }
 
   // Drop stale YOLO detections for this depth tick.
-  if (detection_snapshot.latest_depth_image && detection_snapshot.latest_yolo_detections) {
-    const rclcpp::Time depth_stamp(detection_snapshot.latest_depth_image->header.stamp);
+  if (detection_snapshot.latest_yolo_detections) {
     const rclcpp::Time yolo_stamp(detection_snapshot.latest_yolo_detections->header.stamp);
-    if (message_is_stale_or_future(depth_stamp) || message_is_stale_or_future(yolo_stamp)) {
+    if (message_is_stale_or_future(depth_branch_stamp) || message_is_stale_or_future(yolo_stamp)) {
+      ++det_depth_yolo_stale_drop_count_;
       detection_snapshot.latest_yolo_detections.reset();
     } else {
-    const double skew_sec = std::abs((depth_stamp - yolo_stamp).seconds());
-    if (!in_startup_grace && skew_sec > kMaxDepthYoloSkewSec) {
-      detection_snapshot.latest_yolo_detections.reset();
-      RCLCPP_WARN_THROTTLE(
-        get_logger(),
-        *get_clock(),
-        3000,
-        "Depth/YOLO skew %.3fs > %.3fs. Ignore stale YOLO for this depth fusion tick.",
-        skew_sec,
-        kMaxDepthYoloSkewSec);
-    }
+      const double skew_sec = std::abs((depth_branch_stamp - yolo_stamp).seconds());
+      if (!in_startup_grace && skew_sec > kMaxDepthYoloSkewSec) {
+        ++det_depth_yolo_skew_drop_count_;
+        detection_snapshot.latest_yolo_detections.reset();
+        RCLCPP_WARN_THROTTLE(
+          get_logger(),
+          *get_clock(),
+          3000,
+          "Depth/YOLO skew %.3fs > %.3fs. Ignore stale YOLO for this depth fusion tick.",
+          skew_sec,
+          kMaxDepthYoloSkewSec);
+      }
     }
   }
 
@@ -1505,7 +2248,13 @@ void LVdotDetectorNode::on_detection_timer()
     last_detection_phase_ = "apply_output";
     apply_detection_output(detection_output, runtime_state_);
     apply_filter_output(filter_output, runtime_state_);
+    if (config_.fusion_mode == "dual") {
+      apply_depth_auxiliary_correction(runtime_state_, config_.max_match_range);
+    }
     refresh_filtered_cluster_centers(filter_output);
+    if (last_lidar_bbox_count_ > 0 && runtime_state_.filtered_bboxes_before_yolo.empty()) {
+      ++fused_zero_with_lidar_count_;
+    }
 
     last_projected_depth_sample_count_ = runtime_state_.projected_depth_samples.size();
     last_filtered_depth_sample_count_ = runtime_state_.filtered_depth_samples.size();
@@ -1517,7 +2266,101 @@ void LVdotDetectorNode::on_detection_timer()
     last_db_bbox_count_ = runtime_state_.db_bboxes.size();
     last_u_map_enhanced_db_count_ = count_u_map_enhanced(runtime_state_.db_bboxes);
     update_common_filter_stats(filter_output);
+    last_depth_processed_count_ = current_depth_count;
+    last_depth_branch_stamp_ = depth_branch_stamp;
     last_detection_phase_ = "idle";
+  }
+}
+
+void LVdotDetectorNode::on_depth_branch_worker_timer()
+{
+  if (config_.fusion_mode != "dual") {
+    std::lock_guard<std::mutex> lock(state_mutex_);
+    last_depth_branch_phase_ = "disabled_non_dual";
+    return;
+  }
+
+  LVdotRuntimeState snapshot;
+  std::deque<geometry_msgs::msg::PoseStamped::ConstSharedPtr> pose_history;
+  std::deque<nav_msgs::msg::Odometry::ConstSharedPtr> odom_history;
+  std::deque<vision_msgs::msg::Detection2DArray::ConstSharedPtr> yolo_history;
+  std::size_t depth_seq = 0;
+  {
+    std::lock_guard<std::mutex> lock(state_mutex_);
+    last_depth_branch_phase_ = "snapshot";
+    depth_seq = latest_depth_seq_;
+    if (depth_seq == 0 || depth_seq == last_depth_branch_processed_seq_ || !runtime_state_.latest_depth_image) {
+      last_depth_branch_phase_ = "waiting_new_depth";
+      return;
+    }
+    snapshot = runtime_state_;
+    pose_history = pose_history_;
+    odom_history = odom_history_;
+    yolo_history = yolo_history_;
+  }
+
+  const rclcpp::Time depth_branch_stamp(snapshot.latest_depth_image->header.stamp);
+  if (const auto matched_yolo = nearest_msg_by_stamp(yolo_history, depth_branch_stamp)) {
+    snapshot.latest_yolo_detections = matched_yolo;
+  }
+
+  align_snapshot_pose_for_stamp(
+    snapshot,
+    config_,
+    pose_history,
+    odom_history,
+    depth_branch_stamp);
+
+  if (!snapshot.has_sensor_pose) {
+    std::lock_guard<std::mutex> lock(state_mutex_);
+    last_depth_branch_phase_ = "waiting_sensor_pose";
+    return;
+  }
+
+  {
+    std::lock_guard<std::mutex> lock(state_mutex_);
+    last_depth_branch_phase_ = "build_input";
+  }
+  const auto detection_input = build_detection_input(snapshot, config_);
+  {
+    std::lock_guard<std::mutex> lock(state_mutex_);
+    last_depth_branch_phase_ = "run_core";
+  }
+  const auto detection_output = onboardDetector::runDetection(detection_input);
+  const rclcpp::Time depth_branch_ready_stamp = now();
+
+  {
+    std::lock_guard<std::mutex> lock(state_mutex_);
+    if (depth_seq < latest_depth_seq_) {
+      last_depth_branch_phase_ = "superseded_drop";
+      return;
+    }
+    cache_depth_branch_output(
+      detection_output,
+      depth_branch_stamp,
+      depth_branch_ready_stamp,
+      runtime_state_);
+    depth_branch_history_.push_back(runtime_state_.latest_depth_branch);
+    while (depth_branch_history_.size() > config_.depth_branch_history_size) {
+      depth_branch_history_.pop_front();
+    }
+    runtime_state_.projected_depth_samples = runtime_state_.latest_depth_branch.projected_depth_samples;
+    runtime_state_.filtered_depth_samples = runtime_state_.latest_depth_branch.filtered_depth_samples;
+    runtime_state_.uv_bboxes = runtime_state_.latest_depth_branch.uv_bboxes;
+    runtime_state_.db_bboxes = runtime_state_.latest_depth_branch.db_bboxes;
+    runtime_state_.db_clusters = runtime_state_.latest_depth_branch.db_clusters;
+    runtime_state_.db_cluster_centers = runtime_state_.latest_depth_branch.db_cluster_centers;
+    runtime_state_.db_cluster_stds = runtime_state_.latest_depth_branch.db_cluster_stds;
+    last_projected_depth_sample_count_ = runtime_state_.latest_depth_branch.projected_depth_samples.size();
+    last_filtered_depth_sample_count_ = runtime_state_.latest_depth_branch.filtered_depth_samples.size();
+    last_u_map_box_count_ = runtime_state_.latest_depth_branch.uv_bboxes.size();
+    last_projected_depth_box_count_ = runtime_state_.latest_depth_branch.uv_bboxes.size();
+    last_db_bbox_count_ = runtime_state_.latest_depth_branch.db_bboxes.size();
+    last_u_map_enhanced_db_count_ = count_u_map_enhanced(runtime_state_.latest_depth_branch.db_bboxes);
+    last_depth_processed_count_ = depth_count_;
+    last_depth_branch_processed_seq_ = depth_seq;
+    last_depth_branch_stamp_ = depth_branch_stamp;
+    last_depth_branch_phase_ = "idle";
   }
 }
 
@@ -1531,7 +2374,17 @@ void LVdotDetectorNode::on_lidar_detection_timer()
   }
 
   LVdotRuntimeState snapshot;
+  std::deque<sensor_msgs::msg::PointCloud2::ConstSharedPtr> lidar_history;
+  std::deque<geometry_msgs::msg::PoseStamped::ConstSharedPtr> pose_history;
+  std::deque<nav_msgs::msg::Odometry::ConstSharedPtr> odom_history;
+  std::deque<vision_msgs::msg::Detection2DArray::ConstSharedPtr> yolo_history;
+  std::deque<LVdotRuntimeState::BranchCache> depth_branch_history;
   std::size_t current_lidar_count = 0;
+  rclcpp::Time depth_branch_stamp(0, 0, RCL_ROS_TIME);
+  double matched_branch_age_sec = 0.0;
+  double target_branch_delta_sec = 0.0;
+  double matched_ready_lag_sec = 0.0;
+  bool has_matched_branch = false;
   const double kMaxDepthLidarSkewSec = config_.max_depth_lidar_skew_sec;
   const double kMaxLidarYoloSkewSec = config_.max_lidar_yolo_skew_sec;
   {
@@ -1539,14 +2392,53 @@ void LVdotDetectorNode::on_lidar_detection_timer()
     ++lidar_detection_tick_count_;
     last_lidar_detection_phase_ = "snapshot";
     snapshot = runtime_state_;
+    lidar_history = lidar_history_;
+    pose_history = pose_history_;
+    odom_history = odom_history_;
+    yolo_history = yolo_history_;
+    depth_branch_history = depth_branch_history_;
     current_lidar_count = lidar_count_;
+    if (!lidar_history.empty()) {
+      snapshot.latest_lidar_pointcloud = lidar_history.back();
+    }
   }
 
   if (!snapshot.latest_lidar_pointcloud || current_lidar_count <= last_lidar_processed_count_) {
     std::lock_guard<std::mutex> lock(state_mutex_);
+    ++lidar_waiting_new_lidar_count_;
     last_lidar_detection_phase_ = "waiting_new_lidar";
     return;
   }
+
+  const rclcpp::Time lidar_stamp(snapshot.latest_lidar_pointcloud->header.stamp);
+  const rclcpp::Time branch_select_now = now();
+  const auto branch_match = select_depth_branch_for_lidar(
+    depth_branch_history, lidar_stamp, branch_select_now, config_);
+  if (branch_match.branch != nullptr) {
+    depth_branch_stamp = branch_match.branch->source_stamp;
+    matched_branch_age_sec = branch_match.source_age_sec;
+    target_branch_delta_sec = branch_match.target_delta_sec;
+    matched_ready_lag_sec = branch_match.ready_lag_sec;
+    has_matched_branch = true;
+    load_depth_branch_cache_into_snapshot(*branch_match.branch, snapshot);
+  }
+  if (!config_.enable_depth_branch_in_lidar_fusion) {
+    snapshot.uv_bboxes.clear();
+    snapshot.db_bboxes.clear();
+    snapshot.db_clusters.clear();
+    snapshot.db_cluster_centers.clear();
+    snapshot.db_cluster_stds.clear();
+  }
+  if (const auto matched_yolo = nearest_msg_by_stamp(yolo_history, lidar_stamp)) {
+    snapshot.latest_yolo_detections = matched_yolo;
+  }
+
+  align_snapshot_pose_for_stamp(
+    snapshot,
+    config_,
+    pose_history,
+    odom_history,
+    lidar_stamp);
 
   const auto set_lidar_phase = [this](const char * phase) {
       std::lock_guard<std::mutex> lock(state_mutex_);
@@ -1574,33 +2466,41 @@ void LVdotDetectorNode::on_lidar_detection_timer()
   // If depth is too old relative to LiDAR, do not fuse stale UV/DB branches
   // into this LiDAR tick. This prevents stale visual boxes from polluting
   // current LiDAR-only detections.
-  if (snapshot.latest_lidar_pointcloud && snapshot.latest_depth_image) {
-    const rclcpp::Time lidar_stamp(snapshot.latest_lidar_pointcloud->header.stamp);
-    const rclcpp::Time depth_stamp(snapshot.latest_depth_image->header.stamp);
-    if (message_is_stale_or_future(lidar_stamp) || message_is_stale_or_future(depth_stamp)) {
+  if ((!snapshot.uv_bboxes.empty() || !snapshot.db_bboxes.empty()) && depth_branch_stamp.nanoseconds() != 0) {
+    if (message_is_stale_or_future(lidar_stamp) || message_is_stale_or_future(depth_branch_stamp)) {
+      ++lidar_depth_stale_drop_count_;
       snapshot.uv_bboxes.clear();
       snapshot.db_bboxes.clear();
       snapshot.db_clusters.clear();
       snapshot.db_cluster_centers.clear();
       snapshot.db_cluster_stds.clear();
     } else {
-    const double skew_sec = std::abs((lidar_stamp - depth_stamp).seconds());
-    if (!in_startup_grace && skew_sec > kMaxDepthLidarSkewSec) {
-      snapshot.uv_bboxes.clear();
-      snapshot.db_bboxes.clear();
-      snapshot.db_clusters.clear();
-      snapshot.db_cluster_centers.clear();
-      snapshot.db_cluster_stds.clear();
-      RCLCPP_WARN_THROTTLE(
-        get_logger(),
-        *get_clock(),
-        3000,
-        "Depth/LiDAR skew %.3fs > %.3fs. Fallback to lidar-only fusion for this LiDAR tick.",
-        skew_sec,
-        kMaxDepthLidarSkewSec);
+      const double skew_sec = config_.depth_branch_match_latest_causal ?
+        std::abs((lidar_stamp - depth_branch_stamp).seconds()) :
+        std::abs((
+          lidar_stamp - rclcpp::Duration::from_seconds(config_.depth_branch_offset_sec) -
+          depth_branch_stamp).seconds());
+      if (!in_startup_grace && skew_sec > kMaxDepthLidarSkewSec) {
+        ++lidar_depth_skew_drop_count_;
+        snapshot.uv_bboxes.clear();
+        snapshot.db_bboxes.clear();
+        snapshot.db_clusters.clear();
+        snapshot.db_cluster_centers.clear();
+        snapshot.db_cluster_stds.clear();
+        RCLCPP_WARN_THROTTLE(
+          get_logger(),
+          *get_clock(),
+          3000,
+          "Depth branch rejected by skew %.3fs > %.3fs (lidar-depth=%.3fs, mode=%s, cfg_offset=%.3fs). "
+          "Fallback to lidar-only fusion for this LiDAR tick.",
+          skew_sec,
+          kMaxDepthLidarSkewSec,
+          std::abs((lidar_stamp - depth_branch_stamp).seconds()),
+          config_.depth_branch_match_latest_causal ? "causal_latest" : "offset_nearest",
+          config_.depth_branch_offset_sec);
+      }
     }
-    }
-  } else if (!snapshot.latest_depth_image) {
+  } else if (depth_branch_stamp.nanoseconds() == 0) {
     snapshot.uv_bboxes.clear();
     snapshot.db_bboxes.clear();
     snapshot.db_clusters.clear();
@@ -1609,14 +2509,15 @@ void LVdotDetectorNode::on_lidar_detection_timer()
   }
 
   // Drop stale YOLO detections for this lidar tick.
-  if (snapshot.latest_lidar_pointcloud && snapshot.latest_yolo_detections) {
-    const rclcpp::Time lidar_stamp(snapshot.latest_lidar_pointcloud->header.stamp);
+  if (snapshot.latest_yolo_detections) {
     const rclcpp::Time yolo_stamp(snapshot.latest_yolo_detections->header.stamp);
     if (message_is_stale_or_future(lidar_stamp) || message_is_stale_or_future(yolo_stamp)) {
+      ++lidar_yolo_stale_drop_count_;
       snapshot.latest_yolo_detections.reset();
     } else {
     const double skew_sec = std::abs((lidar_stamp - yolo_stamp).seconds());
     if (!in_startup_grace && skew_sec > kMaxLidarYoloSkewSec) {
+      ++lidar_yolo_skew_drop_count_;
       snapshot.latest_yolo_detections.reset();
       RCLCPP_WARN_THROTTLE(
         get_logger(),
@@ -1656,8 +2557,44 @@ void LVdotDetectorNode::on_lidar_detection_timer()
     refresh_filtered_cluster_centers(filter_output);
     update_common_filter_stats(filter_output);
     last_lidar_processed_count_ = current_lidar_count;
+    last_lidar_branch_stamp_ = lidar_stamp;
+    depth_branch_reject_future_count_ += branch_match.reject_future_count;
+    depth_branch_reject_age_count_ += branch_match.reject_age_count;
+    depth_branch_reject_ready_lag_count_ += branch_match.reject_ready_lag_count;
+    if (has_matched_branch) {
+      ++depth_branch_match_count_;
+      depth_branch_match_abs_sum_sec_ += std::abs(matched_branch_age_sec);
+      depth_branch_match_abs_max_sec_ =
+        std::max(depth_branch_match_abs_max_sec_, std::abs(matched_branch_age_sec));
+      depth_branch_match_signed_sum_sec_ += matched_branch_age_sec;
+      depth_branch_target_abs_sum_sec_ += std::abs(target_branch_delta_sec);
+      depth_branch_target_abs_max_sec_ =
+        std::max(depth_branch_target_abs_max_sec_, std::abs(target_branch_delta_sec));
+      depth_branch_target_signed_sum_sec_ += target_branch_delta_sec;
+      depth_branch_ready_lag_sum_sec_ += matched_ready_lag_sec;
+      depth_branch_ready_lag_max_sec_ =
+        std::max(depth_branch_ready_lag_max_sec_, matched_ready_lag_sec);
+    } else {
+      ++depth_branch_miss_count_;
+    }
     last_lidar_detection_phase_ = "idle";
   }
+
+  RCLCPP_INFO_THROTTLE(
+    get_logger(),
+    *get_clock(),
+    3000,
+    "Depth-branch match: mode=%s cfg_offset=%.3fs lidar-depth=%s target-branch=%s ready_lag=%s history=%zu matched=%s reject(future=%zu,age=%zu,ready=%zu)",
+    config_.depth_branch_match_latest_causal ? "causal_latest" : "offset_nearest",
+    config_.depth_branch_offset_sec,
+    format_optional_seconds(matched_branch_age_sec, has_matched_branch).c_str(),
+    format_optional_seconds(target_branch_delta_sec, has_matched_branch).c_str(),
+    format_optional_seconds(matched_ready_lag_sec, has_matched_branch).c_str(),
+    depth_branch_history.size(),
+    has_matched_branch ? "yes" : "no",
+    branch_match.reject_future_count,
+    branch_match.reject_age_count,
+    branch_match.reject_ready_lag_count);
 }
 
 void LVdotDetectorNode::on_tracking_timer()
@@ -1680,7 +2617,18 @@ void LVdotDetectorNode::on_tracking_timer()
     last_tracking_phase_ = "waiting_new_filtered_update";
     return;
   }
-  if (snapshot.filtered_bboxes.empty()) {
+
+  // QC-GAF integration mode dispatch.  See LV-DOT-Materials/毕设/
+  // qcgaf_integration_analysis_20260512.md for the design rationale.
+  //   disabled    – baseline: tracker consumes snapshot.filtered_bboxes
+  //   refinement  – Path Z:   QC-GAF geometry overrides rule-fusion box xyz/whl
+  //   replacement – Path X:   tracker consumes snapshot.qcgaf_filtered_bboxes
+  //                            (falls back to baseline when QC buffer empty)
+  const std::string & qcgaf_mode = config_.qcgaf_integration_mode;
+  const bool replacement_active =
+    (qcgaf_mode == "replacement") && !snapshot.qcgaf_filtered_bboxes.empty();
+
+  if (!replacement_active && snapshot.filtered_bboxes.empty()) {
     std::lock_guard<std::mutex> lock(state_mutex_);
     last_tracking_phase_ = "waiting_filtered_bboxes";
     last_tracking_filter_update_seq_ = filter_seq;
@@ -1695,7 +2643,15 @@ void LVdotDetectorNode::on_tracking_timer()
     std::lock_guard<std::mutex> lock(state_mutex_);
     last_tracking_phase_ = "build_input";
   }
-  const auto tracking_input = build_tracking_input(snapshot, config_);
+
+  if (qcgaf_mode == "refinement" && !snapshot.qcgaf_filtered_bboxes.empty()) {
+    apply_qcgaf_geometry_refinement(snapshot, config_.qcgaf_match_distance_threshold);
+  }
+  attach_gru_predictions_to_tracks(snapshot, config_, this->now());
+
+  const auto tracking_input = replacement_active
+    ? build_tracking_input_qcgaf_replacement(snapshot, config_)
+    : build_tracking_input(snapshot, config_);
   {
     std::lock_guard<std::mutex> lock(state_mutex_);
     last_tracking_phase_ = "run_core";
@@ -1797,7 +2753,7 @@ void LVdotDetectorNode::on_vis_timer()
       make_color(0.2f, 0.7f, 1.0f, 0.35f), stamp));
   visual_bboxes_qcgaf_pub_->publish(
     make_box_markers(
-      snapshot.visual_bboxes, frame_id, "visual_qcgaf_input",
+      qcgaf_camera_input_boxes(snapshot), frame_id, "visual_qcgaf_input",
       make_color(0.3f, 0.8f, 1.0f, 0.35f), stamp));
   uv_bboxes_pub_->publish(
     make_box_markers(

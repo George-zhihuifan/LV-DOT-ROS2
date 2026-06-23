@@ -26,8 +26,11 @@ setup(
         'console_scripts': [
             'image_pointcloud_relay = lvdot_ros2_adapter.image_pointcloud_relay:main',
             'pose_stub = lvdot_ros2_adapter.pose_stub:main',
-            'gt_detection_publisher = lvdot_ros2_adapter.gt_detection_publisher:main',
             'lvdot_yolo_node = lvdot_ros2_adapter.lvdot_yolo_node:main',
+            'detection_evaluator = lvdot_ros2_adapter.detection_evaluator:main',
+            'advanced_evaluator = lvdot_ros2_adapter.advanced_evaluator:main',
+            'uav_waypoint_mission = lvdot_ros2_adapter.uav_waypoint_mission:main',
+            'yolo_sort_baseline_node = lvdot_ros2_adapter.yolo_sort_baseline_node:main',
         ],
     },
 )

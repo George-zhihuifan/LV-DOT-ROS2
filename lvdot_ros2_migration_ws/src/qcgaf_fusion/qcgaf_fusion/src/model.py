@@ -143,6 +143,7 @@ class QCGAF(nn.Module):
         # Initialize bias to 0 so alpha starts at 0.5 (equal weighting)
         nn.init.zeros_(self.blend_proj.bias)
         nn.init.xavier_uniform_(self.blend_proj.weight)
+        self.alpha_min = 0.45
         # Runtime constants for safer cross-sensor blending.
         self.dist_gate_center = 1.5
         self.dist_gate_scale = 2.0
@@ -176,6 +177,7 @@ class QCGAF(nn.Module):
         # Quality-dependent raw position blending
         # alpha ∈ [0,1]: 1 = trust camera, 0 = trust lidar
         alpha = torch.sigmoid(self.blend_proj(quality))  # (B, 1)
+        alpha = self.alpha_min + (1.0 - self.alpha_min) * alpha
         alpha = alpha.unsqueeze(1)                        # (B, 1, 1)
 
         cam_pos = cam_dets[:, :, :6]                      # (B, M, 6)

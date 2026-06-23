@@ -94,22 +94,22 @@ class PredictionNode(Node):
             self.get_logger().debug(f'Cleaned stale tracks: {stale_ids}')
 
     def tracking_callback(self, msg: MarkerArray):
-        if not msg.markers:
-            return
-
         current_time = time.time()
         pred_markers = MarkerArray()
+
+        if not msg.markers:
+            self.pub.publish(pred_markers)
+            self._cleanup_stale_tracks(current_time)
+            return
+
         stamp = msg.markers[0].header.stamp
         frame_id = msg.markers[0].header.frame_id or 'map'
 
         for marker in msg.markers:
-            track_id = marker.id
-            x = marker.pose.position.x
-            y = marker.pose.position.y
-            z = marker.pose.position.z
-            w = marker.scale.x
-            h = marker.scale.y
-            l = marker.scale.z
+            parsed = self._extract_box_state(marker)
+            if parsed is None:
+                continue
+            track_id, x, y, z, w, h, l = parsed
 
             self.last_seen[track_id] = current_time
             try:
@@ -168,6 +168,38 @@ class PredictionNode(Node):
 
         self.pub.publish(pred_markers)
         self._cleanup_stale_tracks(current_time)
+
+    def _extract_box_state(self, marker: Marker):
+        track_id = marker.id
+        if marker.type == Marker.CUBE:
+            x = marker.pose.position.x
+            y = marker.pose.position.y
+            z = marker.pose.position.z
+            w = marker.scale.x
+            h = marker.scale.y
+            l = marker.scale.z
+            if w <= 0.0 or h <= 0.0 or l <= 0.0:
+                return None
+            return track_id, x, y, z, w, h, l
+
+        if marker.type == Marker.LINE_LIST and len(marker.points) >= 8:
+            xs = [p.x for p in marker.points]
+            ys = [p.y for p in marker.points]
+            zs = [p.z for p in marker.points]
+            min_x, max_x = min(xs), max(xs)
+            min_y, max_y = min(ys), max(ys)
+            min_z, max_z = min(zs), max(zs)
+            x = 0.5 * (min_x + max_x)
+            y = 0.5 * (min_y + max_y)
+            z = 0.5 * (min_z + max_z)
+            w = max_x - min_x
+            h = max_y - min_y
+            l = max_z - min_z
+            if w <= 0.0 or h <= 0.0 or l <= 0.0:
+                return None
+            return track_id, x, y, z, w, h, l
+
+        return None
 
 
 def main(args=None):

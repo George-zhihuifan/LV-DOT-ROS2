@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<sdf version="1.10">
+<sdf version="1.9">
   <model name="uav_d435i_platform">
-    <static>false</static>
+    <static>true</static>
     <self_collide>false</self_collide>
 
     <link name="base_link">
@@ -127,31 +127,60 @@
         </material>
       </visual>
 
-      <sensor name="d435i_rgbd" type="rgbd_camera">
-        <pose>0.24 0.0 -0.02 0 -0.35 0</pose>
+      <sensor name="d435i_color" type="camera">
+        <pose>0.30 0.0 0.05 0 0 0</pose>
         <camera>
-          <horizontal_fov>1.518</horizontal_fov>
+          <horizontal_fov>1.211</horizontal_fov>
           <image>
             <width>640</width>
             <height>480</height>
             <format>R8G8B8</format>
           </image>
           <clip>
-            <near>0.2</near>
-            <far>12.0</far>
+            <near>0.1</near>
+            <far>10.0</far>
           </clip>
         </camera>
         <always_on>true</always_on>
-        <update_rate>15</update_rate>
+        <update_rate>30</update_rate>
         <visualize>false</visualize>
-        <topic>rgbd_camera</topic>
+        <topic>rgbd_camera_color</topic>
+        <enable_metrics>false</enable_metrics>
+      </sensor>
+
+      <sensor name="d435i_depth" type="depth_camera">
+        <pose>0.30 0.0 0.05 0 0 0</pose>
+        <camera>
+          <horizontal_fov>1.518</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R_FLOAT32</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>10.0</far>
+          </clip>
+          <depth_camera>
+            <output>depths</output>
+          </depth_camera>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.010</stddev>
+          </noise>
+        </camera>
+        <always_on>true</always_on>
+        <update_rate>30</update_rate>
+        <visualize>false</visualize>
+        <topic>rgbd_camera_depth</topic>
         <enable_metrics>false</enable_metrics>
       </sensor>
 
       <sensor name="d435i_imu" type="imu">
         <pose>0.02 0 0 0 0 0</pose>
         <always_on>true</always_on>
-        <update_rate>100</update_rate>
+        <update_rate>200</update_rate>
         <visualize>false</visualize>
         <topic>camera/imu</topic>
         <enable_metrics>true</enable_metrics>
@@ -208,13 +237,13 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>500</samples>
+              <samples>720</samples>
               <resolution>1</resolution>
               <min_angle>-3.1415926</min_angle>
               <max_angle>3.1415926</max_angle>
             </horizontal>
             <vertical>
-              <samples>40</samples>
+              <samples>60</samples>
               <resolution>1</resolution>
               <min_angle>-0.122173</min_angle>
               <max_angle>0.907571</max_angle>

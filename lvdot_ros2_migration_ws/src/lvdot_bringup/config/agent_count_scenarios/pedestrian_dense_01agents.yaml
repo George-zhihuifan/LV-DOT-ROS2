@@ -1,0 +1,229 @@
+world:
+  name: pedestrian_prototype
+  ground_size:
+  - 90.0
+  - 90.0
+  actor_model_uri: model://actor_stand_local/meshes/stand.dae
+  actor_z: 0.02
+  actor_scale: 1.0
+  actor_speed_mps: 0.9
+  actor_radius: 0.34
+  trajectory_duration: 18.0
+  sim_dt: 0.05
+  waypoint_tolerance: 0.35
+  desired_force_gain: 2.1
+  obstacle_force_gain: 1.6
+  obstacle_influence_radius: 0.85
+  social_force_gain: 0.5
+  social_force_radius: 0.8
+  along_wall_force_gain: 0.35
+  along_wall_distance_threshold: 0.65
+  along_wall_speed_threshold: 0.18
+  random_force_gain: 0.015
+  random_force_time: 1.0
+  velocity_damping: 1.0
+  max_turn_rate_rad_s: 2.5
+obstacles:
+- name: dense_pillar_a
+  x: 5.5
+  y: 2.1
+  radius: 0.24
+  length: 1.5
+  color:
+  - 0.52
+  - 0.34
+  - 0.22
+- name: dense_pillar_b
+  x: 11.6
+  y: -2.0
+  radius: 0.24
+  length: 1.5
+  color:
+  - 0.24
+  - 0.38
+  - 0.58
+- name: dense_kiosk_a
+  shape: box
+  x: 8.6
+  y: -0.3
+  width: 0.9
+  depth: 0.7
+  length: 1.5
+  color:
+  - 0.62
+  - 0.54
+  - 0.3
+- name: dense_divider_a
+  shape: box
+  x: 3.5
+  y: 2.8
+  width: 1.2
+  depth: 0.25
+  length: 1.0
+  color:
+  - 0.36
+  - 0.56
+  - 0.56
+- name: dense_bench_a
+  shape: box
+  x: 12.3
+  y: 2.3
+  width: 1.4
+  depth: 0.35
+  length: 0.75
+  color:
+  - 0.52
+  - 0.42
+  - 0.28
+waypoints:
+- id: d01
+  x: 2.2
+  y: -2.6
+  r: 0.35
+- id: d02
+  x: 3.8
+  y: -1.8
+  r: 0.35
+- id: d03
+  x: 5.4
+  y: -0.9
+  r: 0.35
+- id: d04
+  x: 7.1
+  y: -2.4
+  r: 0.35
+  kind: attraction
+  strength: 1.05
+- id: d05
+  x: 9.0
+  y: -1.4
+  r: 0.35
+- id: d06
+  x: 11.2
+  y: -2.6
+  r: 0.35
+- id: d07
+  x: 13.5
+  y: -1.8
+  r: 0.35
+  kind: attraction
+  strength: 1.1
+- id: d08
+  x: 14.0
+  y: 0.2
+  r: 0.35
+- id: d09
+  x: 12.5
+  y: 1.6
+  r: 0.35
+- id: d10
+  x: 10.4
+  y: 2.5
+  r: 0.35
+  kind: attraction
+  strength: 1.05
+- id: d11
+  x: 8.2
+  y: 1.6
+  r: 0.35
+- id: d12
+  x: 6.2
+  y: 2.6
+  r: 0.35
+- id: d13
+  x: 4.4
+  y: 1.5
+  r: 0.35
+  kind: attraction
+  strength: 1.05
+- id: d14
+  x: 2.4
+  y: 0.4
+  r: 0.35
+- id: d15
+  x: 4.8
+  y: 0.1
+  r: 0.35
+- id: d16
+  x: 7.4
+  y: 0.3
+  r: 0.35
+- id: d17
+  x: 10.1
+  y: 0.2
+  r: 0.35
+- id: d18
+  x: 12.7
+  y: -0.2
+  r: 0.35
+agent_groups:
+- name_prefix: commuter
+  count: 1
+  start_index: 1
+  type: 1
+  group_id: 1
+  profile: commuter
+  behavior: walk
+  delay_start: 0.0
+  delay_step: 0.25
+  speed_mps: 0.9
+  speed_step: -0.03
+  desired_force_scale: 1.05
+  obstacle_force_scale: 1.0
+  social_force_scale: 1.0
+  preferred_distance: 0.85
+  loop: true
+  waypoint_sets:
+  - - d01
+    - d03
+    - d05
+    - d07
+    - d08
+    - d10
+    - d12
+    - d14
+    - d01
+uav:
+  enabled: true
+  model_name: uav_main
+  pose:
+  - 1.8
+  - -1.6
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.18
+  speed_mps: 0.45
+  loop: true
+  update_hz: 30.0
+  weave_amplitude: 0.0
+  weave_frequency: 0.0
+  vibration_amplitude: 0.0
+  waypoints:
+  - - 1.8
+    - -1.6
+    - 1.0
+  - - 4.0
+    - -1.2
+    - 1.0
+  - - 6.5
+    - 0.4
+    - 1.0
+  - - 9.0
+    - 1.2
+    - 1.0
+  - - 12.0
+    - 0.6
+    - 1.0
+  - - 14.2
+    - -0.8
+    - 1.0
+  - - 11.5
+    - -2.0
+    - 1.0
+  - - 8.0
+    - -1.6
+    - 1.0
+  - - 4.6
+    - -2.2
+    - 1.0

@@ -3,7 +3,9 @@
   <model name="person_standing">
     <static>false</static>
     <link name="link">
+      <self_collide>false</self_collide>
       <gravity>false</gravity>
+      <kinematic>true</kinematic>
       <inertial>
         <pose>0 -0.1 0.95 0 0 0</pose>
         <mass>80.0</mass>

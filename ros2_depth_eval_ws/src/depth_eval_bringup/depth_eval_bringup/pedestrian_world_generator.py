@@ -116,7 +116,7 @@ def render_world(config: dict) -> str:
     )
     ground_x, ground_y = world['ground_size']
     return f"""<?xml version="1.0" ?>
-<sdf version="1.10">
+<sdf version="1.9">
   <world name="{world['name']}">
     <gravity>0 0 -9.8</gravity>
 

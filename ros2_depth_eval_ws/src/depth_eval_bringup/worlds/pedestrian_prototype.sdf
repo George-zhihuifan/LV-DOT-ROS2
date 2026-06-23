@@ -1,15 +1,19 @@
 <?xml version="1.0" ?>
-<sdf version="1.10">
+<sdf version="1.9">
   <world name="pedestrian_prototype">
     <gravity>0 0 -9.8</gravity>
 
-    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
-    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
-    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
-    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
-      <render_engine>ogre</render_engine>
+    <plugin filename="ignition-gazebo-physics-system" name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="ignition-gazebo-user-commands-system" name="ignition::gazebo::systems::UserCommands"/>
+    <plugin filename="ignition-gazebo-scene-broadcaster-system" name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
     </plugin>
-    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+    <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu"/>
+    <plugin filename="libuav_pose_sync_system.so" name="depth_eval::UavPoseSyncSystem">
+      <pose_topic>/uav_motion/pose_cmd</pose_topic>
+      <model_name>uav_main</model_name>
+    </plugin>
     <plugin filename="libpedestrian_pose_sync_system.so" name="depth_eval::PedestrianPoseSyncSystem">
       <pose_topic>/pedestrian_sim/agent_states</pose_topic>
       <model_name>commuter_1</model_name>
@@ -21,6 +25,12 @@
       <model_name>staff_1</model_name>
       <model_name>staff_2</model_name>
     </plugin>
+
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.7 0.85 1.0 1</background>
+      <grid>false</grid>
+    </scene>
 
     <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>

@@ -459,11 +459,11 @@ uav:
   enabled: true
   model_name: uav_main
   pose: [1.8, -1.6, 1.0, 0.0, 0.0, 0.18]
-  speed_mps: 1.25
+  speed_mps: 0.3
   loop: true
-  update_hz: 8.0
-  weave_amplitude: 0.08
-  weave_frequency: 0.16
+  update_hz: 30.0
+  weave_amplitude: 0.0
+  weave_frequency: 0.0
   vibration_amplitude: 0.0
   waypoints:
     - [1.8, -1.6, 1.0]

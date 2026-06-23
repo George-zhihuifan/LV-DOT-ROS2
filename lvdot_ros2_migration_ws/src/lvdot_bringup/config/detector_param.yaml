@@ -4,14 +4,29 @@ lvdot_detector_node:
 
     depth_image_topic: /rgbd_camera/depth_image
     color_image_topic: /rgbd_camera/image
-    lidar_pointcloud_topic: /livox/lidar/pointcloud
+    lidar_pointcloud_topic: /mid360/pointcloud
     pose_topic: /mavros/local_position/pose
     odom_topic: /mavros/local_position/odom
     yolo_detection_topic: /yolo_detector/detected_bounding_boxes
     fusion_mode: dual
 
+    # QC-GAF integration mode (see 毕设/qcgaf_integration_analysis_20260512.md):
+    #   disabled    – baseline behavior (no QC-GAF effect on tracker)
+    #   refinement  – Path Z: QC-GAF refines rule-fusion box geometry
+    #   replacement – Path X: tracker consumes QC-GAF boxes directly
+    qcgaf_integration_mode: disabled
+    qcgaf_match_distance_threshold: 1.0  # meters (refinement mode only)
+
+    # §3.3 quality-aware adaptive noise (independent of integration mode):
+    # When enabled, detector subscribes to /qcgaf/quality_vector, computes
+    # Hc/Hl, and the tracker scales KF Q/R by (1 + alpha * (1 - H)) per frame.
+    qcgaf_noise_adaptation_enabled: true
+    qcgaf_alpha_q: 1.0
+    qcgaf_alpha_r: 1.0
+    qcgaf_quality_topic: /qcgaf/quality_vector
+
     depth_intrinsics: [337.35705085528514, 337.35705085528514, 320.0, 240.0]
-    color_intrinsics: [337.35705085528514, 337.35705085528514, 320.0, 240.0]
+    color_intrinsics: [464.0, 464.0, 320.0, 240.0]
     depth_scale_factor: 1000.0
     depth_min_value: 0.2
     depth_max_value: 12.0
@@ -19,19 +34,20 @@ lvdot_detector_node:
     u_map_col_scale: 0.5
     u_map_threshold_point: 1
     u_map_threshold_line: 1
-    u_map_min_length_line: 2
+    u_map_min_length_line: 1
+    u_map_min_bbox_area: 9
     depth_filter_margin: 10
     depth_skip_pixel: 1
     image_cols: 640
     image_rows: 480
 
-    body_to_camera_depth: [0.0, 0.0, 1.0, 0.18,
+    body_to_camera_depth: [0.0, 0.0, 1.0, 0.30,
                            -1.0, 0.0, 0.0, 0.0,
-                           0.0, -1.0, 0.0, 0.06,
+                           0.0, -1.0, 0.0, 0.05,
                            0.0, 0.0, 0.0, 1.0]
-    body_to_camera_color: [0.0, 0.0, 1.0, 0.18,
+    body_to_camera_color: [0.0, 0.0, 1.0, 0.30,
                            -1.0, 0.0, 0.0, 0.0,
-                           0.0, -1.0, 0.0, 0.06,
+                           0.0, -1.0, 0.0, 0.05,
                            0.0, 0.0, 0.0, 1.0]
     body_to_lidar: [1.0, 0.0, 0.0, 0.18,
                     0.0, 1.0, 0.0, 0.0,
@@ -45,8 +61,8 @@ lvdot_detector_node:
     local_sensor_range: [10.0, 10.0, 5.0]
     dbscan_min_points_cluster: 20
     dbscan_search_range_epsilon: 0.05
-    lidar_DBSCAN_min_points: 10
-    lidar_DBSCAN_epsilon: 0.07
+    lidar_DBSCAN_min_points: 5
+    lidar_DBSCAN_epsilon: 0.10
     post_min_cluster_points: 0
     downsample_threshold: 3500
     gaussian_downsample_rate: 6
@@ -59,7 +75,12 @@ lvdot_detector_node:
     adaptive_similarity_weight: false
     similarity_distance_norm: 0.6
     min_match_similarity: -0.8
+    tracker_high_score_threshold: 0.55
+    tracker_low_score_threshold: 0.10
+    tracker_new_track_score_threshold: 0.25
     history_size: 100
+    tracker_tentative_min_hits: 3
+    tracker_tentative_max_unmatched_frames: 1
     max_unmatched_frames: 14
     fix_size_history_threshold: 10
     fix_size_dimension_threshold: 0.4
@@ -75,15 +96,20 @@ lvdot_detector_node:
     target_object_size: [0.5, 0.5, 1.5]
     min_object_size: [0.10, 0.10, 0.15]
     max_object_size: [3.0, 3.0, 2.0]
-    enable_stage_timers: false
+    enable_stage_timers: true
 
     enable_sync_context: true
-    enable_yolo_sync: true
-    sync_queue_size: 100
-    sync_slop_sec: 0.20
-    max_depth_lidar_skew_sec: 0.8
-    max_depth_yolo_skew_sec: 0.8
-    max_lidar_yolo_skew_sec: 1.0
+    enable_yolo_sync: false
+    sync_queue_size: 200
+    sync_slop_sec: 0.15
+    max_depth_lidar_skew_sec: 0.18
+    max_depth_yolo_skew_sec: 0.20
+    max_lidar_yolo_skew_sec: 1.5
+    depth_branch_match_latest_causal: true
+    max_depth_branch_age_sec: 0.65
+    max_depth_branch_ready_lag_sec: 0.80
+    depth_branch_future_tolerance_sec: 0.03
+    enable_depth_branch_in_lidar_fusion: true
     stale_message_age_sec: 2.0
     skew_startup_grace_sec: 8.0
     future_stamp_tolerance_sec: 0.2

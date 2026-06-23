@@ -30,6 +30,27 @@ onboardDetector::TrackingInput build_tracking_input(
   const LVdotRuntimeState & state,
   const LVdotDetectorConfig & config);
 
+// Path X (replacement mode): build tracking input using QC-GAF boxes as the
+// observation list.  Clusters are emitted as empty arrays — the tracker
+// degrades to box-only operation.  Returns an empty filteredBBoxes list if
+// state.qcgaf_filtered_bboxes is empty (caller should fall back to baseline).
+onboardDetector::TrackingInput build_tracking_input_qcgaf_replacement(
+  const LVdotRuntimeState & state,
+  const LVdotDetectorConfig & config);
+
+// Path Z (refinement mode): for each box in state.filtered_bboxes, find the
+// nearest QC-GAF box within max_match_distance and overwrite its geometry
+// (x, y, z, x_width, y_width, z_width).  Clusters are not touched so the
+// 1:1 correspondence with filtered_bboxes is preserved.  Boxes with no QC-GAF
+// match within range keep their rule-fusion geometry.
+void apply_qcgaf_geometry_refinement(
+  LVdotRuntimeState & state,
+  double max_match_distance);
+
+void apply_depth_auxiliary_correction(
+  LVdotRuntimeState & state,
+  double max_match_distance);
+
 void apply_tracking_output(
   const onboardDetector::TrackingOutput & output,
   LVdotRuntimeState & state);
@@ -44,4 +65,3 @@ void apply_classification_output(
   std::size_t & dynamic_rejected_by_size_out);
 
 }  // namespace lvdot_ros2
-

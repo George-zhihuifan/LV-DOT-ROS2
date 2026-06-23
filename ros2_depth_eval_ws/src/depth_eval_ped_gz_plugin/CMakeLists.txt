@@ -25,8 +25,21 @@ ament_target_dependencies(pedestrian_pose_sync_system
   geometry_msgs
 )
 
+add_library(uav_pose_sync_system SHARED
+  src/uav_pose_sync_system.cpp
+)
+target_compile_features(uav_pose_sync_system PUBLIC cxx_std_17)
+target_link_libraries(uav_pose_sync_system
+  gz-plugin2::gz-plugin2
+  gz-sim8::gz-sim8
+)
+ament_target_dependencies(uav_pose_sync_system
+  rclcpp
+  geometry_msgs
+)
+
 install(
-  TARGETS pedestrian_pose_sync_system
+  TARGETS pedestrian_pose_sync_system uav_pose_sync_system
   LIBRARY DESTINATION lib
 )
 

@@ -21,6 +21,7 @@ struct box3D
     double x{0.0}, y{0.0}, z{0.0};
     double x_width{0.0}, y_width{0.0}, z_width{0.0};
     double id{0.0};
+    double score{0.35};
     double Vx{0.0}, Vy{0.0}, Vz{0.0};
     double Ax{0.0}, Ay{0.0}, Az{0.0};
     bool is_human{false};

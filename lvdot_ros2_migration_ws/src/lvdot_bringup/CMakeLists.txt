@@ -8,27 +8,10 @@ install(DIRECTORY launch config rviz
 )
 
 install(PROGRAMS
-  scripts/check_qcgaf_gru_topics.sh
-  scripts/capture_status_snapshot.py
-  scripts/preflight_real_scene_environment.sh
-  scripts/smoke_test_detector_only.sh
-  scripts/smoke_test_full_stack_qcgaf_gru.sh
-  scripts/run_detector_only_regression_suite.sh
-  scripts/run_gt_eval_funnel_suite.sh
-  scripts/run_regression_matrix.sh
-  scripts/run_scene_environment_diagnostics.sh
-  scripts/run_scene_staged_diagnostics.sh
-  scripts/show_latest_regression_report.sh
-  scripts/show_latest_scene_diagnostics_report.sh
-  scripts/show_latest_scene_staged_report.sh
-  scripts/run_real_scene_regression.sh
-  scripts/run_real_scene_regression_suite.sh
-  scripts/run_regression_full_stack_qcgaf_gru.sh
-  scripts/watch_pipeline_stats.sh
-  scripts/check_real_scene_topics.sh
-  scripts/start_full_stack_qcgaf_gru.sh
-  scripts/validate_dod_qcgaf_gru.sh
-  scripts/validate_real_scene_regression.sh
+  scripts/run_ablation.sh
+  scripts/run_depth_branch_offset_sweep.sh
+  scripts/summarize_results.py
+  scripts/u_map_sweep.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

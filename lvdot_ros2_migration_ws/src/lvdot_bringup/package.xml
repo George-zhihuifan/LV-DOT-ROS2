@@ -13,6 +13,7 @@
   <exec_depend>launch_ros</exec_depend>
   <exec_depend>gru_predictor</exec_depend>
   <exec_depend>lvdot_interfaces</exec_depend>
+  <exec_depend>lvdot_realistic_sensors</exec_depend>
   <exec_depend>lvdot_ros2</exec_depend>
   <exec_depend>qcgaf_fusion</exec_depend>
   <exec_depend>rclpy</exec_depend>

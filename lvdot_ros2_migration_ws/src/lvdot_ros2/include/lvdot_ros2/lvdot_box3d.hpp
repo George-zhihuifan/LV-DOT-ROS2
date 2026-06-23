@@ -16,6 +16,7 @@ struct Box3D
   double z_width{0.0};
 
   double id{0.0};
+  double score{0.35};
 
   double vx{0.0};
   double vy{0.0};
@@ -43,6 +44,7 @@ inline onboardDetector::box3D to_core_box3d(const Box3D & src)
   dst.y_width = src.y_width;
   dst.z_width = src.z_width;
   dst.id = src.id;
+  dst.score = src.score;
   dst.Vx = src.vx;
   dst.Vy = src.vy;
   dst.Vz = src.vz;
@@ -68,6 +70,7 @@ inline Box3D from_core_box3d(const onboardDetector::box3D & src, bool is_u_map_e
   dst.y_width = src.y_width;
   dst.z_width = src.z_width;
   dst.id = src.id;
+  dst.score = src.score;
   dst.vx = src.Vx;
   dst.vy = src.Vy;
   dst.vz = src.Vz;

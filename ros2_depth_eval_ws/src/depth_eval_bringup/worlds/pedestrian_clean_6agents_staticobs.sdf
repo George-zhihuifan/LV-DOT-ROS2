@@ -1,0 +1,238 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="pedestrian_clean_6agents_staticobs">
+    <gravity>0 0 -9.8</gravity>
+
+    <plugin filename="ignition-gazebo-physics-system" name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="ignition-gazebo-user-commands-system" name="ignition::gazebo::systems::UserCommands"/>
+    <plugin filename="ignition-gazebo-scene-broadcaster-system" name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu"/>
+    <plugin filename="libuav_pose_sync_system.so" name="depth_eval::UavPoseSyncSystem">
+      <pose_topic>/uav_motion/pose_cmd</pose_topic>
+      <model_name>uav_main</model_name>
+    </plugin>
+    <plugin filename="libpedestrian_pose_sync_system.so" name="depth_eval::PedestrianPoseSyncSystem">
+      <pose_topic>/pedestrian_sim/agent_states</pose_topic>
+      <model_name>commuter_1</model_name>
+      <model_name>commuter_2</model_name>
+      <model_name>commuter_3</model_name>
+      <model_name>commuter_4</model_name>
+      <model_name>commuter_5</model_name>
+      <model_name>commuter_6</model_name>
+    </plugin>
+
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.7 0.85 1.0 1</background>
+      <grid>false</grid>
+    </scene>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.85 0.85 0.85 1.0</diffuse>
+      <specular>0.2 0.2 0.2 1.0</specular>
+      <direction>-0.4 0.2 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>90.0 90.0</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>90.0 90.0</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.28 0.3 0.32 1</ambient>
+            <diffuse>0.32 0.34 0.36 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <include>
+      <uri>model://uav_d435i_platform</uri>
+      <name>uav_main</name>
+      <pose>1.500 -1.200 1.000 0 0 0.18000</pose>
+    </include>
+
+    <include>
+      <uri>model://pedsim_person</uri>
+      <name>commuter_1</name>
+      <pose>4.000 -0.400 0.020 0 0 0.00000</pose>
+    </include>
+
+    <include>
+      <uri>model://pedsim_person</uri>
+      <name>commuter_2</name>
+      <pose>4.000 0.450 0.020 0 0 0.00000</pose>
+    </include>
+
+    <include>
+      <uri>model://pedsim_person</uri>
+      <name>commuter_3</name>
+      <pose>4.000 1.300 0.020 0 0 0.00000</pose>
+    </include>
+
+    <include>
+      <uri>model://pedsim_person</uri>
+      <name>commuter_4</name>
+      <pose>4.000 2.150 0.020 0 0 0.00000</pose>
+    </include>
+
+    <include>
+      <uri>model://pedsim_person</uri>
+      <name>commuter_5</name>
+      <pose>4.000 3.000 0.020 0 0 0.00000</pose>
+    </include>
+
+    <include>
+      <uri>model://pedsim_person</uri>
+      <name>commuter_6</name>
+      <pose>4.000 3.850 0.020 0 0 0.00000</pose>
+    </include>
+
+    <model name="clean_pillar_mid">
+      <static>true</static>
+      <pose>5.800 0.950 0.675 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.220</radius>
+              <length>1.350</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.220</radius>
+              <length>1.350</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.426 0.279 0.180 1</ambient>
+            <diffuse>0.520 0.340 0.220 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="clean_kiosk_inner">
+      <static>true</static>
+      <pose>8.700 1.850 0.625 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.950 0.550 1.250</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.950 0.550 1.250</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.508 0.443 0.246 1</ambient>
+            <diffuse>0.620 0.540 0.300 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="clean_divider_low">
+      <static>true</static>
+      <pose>11.100 0.200 0.500 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.900 0.400 1.000</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.900 0.400 1.000</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.295 0.459 0.459 1</ambient>
+            <diffuse>0.360 0.560 0.560 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="clean_bench_upper">
+      <static>true</static>
+      <pose>6.800 2.800 0.375 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1.200 0.300 0.750</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1.200 0.300 0.750</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.426 0.344 0.230 1</ambient>
+            <diffuse>0.520 0.420 0.280 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="clean_pillar_outer">
+      <static>true</static>
+      <pose>9.600 3.780 0.675 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.220</radius>
+              <length>1.350</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.220</radius>
+              <length>1.350</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.197 0.312 0.476 1</ambient>
+            <diffuse>0.240 0.380 0.580 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>

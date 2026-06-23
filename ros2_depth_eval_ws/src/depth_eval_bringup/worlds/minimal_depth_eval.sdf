@@ -1,20 +1,20 @@
 <?xml version="1.0" ?>
-<sdf version="1.10">
+<sdf version="1.9">
   <world name="minimal_depth_eval">
     <gravity>0 0 -9.8</gravity>
 
     <plugin
-      filename="gz-sim-physics-system"
-      name="gz::sim::systems::Physics"/>
+      filename="ignition-gazebo-physics-system"
+      name="ignition::gazebo::systems::Physics"/>
     <plugin
-      filename="gz-sim-user-commands-system"
-      name="gz::sim::systems::UserCommands"/>
+      filename="ignition-gazebo-user-commands-system"
+      name="ignition::gazebo::systems::UserCommands"/>
     <plugin
-      filename="gz-sim-scene-broadcaster-system"
-      name="gz::sim::systems::SceneBroadcaster"/>
+      filename="ignition-gazebo-scene-broadcaster-system"
+      name="ignition::gazebo::systems::SceneBroadcaster"/>
     <plugin
-      filename="gz-sim-sensors-system"
-      name="gz::sim::systems::Sensors">
+      filename="ignition-gazebo-sensors-system"
+      name="ignition::gazebo::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
 

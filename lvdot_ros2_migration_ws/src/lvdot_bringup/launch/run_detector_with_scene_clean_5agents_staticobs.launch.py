@@ -13,7 +13,7 @@ def generate_launch_description() -> LaunchDescription:
     depth_eval_share = Path(get_package_share_directory("depth_eval_bringup"))
     scene_launch = depth_eval_share / "launch" / "uav_pedestrian_clean_5agents_staticobs.launch.py"
     realistic_sensors_launch = Path(get_package_share_directory("lvdot_realistic_sensors")) / "launch" / "realistic_sensors.launch.py"
-    default_scenario_config = "/home/mcb/px4_ros2_docker/sim_src/scenario_configs/pedestrian_clean_05agents_staticobs.yaml"
+    default_scenario_config = str(Path(get_package_share_directory("lvdot_bringup")) / "config" / "clean_scenarios" / "pedestrian_clean_05agents_staticobs.yaml")
 
     use_realistic = LaunchConfiguration("use_realistic_sensors")
 

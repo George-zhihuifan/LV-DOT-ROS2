@@ -192,8 +192,8 @@ ros2 launch lvdot_bringup run_full_pipeline.launch.py \
   gazebo_gui:=true rviz:=true \
   use_realistic_sensors:=true \
   pose_stub_orbit_enabled:=true \
-  qcgaf_checkpoint:=/home/mcb/QCGAF-GRU-UAV-Project/qcgaf_fusion/outputs/best_model.pt \
-  gru_model:=/home/mcb/QCGAF-GRU-UAV-Project/gru_predictor/outputs/nuscenes_3d_tuned/best_model.pth
+  qcgaf_checkpoint:=<外部项目目录>/qcgaf_fusion/outputs/best_model.pt \
+  gru_model:=<外部项目目录>/gru_predictor/outputs/nuscenes_3d_tuned/best_model.pth
 ```
 
 加 `launch_evaluator:=true` 即可在最后挂一个 evaluator 节点评 `/qcgaf/fused_bboxes`。

@@ -8,12 +8,12 @@ GRU predictor, launch files, scenario configs, and evaluation utilities.
 
 The full project currently uses two workspaces:
 
-- `/home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws`: Gazebo scene, UAV/pedestrian
+- `$LVDOT_ROOT/ros2_depth_eval_ws`: Gazebo scene, UAV/pedestrian
   simulation, sensor bridge, pose stub, YOLO adapter, and evaluators.
-- `/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws`: main detector, QC-GAF,
+- `$LVDOT_ROOT/lvdot_ros2_migration_ws`: main detector, QC-GAF,
   GRU, bringup launch files, RViz config, experiment configs, and reports.
 
-The older `/home/mcb/LV-DOT-ROS2/lvdot_ros2_ws` workspace is not the current
+The older `$LVDOT_ROOT/lvdot_ros2_ws` workspace is not the current
 mainline.
 
 ## Packages
@@ -31,13 +31,13 @@ mainline.
 Build the simulation/support workspace first, then this workspace:
 
 ```bash
-cd /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws
+cd $LVDOT_ROOT/ros2_depth_eval_ws
 source /opt/ros/humble/setup.bash
 colcon build --symlink-install
 
-cd /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws
+cd $LVDOT_ROOT/lvdot_ros2_migration_ws
 source /opt/ros/humble/setup.bash
-source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
+source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
 colcon build --symlink-install
 ```
 
@@ -45,8 +45,8 @@ For each new terminal:
 
 ```bash
 source /opt/ros/humble/setup.bash
-source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
-source /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/install/setup.bash
+source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
+source $LVDOT_ROOT/lvdot_ros2_migration_ws/install/setup.bash
 ```
 
 ## Current Mainline Startup
@@ -58,8 +58,8 @@ ros2 launch lvdot_bringup run_full_pipeline.launch.py \
   gazebo_gui:=true \
   rviz:=true \
   use_realistic_sensors:=true \
-  scenario_config:=/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml \
-  detector_config:=/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param_baseline.yaml \
+  scenario_config:=$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml \
+  detector_config:=$LVDOT_ROOT/lvdot_ros2_migration_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param_baseline.yaml \
   enable_qcgaf:=true \
   enable_gru:=false \
   launch_evaluator:=false \

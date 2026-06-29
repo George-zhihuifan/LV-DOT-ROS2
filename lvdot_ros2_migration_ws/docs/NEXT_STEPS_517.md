@@ -20,13 +20,13 @@
 
   # 查看 A2 启动日志
   grep -E "fusion_mode|dynamic_bboxes|ERROR|WARN" \
-    /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
+    $LVDOT_ROOT/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
   36/dense_open_A2_visual_only/launch.log | head -30
 
   # 查看 frames.csv 是否有任何 det
-  head -5 /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/logs/ablation_2026051
+  head -5 $LVDOT_ROOT/lvdot_ros2_migration_ws/logs/ablation_2026051
   7_092036/dense_open_A2_visual_only/frames.csv
-  tail -5 /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/logs/ablation_2026051
+  tail -5 $LVDOT_ROOT/lvdot_ros2_migration_ws/logs/ablation_2026051
   7_092036/dense_open_A2_visual_only/frames.csv
 
   可能原因：fusion_mode:=depth_driven
@@ -108,17 +108,17 @@
   # 1. 看启动日志，找 fusion_mode 是否被检测器识别
   grep -E "fusion_mode|Fusion mode|Unknown
   fusion|VisualOnly|visual_only|depth_driven|lidar_driven" \
-    /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
+    $LVDOT_ROOT/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
   36/dense_open_A2_visual_only/launch.log
 
   # 2. 看检测器是否产出 dynamic_bboxes
   grep -E "Pipeline stats|Input health|dynamic_count|fused" \
-    /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
+    $LVDOT_ROOT/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
   36/dense_open_A2_visual_only/launch.log | tail -30
 
   # 3. 看 frames.csv 总检测数
   awk -F, 'NR>1{sum+=$3; n++} END{print "frames=", n, "avg_det=", sum/n}' \
-    /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
+    $LVDOT_ROOT/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
   36/dense_open_A2_visual_only/frames.csv
 
   把这三个命令的输出贴给我，我判断是：
@@ -130,15 +130,15 @@
 
   # 查源码里所有支持的 fusion_mode 字符串
   grep -rn "fusion_mode\|FusionMode\|fusionMode" \
-    /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_core/ \
-    /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_ros2/ | \
+    $LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_core/ \
+    $LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_ros2/ | \
     grep -iE "lidar|visual|depth|dual|only" | head -20
 
   0.3 验证 A6 noise_adaptation 是否生效
 
   # 看 A6 启动日志里有没有打印 qcgaf_noise_adaptation_enabled=true
   grep -E "noise_adaptation|alpha_q|alpha_r|quality_vector" \
-    /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
+    $LVDOT_ROOT/lvdot_ros2_migration_ws/logs/ablation_20260517_0920
   36/dense_open_A6_noise_adapt/launch.log | head -20
 
   ---
@@ -210,9 +210,9 @@
 
   2.2 执行
 
-  cd /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws
+  cd $LVDOT_ROOT/lvdot_ros2_migration_ws
   source /opt/ros/humble/setup.bash
-  source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
+  source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
   source install/setup.bash
 
   # 后台跑，输出到 log 文件方便检查进度

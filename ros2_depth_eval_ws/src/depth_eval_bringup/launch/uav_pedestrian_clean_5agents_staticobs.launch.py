@@ -13,7 +13,9 @@ def generate_launch_description() -> LaunchDescription:
     plugin_prefix = get_package_prefix('depth_eval_ped_gz_plugin')
     world_path = os.path.join(pkg_bringup, 'worlds', 'pedestrian_clean_5agents_staticobs.sdf')
     model_path = os.path.join(pkg_bringup, 'models')
-    default_config_path = '/home/mcb/px4_ros2_docker/sim_src/scenario_configs/pedestrian_clean_05agents_staticobs.yaml'
+    default_config_path = os.path.join(
+        get_package_share_directory('lvdot_bringup'),
+        'config', 'clean_scenarios', 'pedestrian_clean_05agents_staticobs.yaml')
     config_path = LaunchConfiguration('scenario_config')
     rviz_config = os.path.join(pkg_bringup, 'rviz', 'uav_pedestrian_scene.rviz')
     world_name = 'pedestrian_clean_5agents_staticobs'

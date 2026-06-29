@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WS_ROOT="${WS_ROOT:-/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws}"
+# Auto-detect workspace root from this script's location. Override with WS_ROOT.
+_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WS_ROOT="${WS_ROOT:-$(cd "${_SCRIPT_DIR}/../../.." && pwd)}"
 RUN_ABLATION="${WS_ROOT}/src/lvdot_bringup/scripts/run_ablation.sh"
 SCENARIO_DIR="${SCENARIO_DIR:-${WS_ROOT}/src/lvdot_bringup/config/agent_count_scenarios}"
 OUT_ROOT="${OUT_ROOT:-${WS_ROOT}/logs/agent_count_suite_$(date +%Y%m%d_%H%M%S)}"

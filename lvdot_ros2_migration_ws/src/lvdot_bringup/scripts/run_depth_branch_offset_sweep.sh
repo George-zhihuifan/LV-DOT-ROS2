@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WS_ROOT="${WS_ROOT:-/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws}"
+WS_ROOT="${WS_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RUN_ABLATION="${WS_ROOT}/src/lvdot_bringup/scripts/run_ablation.sh"
 OUT_ROOT="${OUT_ROOT:-${WS_ROOT}/logs/depth_branch_offset_sweep_$(date +%Y%m%d_%H%M%S)}"

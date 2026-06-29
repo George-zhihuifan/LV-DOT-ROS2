@@ -242,9 +242,9 @@ GRU 是再下游一层，独立于 QC，做的是"已经被检测+跟踪的目�
 
 ```bash
 # Workspace 设置
-cd /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws
+cd $LVDOT_ROOT/lvdot_ros2_migration_ws
 source /opt/ros/humble/setup.bash
-source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
+source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
 source install/setup.bash
 
 # 1) 单纯起 detector + scene + YOLO (带 GUI)
@@ -274,13 +274,13 @@ python3 src/lvdot_bringup/scripts/u_map_sweep.py \
 # 2) 单独起 QC 融合 (GPU1)
 CUDA_VISIBLE_DEVICES=1 ros2 run qcgaf_fusion fusion_node --ros-args \
   -p config:=$PWD/install/qcgaf_fusion/share/qcgaf_fusion/config/config.yaml \
-  -p checkpoint:=/home/mcb/QCGAF-GRU-UAV-Project/qcgaf_fusion/outputs/best_model.pt \
+  -p checkpoint:=<外部项目目录>/qcgaf_fusion/outputs/best_model.pt \
   -p verbose:=false
 
 # 3) 单独起 GRU 预测 (GPU1)
 CUDA_VISIBLE_DEVICES=1 ros2 run gru_predictor predict_node --ros-args \
   -p config:=$PWD/install/gru_predictor/share/gru_predictor/config/config_tuned.yaml \
-  -p model:=/home/mcb/QCGAF-GRU-UAV-Project/gru_predictor/outputs/nuscenes_3d_tuned/best_model.pth \
+  -p model:=<外部项目目录>/gru_predictor/outputs/nuscenes_3d_tuned/best_model.pth \
   -p input_topic:=/onboard_detector/dynamic_bboxes \
   -p output_topic:=/gru_predictor/predicted_positions \
   -p horizon:=5 -p device:=cuda

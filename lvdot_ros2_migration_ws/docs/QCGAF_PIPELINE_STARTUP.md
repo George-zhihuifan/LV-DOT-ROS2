@@ -22,8 +22,8 @@ Source them in this order:
 
 ```bash
 source /opt/ros/humble/setup.bash
-source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
-source /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/install/setup.bash
+source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
+source $LVDOT_ROOT/lvdot_ros2_migration_ws/install/setup.bash
 ```
 
 ## 3. Recommended Full Startup Command
@@ -35,8 +35,8 @@ ros2 launch lvdot_bringup run_full_pipeline.launch.py \
   gazebo_gui:=true \
   rviz:=true \
   use_realistic_sensors:=true \
-  scenario_config:=/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml \
-  detector_config:=/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param_baseline.yaml \
+  scenario_config:=$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml \
+  detector_config:=$LVDOT_ROOT/lvdot_ros2_migration_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param_baseline.yaml \
   enable_qcgaf:=true \
   enable_gru:=false \
   launch_evaluator:=false \
@@ -65,7 +65,7 @@ The actual startup is layered. The top-level command above does not directly cre
 
 File:
 
-- `/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/launch/run_full_pipeline.launch.py`
+- `$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/launch/run_full_pipeline.launch.py`
 
 Responsibilities:
 
@@ -88,7 +88,7 @@ That means the RViz window you see in the full chain is the RViz node defined in
 
 File:
 
-- `/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/launch/run_detector_with_scene.launch.py`
+- `$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/launch/run_detector_with_scene.launch.py`
 
 Responsibilities:
 
@@ -109,7 +109,7 @@ When `use_realistic_sensors:=false`, it falls back to raw Gazebo topics.
 
 File:
 
-- `/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/launch/run_detector_with_adapter.launch.py`
+- `$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/launch/run_detector_with_adapter.launch.py`
 
 Responsibilities:
 
@@ -132,7 +132,7 @@ This file is where detector-side parameters such as these are wired:
 
 File:
 
-- `/home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/src/depth_eval_bringup/launch/uav_pedestrian_prototype.launch.py`
+- `$LVDOT_ROOT/ros2_depth_eval_ws/src/depth_eval_bringup/launch/uav_pedestrian_prototype.launch.py`
 
 Responsibilities:
 
@@ -157,11 +157,11 @@ Important detail:
 
 The Gazebo world file is:
 
-- `/home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/src/depth_eval_bringup/worlds/pedestrian_prototype.sdf`
+- `$LVDOT_ROOT/ros2_depth_eval_ws/src/depth_eval_bringup/worlds/pedestrian_prototype.sdf`
 
 At runtime, the installed copy is used:
 
-- `/home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/depth_eval_bringup/share/depth_eval_bringup/worlds/pedestrian_prototype.sdf`
+- `$LVDOT_ROOT/ros2_depth_eval_ws/install/depth_eval_bringup/share/depth_eval_bringup/worlds/pedestrian_prototype.sdf`
 
 This world contains the UAV scene and the plugins needed by the prototype pipeline.
 
@@ -174,7 +174,7 @@ Two scene plugins that appear in startup logs are:
 
 For the `1-agent` inspection case, the scenario file is:
 
-- `/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml`
+- `$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml`
 
 This file controls the runtime pedestrian layout used by `pedestrian_state_publisher` and the pose/agent-state machinery.
 
@@ -184,7 +184,7 @@ If you want `2/3/4/5/6` agents, switch this file to the matching YAML in the sam
 
 For the current `A4(QC-GAF)` mainline inspection command, the detector config is:
 
-- `/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param_baseline.yaml`
+- `$LVDOT_ROOT/lvdot_ros2_migration_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param_baseline.yaml`
 
 In the current workflow:
 
@@ -198,11 +198,11 @@ If later you want to inspect a different detector parameter set, replace `detect
 
 The full pipeline RViz config is:
 
-- `/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/rviz/lvdot_detector.rviz`
+- `$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/rviz/lvdot_detector.rviz`
 
 This file is referenced by:
 
-- `/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/launch/run_full_pipeline.launch.py`
+- `$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/launch/run_full_pipeline.launch.py`
 
 The RViz node started by the top-level launch is:
 
@@ -216,10 +216,10 @@ If the full chain is already running and you only want to open RViz manually:
 
 ```bash
 source /opt/ros/humble/setup.bash
-source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
-source /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/install/setup.bash
+source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
+source $LVDOT_ROOT/lvdot_ros2_migration_ws/install/setup.bash
 
-rviz2 -d /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/rviz/lvdot_detector.rviz
+rviz2 -d $LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/rviz/lvdot_detector.rviz
 ```
 
 ## 10. How To Start Gazebo Separately
@@ -230,7 +230,7 @@ If you only want the scene without the detector/fusion stack:
 ros2 launch depth_eval_bringup uav_pedestrian_prototype.launch.py \
   gazebo_gui:=true \
   rviz:=false \
-  scenario_config:=/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml
+  scenario_config:=$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml
 ```
 
 This starts:
@@ -309,8 +309,8 @@ ros2 launch lvdot_bringup run_full_pipeline.launch.py \
   gazebo_gui:=true \
   rviz:=true \
   use_realistic_sensors:=true \
-  scenario_config:=/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml \
-  detector_config:=/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param_baseline.yaml \
+  scenario_config:=$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml \
+  detector_config:=$LVDOT_ROOT/lvdot_ros2_migration_ws/install/lvdot_bringup/share/lvdot_bringup/config/detector_param_baseline.yaml \
   enable_qcgaf:=true \
   enable_gru:=false \
   launch_evaluator:=false \
@@ -323,11 +323,11 @@ Gazebo-only scene:
 ros2 launch depth_eval_bringup uav_pedestrian_prototype.launch.py \
   gazebo_gui:=true \
   rviz:=false \
-  scenario_config:=/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml
+  scenario_config:=$LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/config/agent_count_scenarios/pedestrian_dense_01agents.yaml
 ```
 
 RViz-only:
 
 ```bash
-rviz2 -d /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/src/lvdot_bringup/rviz/lvdot_detector.rviz
+rviz2 -d $LVDOT_ROOT/lvdot_ros2_migration_ws/src/lvdot_bringup/rviz/lvdot_detector.rviz
 ```

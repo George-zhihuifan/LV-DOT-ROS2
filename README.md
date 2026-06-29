@@ -28,14 +28,14 @@ ign gazebo --version      # 应输出 6.16.x
 
 ```bash
 # 1. 构建 ros2_depth_eval_ws（仿真场景 + 传感器仿真节点）
-cd /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws
+cd $LVDOT_ROOT/ros2_depth_eval_ws
 source /opt/ros/humble/setup.bash
 colcon build --symlink-install
 
 # 2. 构建 lvdot_ros2_migration_ws（detector + QCGAF + GRU）
-cd /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws
+cd $LVDOT_ROOT/lvdot_ros2_migration_ws
 source /opt/ros/humble/setup.bash
-source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
+source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
 colcon build --symlink-install
 ```
 
@@ -53,8 +53,8 @@ colcon build --packages-select lvdot_realistic_sensors
 
 ```bash
 source /opt/ros/humble/setup.bash
-source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
-source /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws/install/setup.bash
+source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
+source $LVDOT_ROOT/lvdot_ros2_migration_ws/install/setup.bash
 ```
 
 ### 启动方式 1：完整端到端（推荐）
@@ -222,7 +222,7 @@ sleep 3
 - Gazebo 服务端日志：`~/.ignition/gazebo/log/<timestamp>/server_console.log`
 - Ogre 渲染日志：`~/.ignition/rendering/ogre.log`
 - ROS2 节点日志：`~/.ros/log/<timestamp>/`
-- 本项目过程记录：`/home/mcb/LV-DOT-Materials/毕设/log/`
+- 本项目过程记录：`<外部资料目录>/毕设/log/`
 
 ---
 
@@ -242,4 +242,4 @@ sleep 3
 
 ## 联系
 
-如遇问题，参考 `/home/mcb/LV-DOT-Materials/毕设/log/2026-05-11.md` 详细调试记录。
+如遇问题，参考 `<外部资料目录>/毕设/log/2026-05-11.md` 详细调试记录。

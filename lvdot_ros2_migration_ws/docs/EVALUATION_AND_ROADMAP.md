@@ -194,9 +194,9 @@
 
 ```bash
 # Workspace
-cd /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws
+cd $LVDOT_ROOT/lvdot_ros2_migration_ws
 source /opt/ros/humble/setup.bash
-source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
+source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
 source install/setup.bash
 
 # 1. 跑一次有 GT 评估的 30 秒 demo（YOLO 启）
@@ -218,7 +218,7 @@ python3 src/lvdot_bringup/scripts/u_map_sweep.py \
 
 # 3. 跑全栈 (detector + QC + GRU)
 ros2 launch lvdot_bringup run_full_stack_qcgaf_gru.launch.py \
-  qcgaf_checkpoint:=/home/mcb/QCGAF-GRU-UAV-Project/qcgaf_fusion/outputs/best_model.pt \
-  gru_model:=/home/mcb/QCGAF-GRU-UAV-Project/gru_predictor/outputs/nuscenes_3d_tuned/best_model.pth \
+  qcgaf_checkpoint:=<外部项目目录>/qcgaf_fusion/outputs/best_model.pt \
+  gru_model:=<外部项目目录>/gru_predictor/outputs/nuscenes_3d_tuned/best_model.pth \
   use_sim_time:=true
 ```

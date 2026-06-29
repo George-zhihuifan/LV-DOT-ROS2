@@ -29,7 +29,7 @@ def generate_launch_description() -> LaunchDescription:
     yolo_default_weight = str(ws_root / "models" / "yolo" / "yolo11n.engine")
     rviz_default_config = bringup_share / "rviz" / "lvdot_detector.rviz"
     default_detector_config = str(bringup_share / "config" / "detector_param_clean_refinement.yaml")
-    default_scenario_config = "/home/mcb/px4_ros2_docker/sim_src/scenario_configs/pedestrian_clean_05agents_staticobs.yaml"
+    default_scenario_config = str(bringup_share / "config" / "clean_scenarios" / "pedestrian_clean_05agents_staticobs.yaml")
     use_realistic = LaunchConfiguration("use_realistic_sensors")
 
     def pick(realistic_topic: str, raw_topic: str) -> PythonExpression:

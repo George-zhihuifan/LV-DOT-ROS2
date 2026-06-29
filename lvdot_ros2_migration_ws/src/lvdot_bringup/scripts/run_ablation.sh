@@ -3,8 +3,12 @@ set -euo pipefail
 export AMENT_TRACE_SETUP_FILES="${AMENT_TRACE_SETUP_FILES:-}"
 export AMENT_PYTHON_EXECUTABLE="${AMENT_PYTHON_EXECUTABLE:-/usr/bin/python3}"
 
-WS_ROOT="${WS_ROOT:-/home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws}"
-DEPTH_WS="${DEPTH_WS:-/home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws}"
+# Auto-detect workspace roots from this script's location (src/lvdot_bringup/scripts/).
+# Override by exporting WS_ROOT / DEPTH_WS before calling.
+_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+_MIGRATION_WS="$(cd "${_SCRIPT_DIR}/../../.." && pwd)"
+WS_ROOT="${WS_ROOT:-${_MIGRATION_WS}}"
+DEPTH_WS="${DEPTH_WS:-$(cd "${_MIGRATION_WS}/.." && pwd)/ros2_depth_eval_ws}"
 OUT_ROOT="${OUT_ROOT:-${WS_ROOT}/logs/ablation_$(date +%Y%m%d_%H%M%S)}"
 EVAL_DURATION_SEC="${EVAL_DURATION_SEC:-60.0}"
 WARMUP_SEC="${WARMUP_SEC:-15.0}"

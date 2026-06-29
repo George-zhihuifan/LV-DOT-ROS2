@@ -180,16 +180,16 @@ P3(论文章节最后一步):
 ## 6. 启动命令(实测可用,2026-05-12)
 
 ```bash
-cd /home/mcb/LV-DOT-ROS2/lvdot_ros2_migration_ws
+cd $LVDOT_ROOT/lvdot_ros2_migration_ws
 source /opt/ros/humble/setup.bash
-source /home/mcb/LV-DOT-ROS2/ros2_depth_eval_ws/install/setup.bash
+source $LVDOT_ROOT/ros2_depth_eval_ws/install/setup.bash
 source install/setup.bash
 
 # 全链路(headless)
 ros2 launch lvdot_bringup run_full_pipeline.launch.py \
   gazebo_gui:=false rviz:=false \
-  qcgaf_checkpoint:=/home/mcb/QCGAF-GRU-UAV-Project/qcgaf_fusion/outputs/best_model.pt \
-  gru_model:=/home/mcb/QCGAF-GRU-UAV-Project/gru_predictor/outputs/nuscenes_3d_tuned/best_model.pth
+  qcgaf_checkpoint:=<外部项目目录>/qcgaf_fusion/outputs/best_model.pt \
+  gru_model:=<外部项目目录>/gru_predictor/outputs/nuscenes_3d_tuned/best_model.pth
 
 # 带 GUI
 ros2 launch lvdot_bringup run_full_pipeline.launch.py \
